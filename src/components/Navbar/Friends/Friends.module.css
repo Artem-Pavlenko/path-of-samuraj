@@ -1,0 +1,32 @@
+.wrapper {
+    font-family: cursive;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas:
+        "h h"
+        "f s";
+
+}
+.wrapper img {
+    border-radius: 50%;
+    width: 45px;
+}
+.wrapper span {
+    font-size: 10px;
+}
+.frTitle{
+    color: teal;
+    grid-area: h;
+    text-align: center;
+    font-family: cursive;
+}
+.first {
+    grid-area: f;
+}
+.sec {
+    grid-area: s;
+}
+.acc {
+    padding: 4px;
+}

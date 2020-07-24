@@ -1,0 +1,15 @@
+.nav {
+    grid-area: n;
+    background: khaki;
+    padding: 20px;
+}
+
+.item a {
+    font-family: cursive;
+    color: dimgray;
+    text-decoration: none;
+}
+
+.item a.active {
+    color: blue;
+}
