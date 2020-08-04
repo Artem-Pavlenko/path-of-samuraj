@@ -24,7 +24,7 @@ function MyPosts(props: MyPostPropsType) {
         }
     }
 
-    function onPostChang(e:  ChangeEvent<HTMLTextAreaElement>)  {
+    function onPostChang(e: ChangeEvent<HTMLTextAreaElement>)  {
         props.updatePostText(e.currentTarget.value)
     }
 
