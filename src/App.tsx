@@ -24,9 +24,9 @@ const App: React.FC<AppType> = (props)=> {
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
                     <Route path={'/dialog'} render={() => <Dialogs
-                        dataUsers={state.dialogsPageType.dialog}
-                        dataMess={state.dialogsPageType.mess}
-                        textareaValue={props.store.getState().dialogsPageType.newMessText}
+                        dataUsers={state.dialogsPage.dialog}
+                        dataMess={state.dialogsPage.mess}
+                        textareaValue={props.store.getState().dialogsPage.newMessText}
                         dispatch={props.store.dispatch.bind(props.store)}
                     />}/>
                     <Route path={'/profile'} render={() =>
