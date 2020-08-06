@@ -1,7 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {ActionsTypes, addPostActionCreator, changeNewTexActionCreator, CommentType} from "../../../redux/state";
+import {ActionsTypes, CommentType} from "../../../redux/state";
+import {addPostActionCreator, changeNewTexActionCreator} from "../../../redux/profileReducer";
 
 type MyPostPropsType = {
     dataPost: Array<CommentType>

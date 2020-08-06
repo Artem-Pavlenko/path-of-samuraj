@@ -1,8 +1,16 @@
-import {ActionsTypes, DialogsPageType} from "./state";
+import {ActionsTypes, AddMessActionType, ChangeNewMessActionType, DialogsPageType} from "./state";
 import {v1} from "uuid";
 
 const ADD_MESS = "ADD-MESS"
 const CHANGE_NEW_MESS_TEXT = "CHANGE-NEW-MESS-TEXT"
+
+export const addMessActionCreator = (): AddMessActionType => ({
+    type: "ADD-MESS" //, mess: messText
+})
+export const changeMessActionCreator = (newMessText: string): ChangeNewMessActionType => ({
+    type: "CHANGE-NEW-MESS-TEXT", newMessText: newMessText
+})
+
 
 const dialogsReducer = (state: DialogsPageType, action: ActionsTypes) => {
     switch (action.type) {

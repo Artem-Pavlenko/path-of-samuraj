@@ -38,37 +38,23 @@ export type StoreType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-type AddPostActionType = {
+export type AddPostActionType = {
     type: "ADD-POST"
     // postMessage: string
 }
-type ChangeNewTextActionType = {
+export type ChangeNewTextActionType = {
     type: "CHANGE-NEW-TEXT"
     newText: string
 }
-type ChangeNewMessActionType = {
+export type ChangeNewMessActionType = {
     type: "CHANGE-NEW-MESS-TEXT"
     newMessText: string
 }
-type AddMessActionType = {
+export type AddMessActionType = {
     type: "ADD-MESS"
     //mess: string
 }
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType | ChangeNewMessActionType | AddMessActionType
-
-export const addPostActionCreator = (): AddPostActionType => ({
-    type: "ADD-POST" //, postMessage: postText
-})
-export const changeNewTexActionCreator = (newText: string): ChangeNewTextActionType => ({
-    type: "CHANGE-NEW-TEXT", newText: newText
-})
-export const addMessActionCreator = (): AddMessActionType => ({
-    type: "ADD-MESS" //, mess: messText
-})
-export const changeMessActionCreator = (newMessText: string): ChangeNewMessActionType => ({
-    type: "CHANGE-NEW-MESS-TEXT", newMessText: newMessText
-})
-
 
 let store: StoreType = {
     _state: {
