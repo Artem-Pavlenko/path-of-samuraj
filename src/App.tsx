@@ -8,21 +8,8 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from "./components/Settings/Settings";
 import Profile from "./components/Profile/Profile"
-import {StoreType} from "./state/state";
+import {StoreType} from "./redux/state";
 
-type DialogsDataType = {
-    id: string
-    name: string
-}
-type MessageDataType = {
-    id: string
-    message: string
-}
-type CommentType = {
-    comm: string
-    like: number
-    id: string
-}
 type AppType = {
     store: StoreType
 }
@@ -39,13 +26,14 @@ const App: React.FC<AppType> = (props)=> {
                     <Route path={'/dialog'} render={() => <Dialogs
                         dataUsers={state.dialogsPageType.dialog}
                         dataMess={state.dialogsPageType.mess}
+                        textareaValue={props.store.getState().dialogsPageType.newMessText}
+                        dispatch={props.store.dispatch.bind(props.store)}
                     />}/>
                     <Route path={'/profile'} render={() =>
                         <Profile
                             post={state.profilePost.post}
                             textForTextAreaValue={state.profilePost.newText}
-                            addPost={props.store.addPost.bind(props.store)}
-                            updatePostText={props.store.changeNewText.bind(props.store)}
+                            dispatch={props.store.dispatch.bind(props.store)}
                         />}/>
 
                     <Route path={'/news'} render={() => <News/>}/>

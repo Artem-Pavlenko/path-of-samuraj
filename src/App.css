@@ -17,3 +17,12 @@
   grid-area: c;
   background: cadetblue;
 }
+/*убираю браузерную обводку */
+a:active, a:focus { outline: none; }
+
+input, textarea {outline:none;}
+input:active, textarea:active {outline:none;}
+:focus {outline:none;}
+textarea {resize:none;}
+textarea {resize:vertical;}
+textarea {resize:horizontal;}
