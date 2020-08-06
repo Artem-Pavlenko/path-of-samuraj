@@ -8,10 +8,10 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from "./components/Settings/Settings";
 import Profile from "./components/Profile/Profile"
-import {StoreType} from "./redux/state";
+import {ReduxStore} from "./redux/redux-store";
 
 type AppType = {
-    store: StoreType
+    store: ReduxStore
 }
 
 const App: React.FC<AppType> = (props)=> {
@@ -31,8 +31,8 @@ const App: React.FC<AppType> = (props)=> {
                     />}/>
                     <Route path={'/profile'} render={() =>
                         <Profile
-                            post={state.profilePost.post}
-                            textForTextAreaValue={state.profilePost.newText}
+                            post={state.profilePage.post}
+                            textForTextAreaValue={state.profilePage.newText}
                             dispatch={props.store.dispatch.bind(props.store)}
                         />}/>
 

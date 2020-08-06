@@ -4,7 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import store from "./redux/state";
+import store from "./redux/redux-store";
+
 
 
 export function rerenderTree () {
@@ -17,7 +18,7 @@ export function rerenderTree () {
 }
 
 
-store.subscriber(rerenderTree)
+store.subscribe(rerenderTree)
 rerenderTree()
 
 // If you want your app to work offline and load faster, you can change

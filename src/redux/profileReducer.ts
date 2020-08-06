@@ -1,4 +1,4 @@
-import {ActionsTypes, AddPostActionType, ChangeNewTextActionType, ProfileType} from "./state";
+import {ActionsTypes, AddPostActionType, ChangeNewTextActionType, ProfileType} from "./store";
 import {v1} from "uuid";
 
 const ADD_POST = "ADD-POST"
@@ -11,7 +11,16 @@ export const changeNewTexActionCreator = (newText: string): ChangeNewTextActionT
     type: "CHANGE-NEW-TEXT", newText: newText
 })
 
-const profileReducer = (state: ProfileType, action: ActionsTypes) => {
+let initialState: ProfileType = {
+    post: [
+        {id: v1(), comm: "It's my first post", like: 5},
+        {id: v1(), comm: "Hello World!", like: 7},
+        {id: v1(), comm: "React it's cool!", like: 25}
+    ],
+    newText: ""
+}
+
+const profileReducer = (state: ProfileType = initialState, action: ActionsTypes): ProfileType => {
     switch (action.type) {
         case ADD_POST:
             let postValue = state.newText

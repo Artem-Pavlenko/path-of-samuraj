@@ -26,14 +26,14 @@ export type DialogsPageType = {
 }
 export type StateType = {
     dialogsPage: DialogsPageType
-    profilePost: ProfileType
+    profilePage: ProfileType
 }
 export type StoreType = {
     _state: StateType
     _onChange: () => void //_rerenderTree
     // addPost: (postMessage: string) => void
     // changeNewText: (newText: string) => void
-    subscriber: (callback: () => void) => void
+    subscribe: (callback: () => void) => void
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
 }
@@ -76,7 +76,7 @@ let store: StoreType = {
             ],
             newMessText: ""
         },
-        profilePost: {
+        profilePage: {
             post: [
                 {id: v1(), comm: "It's my first post", like: 5},
                 {id: v1(), comm: "Hello World!", like: 7},
@@ -93,12 +93,12 @@ let store: StoreType = {
     },
 
     dispatch(action) {
-        this._state.profilePost = profileReducer(this._state.profilePost, action)
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         this._onChange()
     },
 
-    subscriber(callback) { //наблюдатель observer-props который fn ()=>void
+    subscribe(callback) { //наблюдатель observer-props который fn ()=>void
         this._onChange = callback
     }
 }

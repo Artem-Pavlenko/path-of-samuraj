@@ -1,7 +1,7 @@
 import React from "react";
 import MyPosts from "./myPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsTypes} from "../../redux/state";
+import {ActionsTypes} from "../../redux/store";
 
 type CommentType = {
     comm: string
