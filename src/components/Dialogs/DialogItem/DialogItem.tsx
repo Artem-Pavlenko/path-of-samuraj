@@ -7,11 +7,12 @@ type DialogType = {
     id: string
 }
 
+//имена, кто написал  в сообщениях
 function DialogItem(props: DialogType) {
     // let path = "/dialogs/" + props.id
     return (
         <div className={s.dialog}>
-            <NavLink to={"/dialogs/" + props.id}> {props.name} </NavLink>
+            <NavLink to={"/dialog/" + props.id}> {props.name} </NavLink>
         </div>
     )
 }

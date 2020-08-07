@@ -6,6 +6,7 @@ type MessageType = {
     text: string
 }
 
+//сообщения в Messages
 function Message(props: MessageType) {
     return (
         <div>

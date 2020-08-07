@@ -1,7 +1,7 @@
 import React from "react";
-import MyPosts from "./myPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsTypes} from "../../redux/store";
+import MyPostsContainer from "./myPosts/MyPostsContainer";
+import {ReduxStore} from "../../redux/redux-store";
 
 type CommentType = {
     comm: string
@@ -9,24 +9,17 @@ type CommentType = {
     id: string
 }
 type ProfileType = {
-    post: Array<CommentType>
-    //addPost: (postMess: string) => void
-    dispatch: (action: ActionsTypes) => void
-    textForTextAreaValue: string
-    // updatePostText: (newText: string) => void
+    // post: Array<CommentType>
+    // dispatch: (action: ActionsTypes) => void
+    // textForTextAreaValue: string
+    store: ReduxStore
 }
-
-
 
 function Profile(props: ProfileType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts
-                dataPost={props.post}
-                textAreaValue={props.textForTextAreaValue}
-                dispatch={props.dispatch}
-            />
+            <MyPostsContainer store={props.store}/>
         </div>
     )
 }

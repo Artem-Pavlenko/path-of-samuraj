@@ -17,28 +17,27 @@ type DialogsPropsType = {
     dataUsers: Array<DialogsDataType>
     dataMess: Array<MessageDataType>
     textareaValue: string
-    dispatch: (action: ActionsTypes) => void
+    onMessChange: (text: string)=> void
+    onSendMess: () => void
 }
 
 
 function Dialogs(props: DialogsPropsType) {
 
     function sendMess() {
-        // props.dispatch(addMessActionCreator(props.textareaValue))
-        // ниже рефактор
-        props.dispatch(addMessActionCreator())
+        props.onSendMess()
     }
     function onMessChange(e: ChangeEvent<HTMLTextAreaElement>) {
-        props.dispatch(changeMessActionCreator( e.currentTarget.value))
+        props.onMessChange( e.currentTarget.value)
     }
 
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                {props.dataUsers.map(user => <DialogItem name={user.name} id={user.id}/>)}
+                {props.dataUsers.map(user => <DialogItem key={user.id} name={user.name} id={user.id}/>)}
             </div>
             <div className={s.messages}>
-                {props.dataMess.map(mess => <Message text={mess.message}/>)}
+                {props.dataMess.map(mess => <Message key={mess.id} text={mess.message}/>)}
                 <textarea
                     placeholder={"write..."}
                     value={props.textareaValue}

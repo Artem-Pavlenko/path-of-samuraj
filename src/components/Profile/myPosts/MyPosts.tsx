@@ -1,36 +1,29 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {ActionsTypes, CommentType} from "../../../redux/store";
-import {addPostActionCreator, changeNewTexActionCreator} from "../../../redux/profileReducer";
+import { CommentType } from "../../../redux/store";
 
 type MyPostPropsType = {
     dataPost: Array<CommentType>
     textAreaValue: string
-    //addPost: (newMess: string) => void
-    //updatePostText: (newText: string) => void
-    dispatch: (action: ActionsTypes) => void
+    addPost: () => void
+    updatePostText: (newText: string) => void
 }
 
 function MyPosts(props: MyPostPropsType) {
-    let postElement = props.dataPost.map(post => <Post comment={post.comm} likeCount={post.like}/>)
+    //отмапил посты
+    let postElement = props.dataPost.map(post => <Post comment={post.comm} likeCount={post.like} key={post.id}/>)
 
-    function addPost() {
-        //props.addPost(props.textAreaValue)
-        // ниже рефактор
-        // props.dispatch(addPostActionCreator(props.textAreaValue))
-        // ниже еще рефактор
-        props.dispatch(addPostActionCreator())
+    function onAddPost() {
+        props.addPost()
     }
-
     function onPostChang(e: ChangeEvent<HTMLTextAreaElement>) {
-        //props.updatePostText(e.currentTarget.value)
-        props.dispatch(changeNewTexActionCreator(e.currentTarget.value))
+        props.updatePostText(e.currentTarget.value)
     }
 
     function onEnter(e: KeyboardEvent<HTMLTextAreaElement>) {
         if (e.charCode === 13) {
-            addPost()
+            onAddPost()
         }
     }
 
@@ -47,10 +40,10 @@ function MyPosts(props: MyPostPropsType) {
                 />
                 <div>
                     <br/>
-                    <button className={s.btn} onClick={addPost}>Add post</button>
+                    <button className={s.btn} onClick={onAddPost}>Add post</button>
                 </div>
             </div>
-            {postElement}
+            {postElement}  {/*посты*/}
         </div>
     )
 }
