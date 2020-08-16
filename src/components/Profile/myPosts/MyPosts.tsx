@@ -1,18 +1,19 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import { CommentType } from "../../../redux/store";
+import {CommentType, ProfileType} from "../../../redux/store";
 
 type MyPostPropsType = {
-    dataPost: Array<CommentType>
-    textAreaValue: string
     addPost: () => void
     updatePostText: (newText: string) => void
+    profilePage: ProfileType
 }
 
 function MyPosts(props: MyPostPropsType) {
+    let dataPost = props.profilePage.post
+    let textAreaValue = props.profilePage.newText
     //отмапил посты
-    let postElement = props.dataPost.map(post => <Post comment={post.comm} likeCount={post.like} key={post.id}/>)
+    let postElement = dataPost.map(post => <Post comment={post.comm} likeCount={post.like} key={post.id}/>)
 
     function onAddPost() {
         props.addPost()
@@ -34,7 +35,7 @@ function MyPosts(props: MyPostPropsType) {
                 <textarea
                     onKeyPress={onEnter}
                     className={s.text}
-                    value={props.textAreaValue}
+                    value={textAreaValue}
                     onChange={onPostChang}
                     placeholder={"enter a comment"}
                 />
@@ -43,7 +44,8 @@ function MyPosts(props: MyPostPropsType) {
                     <button className={s.btn} onClick={onAddPost}>Add post</button>
                 </div>
             </div>
-            {postElement}  {/*посты*/}
+            {/*посты*/}
+            {postElement}
         </div>
     )
 }

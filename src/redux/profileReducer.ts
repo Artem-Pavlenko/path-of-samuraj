@@ -28,10 +28,10 @@ const profileReducer = (state: ProfileType = initialState, action: ActionsTypes)
                 id: v1(), comm: postValue, like: 0
             })
             state.newText = ""
-            return state
+            return {...state}
         case CHANGE_NEW_TEXT:
             state.newText = action.newText
-            return state
+            return {...state}
         default:
             return state
     }

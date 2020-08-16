@@ -7,12 +7,11 @@ const reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer
 })
-
 export type ReduxState = ReturnType<typeof reducers>
 
+
 const store = createStore(reducers)
-
 export type ReduxStore = typeof store
-
+export type DispatchType = typeof store.dispatch
 
 export default store

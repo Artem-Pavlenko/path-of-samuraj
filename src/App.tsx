@@ -14,20 +14,17 @@ type AppType = {
     store: ReduxStore
 }
 
-const App: React.FC<AppType> = (props)=> {
-    let state = props.store.getState()
-
+const App: React.FC = ()=> {
     return (
         <BrowserRouter>
             <div className={"app-wrapper"}>
                 <Header/>
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
-                    <Route path={'/dialog'} render={() => <DialogsContainer
-                     store={props.store}/>}
+                    <Route path={'/dialog'} render={() => <DialogsContainer/>}
                     />
                     <Route path={'/profile'} render={() =>
-                        <Profile store={props.store}/>}
+                        <Profile/>}
                     />
                     <Route path={'/news'} render={() => <News/>}/>
                     <Route path={'/music'} render={() => <Music/>}/>

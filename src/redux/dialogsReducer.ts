@@ -30,15 +30,16 @@ let initialState: DialogsPageType = {
     newMessText: ""
 }
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
+
     switch (action.type) {
         case CHANGE_NEW_MESS_TEXT:
             state.newMessText = action.newMessText
-            return state
+            return {...state}
         case ADD_MESS:
             let newMess2 = state.newMessText
             state.mess.push({id: v1(), message: newMess2})
             state.newMessText = ""
-            return state
+            return {...state}
         default:
             return state
     }

@@ -2,8 +2,6 @@ import React, {ChangeEvent} from "react";
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {ActionsTypes} from "../../redux/store";
-import {addMessActionCreator, changeMessActionCreator} from "../../redux/dialogsReducer";
 
 type DialogsDataType = {
     id: string
@@ -13,10 +11,13 @@ type MessageDataType = {
     id: string
     message: string
 }
+type DialogsPageType = {
+    dialog: Array<DialogsDataType>
+    mess: Array<MessageDataType>
+    newMessText: string
+}
 type DialogsPropsType = {
-    dataUsers: Array<DialogsDataType>
-    dataMess: Array<MessageDataType>
-    textareaValue: string
+    dialogsPage: DialogsPageType
     onMessChange: (text: string)=> void
     onSendMess: () => void
 }
@@ -30,17 +31,18 @@ function Dialogs(props: DialogsPropsType) {
     function onMessChange(e: ChangeEvent<HTMLTextAreaElement>) {
         props.onMessChange( e.currentTarget.value)
     }
+    let dialogsPage = props.dialogsPage
 
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                {props.dataUsers.map(user => <DialogItem key={user.id} name={user.name} id={user.id}/>)}
+                {dialogsPage.dialog.map(user => <DialogItem key={user.id} name={user.name} id={user.id}/>)}
             </div>
             <div className={s.messages}>
-                {props.dataMess.map(mess => <Message key={mess.id} text={mess.message}/>)}
+                {dialogsPage.mess.map(mess => <Message key={mess.id} text={mess.message}/>)}
                 <textarea
                     placeholder={"write..."}
-                    value={props.textareaValue}
+                    value={dialogsPage.newMessText}
                     onChange={onMessChange}
                 />
                 <div>

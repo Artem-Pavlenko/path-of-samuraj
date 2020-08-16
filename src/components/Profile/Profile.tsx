@@ -12,14 +12,14 @@ type ProfileType = {
     // post: Array<CommentType>
     // dispatch: (action: ActionsTypes) => void
     // textForTextAreaValue: string
-    store: ReduxStore
+    // store: ReduxStore
 }
 
-function Profile(props: ProfileType) {
+function Profile() {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer store={props.store}/>
+            <MyPostsContainer/>
         </div>
     )
 }
