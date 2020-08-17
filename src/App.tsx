@@ -7,12 +7,9 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from "./components/Settings/Settings";
 import Profile from "./components/Profile/Profile"
-import {ReduxStore} from "./redux/redux-store";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import Users from "./components/Users/Users";
 
-type AppType = {
-    store: ReduxStore
-}
 
 const App: React.FC = ()=> {
     return (
@@ -21,14 +18,12 @@ const App: React.FC = ()=> {
                 <Header/>
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
-                    <Route path={'/dialog'} render={() => <DialogsContainer/>}
-                    />
-                    <Route path={'/profile'} render={() =>
-                        <Profile/>}
-                    />
+                    <Route path={'/dialog'} render={() => <DialogsContainer/>}/>
+                    <Route path={'/profile'} render={() => <Profile/>}/>
                     <Route path={'/news'} render={() => <News/>}/>
                     <Route path={'/music'} render={() => <Music/>}/>
                     <Route path={'/settings'} render={() => <Settings/>}/>
+                    <Route path={'/users'} render={() => <Users/>}/>
                 </div>
             </div>
         </BrowserRouter>

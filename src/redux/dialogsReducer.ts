@@ -1,9 +1,34 @@
-import {ActionsTypes, AddMessActionType, ChangeNewMessActionType, DialogsPageType} from "./store";
 import {v1} from "uuid";
+import {ActionsTypes} from "./redux-store";
 
+//типизация initialState
+export type DialogsDataType = {
+    id: string
+    name: string
+}
+export type MessageDataType = {
+    id: string
+    message: string
+}
+export type DialogsPageType = {
+    dialog: Array<DialogsDataType>
+    mess: Array<MessageDataType>
+    newMessText: string
+}
+//типизация ActionCreators
+export type AddMessActionType = {
+    type: "ADD-MESS"
+    //mess: string
+}
+export type ChangeNewMessActionType = {
+    type: "CHANGE-NEW-MESS-TEXT"
+    newMessText: string
+}
+
+//case:
 const ADD_MESS = "ADD-MESS"
 const CHANGE_NEW_MESS_TEXT = "CHANGE-NEW-MESS-TEXT"
-
+//ActionCreators
 export const addMessActionCreator = (): AddMessActionType => ({
     type: "ADD-MESS" //, mess: messText
 })
@@ -29,17 +54,27 @@ let initialState: DialogsPageType = {
     ],
     newMessText: ""
 }
+
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
 
     switch (action.type) {
         case CHANGE_NEW_MESS_TEXT:
-            state.newMessText = action.newMessText
-            return {...state}
+            // let stateCopy = {...state}
+            // stateCopy.newMessText = action.newMessText
+            // return stateCopy
+            return {...state, newMessText: action.newMessText}
         case ADD_MESS:
-            let newMess2 = state.newMessText
-            state.mess.push({id: v1(), message: newMess2})
-            state.newMessText = ""
-            return {...state}
+            // let stateCopy = {
+            //     ...state,
+            //     mess: [...state.mess, {id: v1(), message: state.newMessText}],
+            //     newMessText: ""
+            // }
+            // return stateCopy
+            return {
+                ...state,
+                mess: [...state.mess,{id: v1(), message: state.newMessText}],
+                newMessText: ""
+            }
         default:
             return state
     }

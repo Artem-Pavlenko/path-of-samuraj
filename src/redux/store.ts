@@ -2,33 +2,33 @@ import {v1} from "uuid";
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 
-export type DialogsDataType = {
+type DialogsDataType = {
     id: string
     name: string
 }
-export type MessageDataType = {
+type MessageDataType = {
     id: string
     message: string
 }
-export type CommentType = {
+type CommentType = {
     comm: string
     like: number
     id: string
 }
-export type ProfileType = {
+type ProfileType = {
     post: Array<CommentType>
     newText: string
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     dialog: Array<DialogsDataType>
     mess: Array<MessageDataType>
     newMessText: string
 }
-export type StateType = {
+type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfileType
 }
-export type StoreType = {
+type StoreType = {
     _state: StateType
     _onChange: () => void //_rerenderTree
     // addPost: (postMessage: string) => void
@@ -38,23 +38,24 @@ export type StoreType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-export type AddPostActionType = {
+type AddPostActionType = {
     type: "ADD-POST"
     // postMessage: string
 }
-export type ChangeNewTextActionType = {
+type ChangeNewTextActionType = {
     type: "CHANGE-NEW-TEXT"
     newText: string
 }
-export type ChangeNewMessActionType = {
+type ChangeNewMessActionType = {
     type: "CHANGE-NEW-MESS-TEXT"
     newMessText: string
 }
-export type AddMessActionType = {
+type AddMessActionType = {
     type: "ADD-MESS"
     //mess: string
 }
-export type ActionsTypes = AddPostActionType | ChangeNewTextActionType | ChangeNewMessActionType | AddMessActionType
+type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
+    ChangeNewMessActionType | AddMessActionType
 
 let store: StoreType = {
     _state: {

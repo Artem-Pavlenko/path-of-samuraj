@@ -18,7 +18,7 @@ type DialogsPageType = {
 }
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    onMessChange: (text: string)=> void
+    onMessChange: (text: string) => void
     onSendMess: () => void
 }
 

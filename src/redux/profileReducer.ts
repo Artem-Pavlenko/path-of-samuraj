@@ -1,9 +1,29 @@
-import {ActionsTypes, AddPostActionType, ChangeNewTextActionType, ProfileType} from "./store";
 import {v1} from "uuid";
+import {ActionsTypes} from "./redux-store";
 
+//типизация initialState
+export type CommentType = {
+    comm: string
+    like: number
+    id: string
+}
+export type ProfileType = {
+    post: Array<CommentType>
+    newText: string
+}
+//типизация ActionCreators
+export type AddPostActionType = {
+    type: "ADD-POST"
+    // postMessage: string
+}
+export type ChangeNewTextActionType = {
+    type: "CHANGE-NEW-TEXT"
+    newText: string
+}
+//CASE:
 const ADD_POST = "ADD-POST"
 const CHANGE_NEW_TEXT = "CHANGE-NEW-TEXT"
-
+// ActionCreators
 export const addPostActionCreator = (): AddPostActionType => ({
     type: "ADD-POST" //, postMessage: postText
 })
@@ -23,15 +43,17 @@ let initialState: ProfileType = {
 const profileReducer = (state: ProfileType = initialState, action: ActionsTypes): ProfileType => {
     switch (action.type) {
         case ADD_POST:
-            let postValue = state.newText
-            state.post.unshift({
-                id: v1(), comm: postValue, like: 0
-            })
-            state.newText = ""
-            return {...state}
+            if (state.newText.trim()){
+                return {
+                    ...state,
+                    post: [
+                        {id: v1(), comm: state.newText.trim(), like: 0},...state.post],
+                    newText: ""
+                }
+            }
+            return state
         case CHANGE_NEW_TEXT:
-            state.newText = action.newText
-            return {...state}
+            return {...state, newText: action.newText}
         default:
             return state
     }
