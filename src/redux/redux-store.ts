@@ -1,12 +1,11 @@
 import {createStore, combineReducers} from "redux"
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
-import usersReducer, {User} from "./usersReducer";
+import usersReducer, { Users2} from "./usersReducer";
 
 //типизация АС
 export type AddPostActionType = {
     type: "ADD-POST"
-    // postMessage: string
 }
 export type ChangeNewTextActionType = {
     type: "CHANGE-NEW-TEXT"
@@ -22,15 +21,15 @@ export type AddMessActionType = {
 }
 export type FollowUserAC = {
     type: "FOLLOW"
-    userID: string
+    userID: number
 }
 export type UnfollowUserAC = {
     type: "UNFOLLOW"
-    userID: string
+    userID: number
 }
 export type SetUsersAc = {
     type: "SET_USERS"
-    users: Array<User>
+    items: Array<Users2>
 }
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUserAC |

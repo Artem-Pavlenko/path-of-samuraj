@@ -1,14 +1,12 @@
 import React from "react";
-import {User} from "../../../redux/usersReducer";
+import {Users2} from "../../../redux/usersReducer";
 import s from "./UserItem.module.css"
+import userIcon from '../../../assets/images/user.png'
 
 type UserItemType = {
-    user: User
-    // onFollow: (userId: string) => void
-    // onUnFollow: (userId: string) => void
-    // keyId: string
-    unFollow: (userID: string) => void
-    follow: (userID: string) => void
+    user: Users2
+    unFollow: (userID: number) => void
+    follow: (userID: number) => void
 }
 
 function UserItem(user: UserItemType) {
@@ -22,7 +20,7 @@ function UserItem(user: UserItemType) {
         <div key={user.user.id}>
             <span>
                 <div>
-                    <img src={user.user.photoURL} className={s.avatar}/>
+                    <img src={userIcon} className={s.avatar}/>
                 </div>
                 <div>
                     {user.user.followed
@@ -33,12 +31,12 @@ function UserItem(user: UserItemType) {
             </span>
             <span>
                 <span>
-                    <div>{user.user.fullName}</div>
+                    <div>{user.user.name}</div>
                     <div>{user.user.status}</div>
                 </span>
                 <span>
-                    <div>{user.user.live.country}</div>
-                    <div>{user.user.live.cities}</div>
+                    <div>{'country'}</div>
+                    <div>{'cities'}</div>
                 </span>
             </span>
         </div>
