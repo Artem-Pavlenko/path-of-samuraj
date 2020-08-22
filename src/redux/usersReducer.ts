@@ -1,7 +1,8 @@
 import {v1} from "uuid";
-import {ActionsTypes} from "./redux-store";
+import {ActionsTypes, FollowUserAC, SetUsersAc, UnfollowUserAC} from "./redux-store";
 
-type User = {
+//типизация для initialState
+export type User = {
     fullName: string
     id: string
     live: {
@@ -9,28 +10,53 @@ type User = {
         cities: string
     }
     status: string
-
+    followed: boolean
+    photoURL: string
 }
 export type UsersType = {
     users: Array<User>
 }
+//CASE
+const FOLLOW = "FOLLOW"
+const UNFOLLOW = "UNFOLLOW"
+const SET_USERS = "SET_USERS"
+//AC
+export const followAC = (userId: string): FollowUserAC => ({type: FOLLOW, userID: userId})
+export const unFollowAC = (userId: string): UnfollowUserAC => ({type: UNFOLLOW, userID: userId})
+export const setUsersAC = (users: Array<User>): SetUsersAc => ({type: SET_USERS, users: users})
 
 let initialState: UsersType = {
-  users: [
-      {fullName: "Artem Pavlenko", id: v1(), live: {country: "Ukraine", cities: "Kiev"},
-          status: "I am looking for a job"},
-      {fullName: "Yaroslav Nazim", id: v1(), live: {country: "Czech Republic", cities: "Mlada Boleslav"},
-          status: "Pojebana Skoda"},
-      {fullName: "Sasha Buhaj", id: v1(), live: {country: "Czech Republic", cities: "Mlada Boleslav"},
-          status: "Do pice Cesko"}
-  ]
+    users: []
 }
 const usersReducer = (state: UsersType = initialState, action: ActionsTypes): UsersType => {
 
     switch (action.type) {
+        case FOLLOW:
+            return {
+                ...state,
+                users: state.users.map(u => {
+                    if (u.id === action.userID) {
+                        return {...u, followed: true}
+                    }
+                    return u
+                })
+            }
+        case UNFOLLOW:
+            return {
+                ...state,
+                users: state.users.map(u => {
+                    if (u.id === action.userID) {
+                        return {...u, followed: false}
+                    }
+                    return u
+                })
+            }
+        case SET_USERS:
+            return {...state, users:[...state.users, ...action.users]}
         default:
             return state
     }
 }
+
 
 export default usersReducer;

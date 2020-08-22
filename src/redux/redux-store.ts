@@ -1,8 +1,9 @@
 import {createStore, combineReducers} from "redux"
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
+import usersReducer, {User} from "./usersReducer";
 
-
+//типизация АС
 export type AddPostActionType = {
     type: "ADD-POST"
     // postMessage: string
@@ -19,12 +20,26 @@ export type AddMessActionType = {
     type: "ADD-MESS"
     //mess: string
 }
+export type FollowUserAC = {
+    type: "FOLLOW"
+    userID: string
+}
+export type UnfollowUserAC = {
+    type: "UNFOLLOW"
+    userID: string
+}
+export type SetUsersAc = {
+    type: "SET_USERS"
+    users: Array<User>
+}
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
-    ChangeNewMessActionType | AddMessActionType
+    ChangeNewMessActionType | AddMessActionType | FollowUserAC |
+    UnfollowUserAC | SetUsersAc
 
 const reducers = combineReducers({
     profilePage: profileReducer,
-    dialogsPage: dialogsReducer
+    dialogsPage: dialogsReducer,
+    userPage: usersReducer
 })
 export type ReduxState = ReturnType<typeof reducers>
 
