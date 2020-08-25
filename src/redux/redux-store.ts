@@ -1,7 +1,7 @@
 import {createStore, combineReducers} from "redux"
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
-import usersReducer, { Users2} from "./usersReducer";
+import usersReducer, { Users} from "./usersReducer";
 
 //типизация АС
 export type AddPostActionType = {
@@ -29,7 +29,7 @@ export type UnfollowUserAC = {
 }
 export type SetUsersAc = {
     type: "SET_USERS"
-    items: Array<Users2>
+    items: Array<Users>
 }
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUserAC |

@@ -13,7 +13,7 @@ import {ActionsTypes, FollowUserAC, SetUsersAc, UnfollowUserAC} from "./redux-st
 // //     followed: boolean
 // //     photoURL: string
 // // }
-export type Users2 = {
+export type Users = {
     name: string
     id: number
     uniqueUrlName: null,
@@ -25,8 +25,8 @@ export type Users2 = {
     followed: boolean
 }
 
-export type UsersType2 = {
-    items: Array<Users2>
+export type UsersType = {
+    items: Array<Users>
 }
 // export type UsersType = {
 //     users: Array<User>
@@ -38,12 +38,12 @@ const SET_USERS = "SET_USERS"
 //AC
 export const followAC = (userId: number): FollowUserAC => ({type: FOLLOW, userID: userId})
 export const unFollowAC = (userId: number): UnfollowUserAC => ({type: UNFOLLOW, userID: userId})
-export const setUsersAC = (users: Array<Users2>): SetUsersAc => ({type: SET_USERS, items: users})
+export const setUsersAC = (users: Array<Users>): SetUsersAc => ({type: SET_USERS, items: users})
 
-let initialState: UsersType2 = {
+let initialState: UsersType = {
     items: []
 }
-const usersReducer = (state: UsersType2 = initialState, action: ActionsTypes): UsersType2 => {
+const usersReducer = (state: UsersType = initialState, action: ActionsTypes): UsersType => {
 
     switch (action.type) {
         case FOLLOW:

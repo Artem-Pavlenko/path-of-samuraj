@@ -1,10 +1,10 @@
 import React from "react";
-import {Users2} from "../../../redux/usersReducer";
+import {Users} from "../../../redux/usersReducer";
 import s from "./UserItem.module.css"
 import userIcon from '../../../assets/images/user.png'
 
 type UserItemType = {
-    user: Users2
+    user: Users
     unFollow: (userID: number) => void
     follow: (userID: number) => void
 }
