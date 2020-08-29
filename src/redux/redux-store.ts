@@ -1,7 +1,7 @@
 import {createStore, combineReducers} from "redux"
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
-import usersReducer, { Users} from "./usersReducer";
+import usersReducer, { Users } from "./usersReducer";
 
 //типизация АС
 export type AddPostActionType = {
@@ -19,32 +19,41 @@ export type AddMessActionType = {
     type: "ADD-MESS"
     //mess: string
 }
-export type FollowUserAC = {
+export type FollowUser = {
     type: "FOLLOW"
     userID: number
 }
-export type UnfollowUserAC = {
+export type UnfollowUser = {
     type: "UNFOLLOW"
     userID: number
 }
-export type SetUsersAc = {
+export type SetUsers = {
     type: "SET_USERS"
     items: Array<Users>
 }
+export type SetCurrentPage = {
+    type: 'SET_CURRENT_PAGE'
+    currentPage: number
+}
+export type SetTotalCount = {
+    type: 'SET_TOTAL_COUNT'
+    totalCount: number
+}
+
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
-    ChangeNewMessActionType | AddMessActionType | FollowUserAC |
-    UnfollowUserAC | SetUsersAc
+    ChangeNewMessActionType | AddMessActionType | FollowUser |
+    UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount
 
 const reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     userPage: usersReducer
 })
-export type ReduxState = ReturnType<typeof reducers>
-
-
 const store = createStore(reducers)
+
+export type ReduxStateType = ReturnType<typeof reducers>
 export type ReduxStore = typeof store
 export type DispatchType = typeof store.dispatch
 
-export default store
+
+export default store;

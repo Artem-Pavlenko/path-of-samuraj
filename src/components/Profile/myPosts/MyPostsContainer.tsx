@@ -1,11 +1,11 @@
 
 import {addPostActionCreator, changeNewTexActionCreator} from "../../../redux/profileReducer";
 import MyPosts from "./MyPosts";
-import {DispatchType, ReduxState} from "../../../redux/redux-store";
+import {DispatchType, ReduxStateType} from "../../../redux/redux-store";
 import {connect} from "react-redux";
 
 
-let mapStateToProps = (state: ReduxState) =>{
+let mapStateToProps = (state: ReduxStateType) =>{
     return {
         profilePage: state.profilePage
     }

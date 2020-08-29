@@ -1,11 +1,11 @@
 
 import {addMessActionCreator, changeMessActionCreator} from "../../redux/dialogsReducer";
-import {DispatchType, ReduxState} from "../../redux/redux-store";
+import {DispatchType, ReduxStateType} from "../../redux/redux-store";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 
 
-let mapStateToProps = (state: ReduxState) => {
+let mapStateToProps = (state: ReduxStateType) => {
     return {
         dialogsPage: state.dialogsPage
     }

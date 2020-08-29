@@ -1,5 +1,8 @@
-.app-wrapper {
+body {
+  background-image: url("https://f.vividscreen.info/soft/d231c0d846c26070a8ae2d1255c19036/Cool-Abstract-Background-1920x1080.jpg");
+}
 
+.app-wrapper {
   font-family: cursive;
   margin: 0 auto;
   display: grid;
@@ -15,7 +18,8 @@
 
 .app-wrapper-content {
   grid-area: c;
-  background: cadetblue;
+  background: rgba(250, 248, 248, 0.34);
+
 }
 /*убираю браузерную обводку */
 a:active, a:focus { outline: none; }

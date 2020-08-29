@@ -103,6 +103,3 @@ let store: StoreType = {
         this._onChange = callback
     }
 }
-
-
-export default store;

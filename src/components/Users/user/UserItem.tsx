@@ -20,7 +20,7 @@ function UserItem(user: UserItemType) {
         <div key={user.user.id}>
             <span>
                 <div>
-                    <img src={userIcon} className={s.avatar}/>
+                    <img src={userIcon} className={s.avatar} alt={""}/>
                 </div>
                 <div>
                     {user.user.followed

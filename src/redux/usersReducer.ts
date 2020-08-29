@@ -1,18 +1,5 @@
-import {v1} from "uuid";
-import {ActionsTypes, FollowUserAC, SetUsersAc, UnfollowUserAC} from "./redux-store";
+import {ActionsTypes, FollowUser, SetCurrentPage, SetTotalCount, SetUsers, UnfollowUser} from "./redux-store";
 
-//типизация для initialState
-// export type User = {
-// //     fullName: string
-// //     id: string
-// //     live: {
-// //         country: string
-// //         cities: string
-// //     }
-// //     status: string
-// //     followed: boolean
-// //     photoURL: string
-// // }
 export type Users = {
     name: string
     id: number
@@ -27,21 +14,29 @@ export type Users = {
 
 export type UsersType = {
     items: Array<Users>
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
 }
-// export type UsersType = {
-//     users: Array<User>
-// }
+
 //CASE
-const FOLLOW = "FOLLOW"
-const UNFOLLOW = "UNFOLLOW"
-const SET_USERS = "SET_USERS"
+const FOLLOW = 'FOLLOW'
+const UNFOLLOW = 'UNFOLLOW'
+const SET_USERS = 'SET_USERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 //AC
-export const followAC = (userId: number): FollowUserAC => ({type: FOLLOW, userID: userId})
-export const unFollowAC = (userId: number): UnfollowUserAC => ({type: UNFOLLOW, userID: userId})
-export const setUsersAC = (users: Array<Users>): SetUsersAc => ({type: SET_USERS, items: users})
+export const followAC = (userId: number): FollowUser => ({type: FOLLOW, userID: userId})
+export const unFollowAC = (userId: number): UnfollowUser => ({type: UNFOLLOW, userID: userId})
+export const setUsersAC = (users: Array<Users>): SetUsers => ({type: SET_USERS, items: users})
+export const setCurrentPageAC = (page: number): SetCurrentPage => ({type: SET_CURRENT_PAGE, currentPage: page})
+export const setTotalCountAC = (totalCount: number): SetTotalCount => ({type: SET_TOTAL_COUNT, totalCount })
 
 let initialState: UsersType = {
-    items: []
+    items: [],
+    pageSize: 3,
+    totalUsersCount: 0,
+    currentPage: 1
 }
 const usersReducer = (state: UsersType = initialState, action: ActionsTypes): UsersType => {
 
@@ -67,11 +62,16 @@ const usersReducer = (state: UsersType = initialState, action: ActionsTypes): Us
                 })
             }
         case SET_USERS:
-            return {...state, items: [...state.items, ...action.items]}
+            return {...state, items: [...action.items]}
+        case SET_CURRENT_PAGE:
+            return {
+                ...state, currentPage: action.currentPage
+            }
+        case SET_TOTAL_COUNT:
+            return {...state, totalUsersCount: action.totalCount}
         default:
             return state
     }
 }
-
 
 export default usersReducer;

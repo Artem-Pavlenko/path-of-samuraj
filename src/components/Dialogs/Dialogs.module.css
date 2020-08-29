@@ -1,51 +1,67 @@
-.dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
-}
+/*.dialogsBlock {*/
+/*    display: grid;*/
+/*    grid-template-columns: 2fr 10fr;*/
+/*}*/
 
-.dialogs .dialogsItems {
-    padding: 10px;
-}
+/*.dialogs .dialogsItems {*/
+/*    padding: 10px;*/
+/*}*/
 
-.dialogs .dialogsItems .dialog a.active {
-    color: blue;
-}
+/*.dialogs .dialogsItems .dialog a.active {*/
+/*    color: blue;*/
+/*}*/
 
-.dialogs .dialogsItems .active {
-    color: blue;
-}
+/*.dialogs .dialogsItems .active {*/
+/*    color: blue;*/
+/*}*/
 
-.messages {
-    padding: 10px;
+/*.messages {*/
+/*    padding: 10px;*/
+/*}*/
+.dialogsBlock {
+    height: 80vh;
 }
+.containerMess {
+    height: 100%;
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.dialogsItems {
 
+}
+.messages{
+   width: 70%;
+    display: flex;
+    flex-direction: column;
+}
 .messages textarea {
     border-radius: 20px;
     box-shadow: 10px 10px 7px teal;
     margin: 10px;
+    height: 90px;
 }
 
 .messages button {
-    margin: 10px;
-    box-shadow: 3px 4px 0px 0px #1564ad;
-    background: linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
-    background-color: #79bbff;
+    box-shadow: 3px 4px 0 0 #1564ad;
+    background: #79bbff linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
     border-radius: 5px;
     border: 1px solid #337bc4;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
-    font-family: Arial;
     font-size: 17px;
     font-weight: bold;
     padding: 9px 17px;
     text-decoration: none;
-    text-shadow: 0px 1px 0px #528ecc;
+    text-shadow: 0 1px 0 #528ecc;
+    width: 100px;
+    margin: 10px auto;
 }
 
 .messages button:hover {
-    background: linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
-    background-color: #378de5;
+    background: #378de5 linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
 }
 
 .messages button :active {
