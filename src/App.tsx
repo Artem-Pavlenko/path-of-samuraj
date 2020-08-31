@@ -6,9 +6,9 @@ import NavBar from "./components/Navbar/Navbar";
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from "./components/Settings/Settings";
-import Profile from "./components/Profile/Profile"
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersPage from "./components/Users/UsersPage";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 
 
@@ -20,7 +20,7 @@ const App: React.FC = ()=> {
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
                     <Route path={'/dialog'} render={() => <DialogsContainer/>}/>
-                    <Route path={'/profile'} render={() => <Profile/>}/>
+                    <Route path={'/profile'} render={() => <ProfileContainer/>}/>
                     <Route path={'/news'} render={() => <News/>}/>
                     <Route path={'/music'} render={() => <Music/>}/>
                     <Route path={'/settings'} render={() => <Settings/>}/>

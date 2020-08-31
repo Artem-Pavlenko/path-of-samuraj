@@ -1,8 +1,16 @@
 
 .content img {
     width: 100%;
+    border-radius: 0 0 10px 10px;
 }
 
 .descriptionBlock {
     padding: 15px;
+}
+.avatar {
+    border-radius: 28px;
+    width: 80px;
+}
+.contacts {
+    font-weight: bold;
 }

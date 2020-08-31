@@ -1,5 +1,5 @@
 import {createStore, combineReducers} from "redux"
-import profileReducer from "./profileReducer";
+import profileReducer, {UserProfileType} from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 import usersReducer, { UsersReducerType } from "./usersReducer";
 
@@ -43,11 +43,19 @@ export type ToggleFetchingType = {
     type: 'TOGGLE_FETCHING'
     isFetch: boolean
 }
+export type setUserProfileType = {
+    type: 'SET_PROFILE'
+    profile: UserProfileType
+}
+type setToggleFetchProfile = {
+    type: 'TOGGLE_FETCHING_PROFILE'
+    isFetch: boolean
+}
 
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUser |
     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
-    ToggleFetchingType
+    ToggleFetchingType | setUserProfileType | setToggleFetchProfile
 
 const reducers = combineReducers({
     profilePage: profileReducer,
@@ -60,5 +68,7 @@ export type ReduxStateType = ReturnType<typeof reducers>
 export type ReduxStore = typeof store
 export type DispatchType = typeof store.dispatch
 
-
 export default store;
+
+// @ts-ignore
+window.store = store

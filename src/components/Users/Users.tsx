@@ -3,6 +3,8 @@ import {UsersReducerType} from "../../redux/usersReducer";
 import UserItem from "./user/UserItem";
 import s from "./Users.module.css";
 import Preloader from "../../common/Preloader/Preloader";
+import {NavLink} from "react-router-dom";
+import userIcon from '../../assets/images/images_man.png'
 
 
 type UsersItemPageType = {
@@ -28,7 +30,7 @@ function Users(props: UsersItemPageType) {
         <>
             <div>
                 <div className={s.pageNumber}>
-                    {pages.map(p => {
+                    {pages.map(p => {  //отрисовка к-во страниц пользователей/100(розделена на 100 для удобства просмотра)
                         return <span
                             onClick={() => {
                                 props.onPageChanged(p)
@@ -39,20 +41,31 @@ function Users(props: UsersItemPageType) {
                     })}
                     {props.isFetching ? <Preloader/> : null}
                 </div>
-                {props.users.map(user => {
+                {props.users.map(user => {        //отрисовка пользователей
                     let unFollow = () => {
                         props.unFollow(user.id)
                     }
                     let follow = () => {
                         props.follow(user.id)
                     }
-                    return <UserItem
-                        follow={follow}
-                        unFollow={unFollow}
-                        key={user.id}
-                        user={user}
-                        userAvatar={user.photos.small}
-                    />
+
+                    return <>
+                        <NavLink to={'/profile/' + user.id}>
+                            <img
+                                className={s.avatarIMG}
+                                src={user.photos.small == null
+                                    ? userIcon
+                                    : user.photos.small} alt="..."
+                            />
+                        </NavLink>
+                        <UserItem
+                            follow={follow}
+                            unFollow={unFollow}
+                            key={user.id}
+                            user={user}
+                            userAvatar={user.photos.small}
+                        />
+                    </>
                 })}
             </div>
         </>

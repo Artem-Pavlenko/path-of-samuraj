@@ -1,9 +1,5 @@
-import React, {useMemo} from "react";
+import React from "react";
 import {UsersReducerType} from "../../../redux/usersReducer";
-import s from "./UserItem.module.css"
-import userIconNam from "../../../assets/images/images_man.png";
-import userIconFemen from "../../../assets/images/images.png";
-import userIcon from "../../../assets/images/user.png";
 
 
 // let randomIcon = [userIconNam, userIconFemen, userIcon]
@@ -30,11 +26,7 @@ function UserItemBlock(user: UserItemType) {
     return (
         <div key={user.user.id}>
             <span>
-                <div className={s.avatar}>
-                     {<img src={user.userAvatar === null ? userIconNam : user.userAvatar} alt=""/>}
-                </div>
                 <div>
-
                     {user.user.followed
                         ? <button onClick={unFollow}>unFollow</button>
                         : <button onClick={follow}>Follow</button>}

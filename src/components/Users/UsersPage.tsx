@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {DispatchType, ReduxStateType} from "../../redux/redux-store";
+import {ReduxStateType} from "../../redux/redux-store";
 import {
     follow,
     setCurrentPage,
@@ -28,7 +28,7 @@ type UsersCType = {
     setToggleFetch: (fetch: boolean) => void
 }
 
-class UsersC extends React.Component<UsersCType> {
+class UsersContainer extends React.Component<UsersCType> {
 
     componentDidMount() {
         this.props.setToggleFetch(true)
@@ -98,13 +98,13 @@ let mapStateToProps = (state: ReduxStateType) => {
 // }
 
 
-let UsersPage = connect(mapStateToProps,{
+let UsersPage = connect(mapStateToProps, {
     follow,
     unFollow,
     setUsers,
     setCurrentPage,
     setTotalCount,
     setToggleFetch
-} )(UsersC)
+})(UsersContainer)
 
 export default UsersPage

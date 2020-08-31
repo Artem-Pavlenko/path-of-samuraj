@@ -3,10 +3,12 @@ import {
     FollowUser,
     SetCurrentPage,
     SetTotalCount,
-    SetUsers, ToggleFetchingType,
+    SetUsers,
+    ToggleFetchingType,
     UnfollowUser
 } from "./redux-store";
 
+//типизация state/initialState
 export type UsersReducerType = {
     name: string
     id: number
@@ -18,8 +20,7 @@ export type UsersReducerType = {
     status: null,
     followed: boolean
 }
-
-export type UsersStateType = {
+type UsersStateType = {
     items: Array<UsersReducerType>
     totalUsersCount: number
     pageSize: number
@@ -40,7 +41,7 @@ export const follow = (userId: number): FollowUser => ({type: FOLLOW, userID: us
 export const unFollow = (userId: number): UnfollowUser => ({type: UNFOLLOW, userID: userId})
 export const setUsers = (users: Array<UsersReducerType>): SetUsers => ({type: SET_USERS, items: users})
 export const setCurrentPage = (page: number): SetCurrentPage => ({type: SET_CURRENT_PAGE, currentPage: page})
-export const setTotalCount = (totalCount: number): SetTotalCount => ({type: SET_TOTAL_COUNT, totalCount })
+export const setTotalCount = (totalCount: number): SetTotalCount => ({type: SET_TOTAL_COUNT, totalCount})
 export const setToggleFetch = (isFetch: boolean): ToggleFetchingType => ({type: TOGGLE_FETCHING, isFetch: isFetch})
 
 let initialState: UsersStateType = {

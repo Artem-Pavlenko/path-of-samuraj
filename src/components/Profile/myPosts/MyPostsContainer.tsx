@@ -1,8 +1,9 @@
-
 import {addPostActionCreator, changeNewTexActionCreator} from "../../../redux/profileReducer";
 import MyPosts from "./MyPosts";
 import {DispatchType, ReduxStateType} from "../../../redux/redux-store";
 import {connect} from "react-redux";
+
+
 
 
 let mapStateToProps = (state: ReduxStateType) =>{
