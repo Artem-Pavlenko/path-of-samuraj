@@ -8,7 +8,8 @@ import Music from './components/Music/Music';
 import Settings from "./components/Settings/Settings";
 import Profile from "./components/Profile/Profile"
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import UsersContainer from "./components/Users/UsersContainer";
+import UsersPage from "./components/Users/UsersPage";
+
 
 
 const App: React.FC = ()=> {
@@ -23,7 +24,7 @@ const App: React.FC = ()=> {
                     <Route path={'/news'} render={() => <News/>}/>
                     <Route path={'/music'} render={() => <Music/>}/>
                     <Route path={'/settings'} render={() => <Settings/>}/>
-                    <Route path={'/users'} render={() => <UsersContainer />}/>
+                    <Route path={'/users'} render={() => <UsersPage />}/>
                 </div>
             </div>
         </BrowserRouter>

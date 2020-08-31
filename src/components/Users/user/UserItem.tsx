@@ -1,28 +1,40 @@
-import React from "react";
-import {Users} from "../../../redux/usersReducer";
+import React, {useMemo} from "react";
+import {UsersReducerType} from "../../../redux/usersReducer";
 import s from "./UserItem.module.css"
-import userIcon from '../../../assets/images/user.png'
+import userIconNam from "../../../assets/images/images_man.png";
+import userIconFemen from "../../../assets/images/images.png";
+import userIcon from "../../../assets/images/user.png";
+
+
+// let randomIcon = [userIconNam, userIconFemen, userIcon]
+// let icon = useMemo( () => {
+//     return randomIcon[Math.floor(Math.random()*randomIcon.length)]
+// }, [randomIcon])
 
 type UserItemType = {
-    user: Users
+    user: UsersReducerType
     unFollow: (userID: number) => void
     follow: (userID: number) => void
+    userAvatar: string | null
 }
 
-function UserItem(user: UserItemType) {
+function UserItemBlock(user: UserItemType) {
     function unFollow() {
         user.unFollow(user.user.id)
     }
     function follow() {
         user.follow(user.user.id)
     }
+
+
     return (
         <div key={user.user.id}>
             <span>
-                <div>
-                    <img src={userIcon} className={s.avatar} alt={""}/>
+                <div className={s.avatar}>
+                     {<img src={user.userAvatar === null ? userIconNam : user.userAvatar} alt=""/>}
                 </div>
                 <div>
+
                     {user.user.followed
                         ? <button onClick={unFollow}>unFollow</button>
                         : <button onClick={follow}>Follow</button>}
@@ -43,4 +55,5 @@ function UserItem(user: UserItemType) {
     )
 }
 
+const UserItem = React.memo(UserItemBlock)
 export default UserItem;

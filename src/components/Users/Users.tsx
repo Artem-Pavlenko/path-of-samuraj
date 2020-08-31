@@ -1,76 +1,63 @@
 import React from "react";
-import s from './Users.module.css'
-import {Users} from "../../redux/usersReducer";
+import {UsersReducerType} from "../../redux/usersReducer";
 import UserItem from "./user/UserItem";
-import axios from 'axios'
-import {NavLink} from "react-router-dom";
+import s from "./Users.module.css";
+import Preloader from "../../common/Preloader/Preloader";
 
-type UsersType = {
-    users: Array<Users>
+
+type UsersItemPageType = {
+    users: Array<UsersReducerType>
     follow: (userID: number) => void
     unFollow: (userId: number) => void
-    setUsers: (users: Array<Users>) => void
-    setCurrentPage: (page: number) => void
-    setTotalCount: (totalCount: number) => void
-    pageSize: number
+    onPageChanged: (page: number) => void
     totalUsersCount: number
+    pageSize: number
     currentPage: number
+    isFetching: boolean
 }
 
-class Userses extends React.Component<UsersType> {
+function Users(props: UsersItemPageType) {
 
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then((response) => {
-                this.props.setUsers(response.data.items)
-                this.props.setTotalCount(response.data.totalCount)
-            })
+    let pageCount = Math.ceil((props.totalUsersCount / props.pageSize) / 100) //делю на 100 чтобы отображалось меньше страниц
+    let pages = []
+    for (let i = 1; i <= pageCount; i++) {
+        pages.push(i)
     }
 
-    onPageChanged = (page: number) => {
-        this.props.setCurrentPage(page)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
-            .then((response) => {
-                this.props.setUsers(response.data.items)
-            })
-
-    }
-
-    render() {
-
-        let pageCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
-        let pages = []
-        for (let i = 1; i <= pageCount; i++) {
-            pages.push(i)
-        }
-        return (
+    return (
+        <>
             <div>
                 <div className={s.pageNumber}>
-                    {pages.map( p => {
+                    {pages.map(p => {
                         return <span
-                            onClick={() => {this.onPageChanged(p)}}
-                            className={this.props.currentPage === p ? s.selectedPage : ''}>
-                            { p }
+                            onClick={() => {
+                                props.onPageChanged(p)
+                            }}
+                            className={props.currentPage === p ? s.selectedPage : ''}>
+                            {p}
                         </span>
                     })}
+                    {props.isFetching ? <Preloader/> : null}
                 </div>
-                {this.props.users.map(user => {
+                {props.users.map(user => {
                     let unFollow = () => {
-                        this.props.unFollow(user.id)
+                        props.unFollow(user.id)
                     }
                     let follow = () => {
-                        this.props.follow(user.id)
+                        props.follow(user.id)
                     }
                     return <UserItem
                         follow={follow}
                         unFollow={unFollow}
                         key={user.id}
                         user={user}
+                        userAvatar={user.photos.small}
                     />
                 })}
             </div>
-        );
-    }
+        </>
+    )
 }
 
-export default Userses;
+
+export default Users;

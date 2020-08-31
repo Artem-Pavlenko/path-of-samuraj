@@ -1,7 +1,7 @@
 import {createStore, combineReducers} from "redux"
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
-import usersReducer, { Users } from "./usersReducer";
+import usersReducer, { UsersReducerType } from "./usersReducer";
 
 //типизация АС
 export type AddPostActionType = {
@@ -29,7 +29,7 @@ export type UnfollowUser = {
 }
 export type SetUsers = {
     type: "SET_USERS"
-    items: Array<Users>
+    items: Array<UsersReducerType>
 }
 export type SetCurrentPage = {
     type: 'SET_CURRENT_PAGE'
@@ -39,10 +39,15 @@ export type SetTotalCount = {
     type: 'SET_TOTAL_COUNT'
     totalCount: number
 }
+export type ToggleFetchingType = {
+    type: 'TOGGLE_FETCHING'
+    isFetch: boolean
+}
 
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUser |
-    UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount
+    UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
+    ToggleFetchingType
 
 const reducers = combineReducers({
     profilePage: profileReducer,
