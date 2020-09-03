@@ -22,9 +22,9 @@ type ProfilePropsType = DispatchProfileType & StateProfileType & RouterType
 class ProfileContainer extends React.Component<ProfilePropsType> {
 
     componentDidMount() {
-        let userID = this.props.match.params.userID
+        let userID = this.props.match.params.userID   //переменной присваиваем ID который будет в URL при нажати на аватарку пользователя(в User.tsx)
         if (!userID) {   //если не передаём никой id профиля, то хададим по умолчанию id
-            userID = '2' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
+            userID = '7546' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
         }
         axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + userID)
             .then((response) => {
@@ -42,7 +42,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
     }
 }
 
-
+//закидываем ProfileContainer в hoc, что передать
 let WithURLDataContainerComponent = withRouter(ProfileContainer)
 
 let mapStateToProps = (state: ReduxStateType): StateProfileType => {

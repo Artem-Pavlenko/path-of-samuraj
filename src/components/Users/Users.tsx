@@ -1,6 +1,6 @@
 import React from "react";
 import {UsersReducerType} from "../../redux/usersReducer";
-import UserItem from "./user/UserItem";
+import UserItem from "./userItem/UserItem";
 import s from "./Users.module.css";
 import Preloader from "../../common/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
@@ -32,6 +32,7 @@ function Users(props: UsersItemPageType) {
                 <div className={s.pageNumber}>
                     {pages.map(p => {  //отрисовка к-во страниц пользователей/100(розделена на 100 для удобства просмотра)
                         return <span
+                            key={p}
                             onClick={() => {
                                 props.onPageChanged(p)
                             }}
@@ -48,7 +49,7 @@ function Users(props: UsersItemPageType) {
                     let follow = () => {
                         props.follow(user.id)
                     }
-
+//При нажатии(NavLink) на аватарку пользователя в URL попадёт его ID.
                     return <div key={user.id}>
                         <NavLink to={'/profile/' + user.id}>
                             <img

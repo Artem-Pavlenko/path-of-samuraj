@@ -47,6 +47,4 @@ function UserItem(user: UserItemType) {
     )
 }
 
-
-
 export default UserItem;

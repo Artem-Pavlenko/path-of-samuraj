@@ -3,10 +3,14 @@
     background: #0099F7;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #F11712, #0099F7);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #F11712, #0099F7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }
 
 .header img {
     width: 50px;
 }
-
+.loginBlock {
+    float: right;
+}
+.loginBlock a {
+    color: aliceblue;
+}

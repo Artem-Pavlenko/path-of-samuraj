@@ -2,6 +2,7 @@ import {createStore, combineReducers} from "redux"
 import profileReducer, {UserProfileType} from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 import usersReducer, { UsersReducerType } from "./usersReducer";
+import authReducer, {HeaderReducerType} from "./authReducer";
 
 //типизация АС
 export type AddPostActionType = {
@@ -51,19 +52,29 @@ type setToggleFetchProfile = {
     type: 'TOGGLE_FETCHING_PROFILE'
     isFetch: boolean
 }
+type setAuthorization = {
+    type: 'SET_AUTHORIZATION'
+    data: HeaderReducerType
+}
+type setToggleFetchHeader = {
+    type: 'SET_TOGGLE_HEADER'
+    isFetchHeader: boolean
+}
 
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUser |
     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
-    ToggleFetchingType | setUserProfileType | setToggleFetchProfile
+    ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
+    setAuthorization | setToggleFetchHeader
 
 const reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    userPage: usersReducer
+    userPage: usersReducer,
+    auth: authReducer
 })
 const store = createStore(reducers)
-
+//type State
 export type ReduxStateType = ReturnType<typeof reducers>
 export type ReduxStore = typeof store
 export type DispatchType = typeof store.dispatch
