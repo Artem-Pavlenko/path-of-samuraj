@@ -20,7 +20,7 @@ const App: React.FC = ()=> {
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
                     <Route path={'/dialog'} render={() => <DialogsContainer/>}/>
-                    <Route path={'/profile'} render={() => <ProfileContainer/>}/>
+                    <Route path={'/profile/:userID?'} render={() => <ProfileContainer/>}/>
                     <Route path={'/news'} render={() => <News/>}/>
                     <Route path={'/music'} render={() => <Music/>}/>
                     <Route path={'/settings'} render={() => <Settings/>}/>

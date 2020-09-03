@@ -96,8 +96,6 @@ let mapStateToProps = (state: ReduxStateType) => {
 //         }
 //     }
 // }
-
-
 let UsersPage = connect(mapStateToProps, {
     follow,
     unFollow,

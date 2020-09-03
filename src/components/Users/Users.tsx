@@ -49,9 +49,10 @@ function Users(props: UsersItemPageType) {
                         props.follow(user.id)
                     }
 
-                    return <>
+                    return <div key={user.id}>
                         <NavLink to={'/profile/' + user.id}>
                             <img
+                                key={user.id}
                                 className={s.avatarIMG}
                                 src={user.photos.small == null
                                     ? userIcon
@@ -59,13 +60,13 @@ function Users(props: UsersItemPageType) {
                             />
                         </NavLink>
                         <UserItem
+                            key={user.id}
                             follow={follow}
                             unFollow={unFollow}
-                            key={user.id}
                             user={user}
                             userAvatar={user.photos.small}
                         />
-                    </>
+                    </div>
                 })}
             </div>
         </>

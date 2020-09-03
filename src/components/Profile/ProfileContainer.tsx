@@ -3,19 +3,30 @@ import axios from "axios";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {setToggleFetchProfile, setUserProfile, UserProfileType} from "../../redux/profileReducer";
-import {ReduxStateType} from "../../redux/redux-store";
+import {DispatchType, ReduxStateType} from "../../redux/redux-store";
+import { withRouter } from "react-router-dom";
+import {RouteComponentProps} from "react-router";
 
-type ProfileContainerPage = {
+
+type RouterType = RouteComponentProps<{ userID: string }>
+type DispatchProfileType = {
     setUserProfile: (profile: UserProfileType) => void
-    profile: UserProfileType
-    isFetch: boolean
     setToggleFetchProfile: (isFetch: boolean) => void
 }
+type StateProfileType = {
+    profile: UserProfileType
+    isFetch: boolean
+}
+type ProfilePropsType = DispatchProfileType & StateProfileType & RouterType
 
-class ProfilePage extends React.Component<ProfileContainerPage> {
+class ProfileContainer extends React.Component<ProfilePropsType> {
 
     componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/profile/2')
+        let userID = this.props.match.params.userID
+        if (!userID) {   //если не передаём никой id профиля, то хададим по умолчанию id
+            userID = '2' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
+        }
+        axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + userID)
             .then((response) => {
                 this.props.setToggleFetchProfile(false)
                 this.props.setUserProfile(response.data)
@@ -31,14 +42,27 @@ class ProfilePage extends React.Component<ProfileContainerPage> {
     }
 }
 
-let mapStateToProps = (state: ReduxStateType) => {
+
+let WithURLDataContainerComponent = withRouter(ProfileContainer)
+
+let mapStateToProps = (state: ReduxStateType): StateProfileType => {
     return {
         profile: state.profilePage.profile,
         isFetch: state.profilePage.isFetching
     }
 }
+let mapDispatchToProps = (dispatch: DispatchType): DispatchProfileType => {
+    return {
+        setUserProfile:  (profile: UserProfileType) => {
+            dispatch(setUserProfile(profile))
+        },
+        setToggleFetchProfile: (isFetch: boolean) => {
+            dispatch(setToggleFetchProfile(isFetch))
+        }
+        //короткий вариант
+        // setUserProfile,
+        //setToggleFetchProfile
+    }
+}
 
-
-
-let ProfileContainer =  connect(mapStateToProps, {setUserProfile, setToggleFetchProfile})(ProfilePage);
-export default ProfileContainer
+export default  connect(mapStateToProps, mapDispatchToProps)(WithURLDataContainerComponent);

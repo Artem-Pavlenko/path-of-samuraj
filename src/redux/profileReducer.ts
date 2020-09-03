@@ -89,7 +89,7 @@ let initialState: ProfileType = {
             youtube: null
         },
         fullName: null,
-        lookingForAJob: true,
+        lookingForAJob: false,
         lookingForAJobDescription: null,
         userId: 1,
         photos: {

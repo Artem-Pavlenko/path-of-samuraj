@@ -14,7 +14,7 @@ type UserItemType = {
     userAvatar: string | null
 }
 
-function UserItemBlock(user: UserItemType) {
+function UserItem(user: UserItemType) {
     function unFollow() {
         user.unFollow(user.user.id)
     }
@@ -47,5 +47,6 @@ function UserItemBlock(user: UserItemType) {
     )
 }
 
-const UserItem = React.memo(UserItemBlock)
+
+
 export default UserItem;
