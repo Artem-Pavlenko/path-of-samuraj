@@ -60,12 +60,16 @@ type setToggleFetchHeader = {
     type: 'SET_TOGGLE_HEADER'
     isFetchHeader: boolean
 }
+type SetPhoto = {
+    type: 'SET_PHOTO'
+    photo: string | null
+}
 
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUser |
     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
     ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
-    setAuthorization | setToggleFetchHeader
+    setAuthorization | setToggleFetchHeader | SetPhoto
 
 const reducers = combineReducers({
     profilePage: profileReducer,
