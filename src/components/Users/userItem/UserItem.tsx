@@ -1,5 +1,5 @@
 import React from "react";
-import {UsersReducerType} from "../../../redux/usersReducer";
+import { UsersReducerType} from "../../../redux/usersReducer";
 
 
 // let randomIcon = [userIconNam, userIconFemen, userIcon]
@@ -12,31 +12,31 @@ type UserItemType = {
     unFollow: (userID: number) => void
     follow: (userID: number) => void
     userAvatar: string | null
+    followingInProgress: Array<number>
 }
 
-function UserItem(user: UserItemType) {
+function UserItem(props: UserItemType) {
     function unFollow() {
-        user.unFollow(user.user.id)
+        props.unFollow(props.user.id)
     }
     function follow() {
-        user.follow(user.user.id)
+        props.follow(props.user.id)
     }
 
 
     return (
-        <div key={user.user.id}>
+        <div key={props.user.id}>
             <span>
                 <div>
-                    {user.user.followed
-                        ? <button onClick={unFollow}>unFollow</button>
-                        : <button onClick={follow}>Follow</button>}
-
+                    {props.user.followed
+                        ? <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={unFollow}>unFollow</button>
+                        : <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={follow}>Follow</button>}
                 </div>
             </span>
             <span>
                 <span>
-                    <div>{user.user.name}</div>
-                    <div>{user.user.status}</div>
+                    <div>{props.user.name}</div>
+                    <div>{props.user.status}</div>
                 </span>
                 <span>
                     <div>{'country'}</div>

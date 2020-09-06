@@ -1,7 +1,7 @@
 import React from "react";
 import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
-import userPhoto from '../../assets/images/images_man.png'
+import userPhoto from '../../assets/images/user img/images_man.png'
 
 type HeaderPropsType = {
     isAuth: boolean

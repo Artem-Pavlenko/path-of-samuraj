@@ -1,12 +1,11 @@
 import React from "react";
-import axios from "axios";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {setToggleFetchProfile, setUserProfile, UserProfileType} from "../../redux/profileReducer";
 import {DispatchType, ReduxStateType} from "../../redux/redux-store";
 import { withRouter } from "react-router-dom";
 import {RouteComponentProps} from "react-router";
-
+import {profileAPI} from "../../API/API";
 
 type RouterType = RouteComponentProps<{ userID: string }>
 type DispatchProfileType = {
@@ -26,10 +25,10 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         if (!userID) {   //если не передаём никой id профиля, то хададим по умолчанию id
             userID = '7546' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
         }
-        axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + userID)
-            .then((response) => {
+        profileAPI.getProfile(+userID)
+            .then((responseData) => {
                 this.props.setToggleFetchProfile(false)
-                this.props.setUserProfile(response.data)
+                this.props.setUserProfile(responseData)
             })
     }
 

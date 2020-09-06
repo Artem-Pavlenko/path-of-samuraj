@@ -3,7 +3,9 @@ import {connect} from "react-redux";
 import Header from "./Header";
 import axios from "axios";
 import {DispatchType, ReduxStateType} from "../../redux/redux-store";
-import {HeaderReducerType, setAuthUserData, setPhoto, setPhotoType, setToggleFetchAuth} from "../../redux/authReducer";
+import {HeaderReducerType, setAuthUserData, setPhoto, setToggleFetchAuth} from "../../redux/authReducer";
+import {authAPI} from "../../API/API";
+
 
 type StateToProps = {
     isAuth: boolean
@@ -20,19 +22,20 @@ type HeaderContainerType = StateToProps & DispatchToProps
 
 class HeaderContainer extends React.Component<HeaderContainerType> {
     componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {
-            withCredentials: true // передаём ещё и cookie ("передаём запрос с авторизацией/полномочиями")
-        })
-            .then((response) => {
-                if (response.data.resultCode === 0) {
-                    this.props.setToggleFetchAuth(false)
-                    this.props.setAuthUserData(response.data)
+        // axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {
+        //     withCredentials: true // передаём ещё и cookie ("передаём запрос с авторизацией/полномочиями")
+        // })
+        authAPI.authMe()
+            .then((responseData) => {
+                if (responseData.resultCode === 0) {
+                    this.props.setToggleFetchAuth(false) // отрисовка 'login' или имя залогиненого пользователя
+                    this.props.setAuthUserData(responseData)
                     axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + 7546) // + мой ID
                         .then((response) => {
                             this.props.setPhoto(response.data.photos.small)
                         })
-                } else if (response.data.resultCode !== 0) {
-                    alert(response.data.messages)
+                } else if (responseData.resultCode !== 0) {
+                    alert(responseData.messages)
                 }
             })
     }

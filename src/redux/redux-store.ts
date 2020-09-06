@@ -64,12 +64,17 @@ type SetPhoto = {
     type: 'SET_PHOTO'
     photo: string | null
 }
+export type setFollowingType = {
+    type: 'SET_TOGGLE_FOLLOWING'
+    userID: number
+    isFetch: boolean
+}
 
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUser |
     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
     ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
-    setAuthorization | setToggleFetchHeader | SetPhoto
+    setAuthorization | setToggleFetchHeader | SetPhoto | setFollowingType
 
 const reducers = combineReducers({
     profilePage: profileReducer,

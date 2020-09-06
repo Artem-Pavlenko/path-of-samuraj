@@ -1,7 +1,7 @@
 import {
     ActionsTypes,
     FollowUser,
-    SetCurrentPage,
+    SetCurrentPage, setFollowingType,
     SetTotalCount,
     SetUsers,
     ToggleFetchingType,
@@ -20,12 +20,17 @@ export type UsersReducerType = {
     status: null,
     followed: boolean
 }
+
 type UsersStateType = {
     items: Array<UsersReducerType>
     totalUsersCount: number
     pageSize: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: {
+        userID: Array<number>
+        isFetch: boolean
+    }
 }
 
 //CASE
@@ -35,7 +40,7 @@ const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 const TOGGLE_FETCHING = 'TOGGLE_FETCHING'
-
+const SET_TOGGLE_FOLLOWING = 'SET_TOGGLE_FOLLOWING'
 //AC
 export const follow = (userId: number): FollowUser => ({type: FOLLOW, userID: userId})
 export const unFollow = (userId: number): UnfollowUser => ({type: UNFOLLOW, userID: userId})
@@ -43,13 +48,15 @@ export const setUsers = (users: Array<UsersReducerType>): SetUsers => ({type: SE
 export const setCurrentPage = (page: number): SetCurrentPage => ({type: SET_CURRENT_PAGE, currentPage: page})
 export const setTotalCount = (totalCount: number): SetTotalCount => ({type: SET_TOTAL_COUNT, totalCount})
 export const setToggleFetch = (isFetch: boolean): ToggleFetchingType => ({type: TOGGLE_FETCHING, isFetch: isFetch})
+export const setFollowing = (userID: number, isFetch: boolean): setFollowingType => ({type: SET_TOGGLE_FOLLOWING,userID,isFetch})
 
 let initialState: UsersStateType = {
     items: [],
     pageSize: 3,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    followingInProgress: {userID: [1], isFetch: false}
 }
 const usersReducer = (state: UsersStateType = initialState, action: ActionsTypes): UsersStateType => {
 
@@ -84,6 +91,14 @@ const usersReducer = (state: UsersStateType = initialState, action: ActionsTypes
             return {...state, totalUsersCount: action.totalCount}
         case TOGGLE_FETCHING:
             return {...state, isFetching: action.isFetch}
+        case SET_TOGGLE_FOLLOWING:
+            return {
+                ...state,
+                followingInProgress: {...state.followingInProgress, userID: action.isFetch
+                        ? [...state.followingInProgress.userID, action.userID]
+                        : state.followingInProgress.userID.filter(id => id !== action.userID)}
+            }
+
         default:
             return state
     }
