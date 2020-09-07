@@ -18,8 +18,8 @@ function ProfileInfo(props: profile) {
             </div>
             {
                 props.isFetch
-                    ? <Preloader/> :
-                    <div className={s.descriptionBlock}>
+                    ? <Preloader/>
+                    : <div className={s.descriptionBlock}>
                         <img className={s.avatar}
                              src={props.profile.photos.large == null ? userIcon : props.profile.photos.large}
                              alt="..."/>

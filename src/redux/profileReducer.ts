@@ -1,5 +1,6 @@
 import {v1} from "uuid";
-import {ActionsTypes} from "./redux-store";
+import {ActionsTypes, DispatchType} from "./redux-store";
+import {profileAPI} from "../API/API";
 
 //типизация state/initialState
 export type CommentType = {
@@ -68,6 +69,18 @@ export const setToggleFetchProfile = (isFetch: boolean): ToggleFetchProfileType 
     type: TOGGLE_FETCHING_PROFILE,
     isFetch
 })
+
+export const getProfileThunk = (userID: string) => {
+    return(dispatch: DispatchType) => {
+        profileAPI.getProfile(+userID)
+            .then((responseData) => {
+                dispatch(setToggleFetchProfile(false))
+                dispatch(setUserProfile(responseData))
+            })
+    }
+
+}
+
 
 let initialState: ProfileType = {
     post: [

@@ -8,44 +8,6 @@ const instance = axios.create({
     }
 })
 
-export const getUsers = (currentPage: number, pageSize: number) => {
-    return instance.get(`users?page=${currentPage}&count=${pageSize}`).then((response) => {
-        return response.data
-    })
-}
-
-export const following = (userID: number) => {
-    return instance.post(`/follow/${userID}`, {})
-        .then(response => {
-            console.log("following response data", response.data)
-            return response.data.resultCode
-        })
-}
-
-export const unFollowing = (userID: number) => {
-    return instance.delete(`/follow/${userID}`)
-        .then(response => {
-            console.log("unFollowing response data:", response.data)
-            return response.data.resultCode
-        })
-}
-
-export const getProfile = (userID: number) => {
-    return instance.get(`/profile/${userID}`)
-        .then(response => {
-            console.log("get profile response data: ", response.data)
-            return response.data
-        })
-}
-
-export const authMe = () => {
-    return instance.get(`auth/me`)
-        .then(response => {
-            console.log("auth/me:", response.data)
-            return response.data
-        })
-}
-
 export const userAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`).then((response) => {
@@ -65,7 +27,7 @@ export const authAPI = {
 }
 
 export const followingAPI = {
-    following(userID: number){
+    following(userID: number) {
         return instance.post(`/follow/${userID}`, {})
             .then(response => {
                 console.log("following response data", response.data.resultCode)

@@ -1,8 +1,9 @@
-import {createStore, combineReducers} from "redux"
+import {createStore, combineReducers, applyMiddleware} from "redux"
 import profileReducer, {UserProfileType} from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 import usersReducer, { UsersReducerType } from "./usersReducer";
 import authReducer, {HeaderReducerType} from "./authReducer";
+import thunkMiddleware from "redux-thunk"
 
 //типизация АС
 export type AddPostActionType = {
@@ -82,7 +83,7 @@ const reducers = combineReducers({
     userPage: usersReducer,
     auth: authReducer
 })
-const store = createStore(reducers)
+let store = createStore( reducers, applyMiddleware(thunkMiddleware))
 //type State
 export type ReduxStateType = ReturnType<typeof reducers>
 export type ReduxStore = typeof store
