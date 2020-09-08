@@ -1,46 +1,52 @@
-/*.dialogsBlock {*/
-/*    display: grid;*/
-/*    grid-template-columns: 2fr 10fr;*/
-/*}*/
-
-/*.dialogs .dialogsItems {*/
-/*    padding: 10px;*/
-/*}*/
-
-/*.dialogs .dialogsItems .dialog a.active {*/
-/*    color: blue;*/
-/*}*/
-
-/*.dialogs .dialogsItems .active {*/
-/*    color: blue;*/
-/*}*/
-
-/*.messages {*/
-/*    padding: 10px;*/
-/*}*/
 .dialogsBlock {
-    height: 80vh;
+    min-height: 100vh;
 }
+
 .containerMess {
+    /*height: 100%;*/
     height: 100%;
-    width: 70%;
+    width: 90%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
 }
-.dialogsItems {
 
+.dialogsItems {
+    width: 20%;
 }
-.messages{
-   width: 70%;
+
+.messages {
+    width: 70%;
+    min-height: 80%;
     display: flex;
     flex-direction: column;
 }
-.messages textarea {
-    border-radius: 20px;
+.messTextBlock {
+    /*min-height: 60%;*/
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    border-radius: .8em .8em 1.3em 1.3em;
+}
+.sendMessBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.textAreaBlock {
+    height: 150px;
+    width: 80%;
+}
+.messages div textarea {
+    border-radius: 1.3em;
     box-shadow: 10px 10px 7px teal;
-    margin: 10px;
-    height: 90px;
+    margin-top: 10px;
+    width: 95%;
+    font-size: 16pt;
+    overflow: hidden;
+    padding: 10px;
 }
 
 .messages button {
@@ -56,8 +62,8 @@
     padding: 9px 17px;
     text-decoration: none;
     text-shadow: 0 1px 0 #528ecc;
-    width: 100px;
-    margin: 10px auto;
+    width: 75px;
+    margin: 15px 0 0 10px;
 }
 
 .messages button:hover {

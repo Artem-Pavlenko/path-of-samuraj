@@ -25,7 +25,7 @@ type UsersContainerType = DispatchToPropsType & StateToPropsType
 class UsersPage extends React.Component<UsersContainerType> {
 
     componentDidMount() {
-        //thunk (преобразователь)
+        //thunk (преобразователь) сетает из сервака юзеров при зазруке users страници
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
         // this.props.setToggleFetch(true)
         // userAPI.getUsers(this.props.currentPage, this.props.pageSize).then((responseData) => {
@@ -35,7 +35,7 @@ class UsersPage extends React.Component<UsersContainerType> {
         // })
     }
 
-    onPageChanged = (pageNumber: number) => {
+    onPageChanged = (pageNumber: number) => {  //принажатии номера страници пользователей
         this.props.setCurrentPage(pageNumber)
         //thunk (преобразователь)
         this.props.getUsers(pageNumber, this.props.pageSize)

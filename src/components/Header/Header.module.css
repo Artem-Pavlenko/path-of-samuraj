@@ -1,16 +1,37 @@
 .header {
     grid-area: h;
-    background: #0099F7;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #F11712, #0099F7);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #F11712, #0099F7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #4267b2;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0 0 15px 15px;
+    /*background: #0099F7;  !* fallback for old browsers *!*/
+    /*background: -webkit-linear-gradient(to right, #F11712, #0099F7);  !* Chrome 10-25, Safari 5.1-6 *!*/
+    /*background: linear-gradient(to right, #F11712, #0099F7); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+}
+.network {
+    display: flex;
+}
+.network img {
+    width: 60px;
+    border-radius: 50px;
+}
+.network div {
+    align-self: center;
+}
+.network span{
+    color: aliceblue;
+
+
+}
+.loginBlock img {
+    width: 50px;
+    padding: 5px;
+    border-radius: 10px;
+}
+.profileLogin {
+    display: flex;
 }
 
-.header img {
-    width: 50px;
-}
-.loginBlock {
-    float: right;
-}
 .loginBlock a {
     color: aliceblue;
 }

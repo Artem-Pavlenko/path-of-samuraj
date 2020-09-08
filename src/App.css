@@ -1,12 +1,14 @@
 body {
-  background-image: url("./assets/images/background_img/Cool-Abstract-Background-1920x1080.jpg");
+  background-color: #e9ebee;
+  /*background-image: url("./assets/images/background_img/Whatsapp_Green_Wallpaper.png");*/
+  /*background-attachment: fixed;*/
 }
 
 .app-wrapper {
   font-family: cursive;
   margin: 0 auto;
   display: grid;
-  width: 900px;
+  width: 80%;
   grid-template-areas:
   "h h"
   "n c";
@@ -14,6 +16,7 @@ body {
   grid-template-rows: 60px 1fr;
   grid-template-columns: 1fr 10fr;
   grid-gap: 7px;
+  /*border: 2px solid;*/
 }
 
 .app-wrapper-content {

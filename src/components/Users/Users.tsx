@@ -2,6 +2,7 @@ import React from "react";
 import {UsersReducerType} from "../../redux/usersReducer";
 import UserItem from "./userItem/UserItem";
 import s from "./Users.module.css";
+import item from '../../common/layout/item.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 import userIcon from '../../assets/images/user img/images_man.png'
@@ -32,8 +33,7 @@ function Users(props: UsersItemPageType) {
     }
 
     return (
-        <>
-            <div>
+            <div className={s.HeaderUserBlock}>
                 <div className={s.pageNumber}>
                     {pages.map(p => {  //отрисовка к-во страниц пользователей/100(розделена на 100 для удобства просмотра)
                         return <span
@@ -45,7 +45,10 @@ function Users(props: UsersItemPageType) {
                             {p}
                         </span>
                     })}
-                    {props.isFetching ? <Preloader/> : null}
+
+                </div>
+                <div className={s.PreloaderBlock}>
+                    {props.isFetching && <Preloader/>}
                 </div>
                 {props.users.map(user => {        //отрисовка пользователей
                     let unFollow = () => {
@@ -73,7 +76,7 @@ function Users(props: UsersItemPageType) {
                         //     })
                     }
 //При нажатии(NavLink) на аватарку пользователя в URL попадёт его ID.
-                    return <div key={user.id}>
+                    return <div key={user.id} className={item.itemCase}>
                         <NavLink to={'/profile/' + user.id}>
                             <img
                                 key={user.id}
@@ -94,7 +97,6 @@ function Users(props: UsersItemPageType) {
                     </div>
                 })}
             </div>
-        </>
     )
 }
 

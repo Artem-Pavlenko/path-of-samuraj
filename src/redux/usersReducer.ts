@@ -91,7 +91,7 @@ export const followThunk = (userID: number) => {
 
 let initialState: UsersStateType = {
     items: [],
-    pageSize: 3,
+    pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,

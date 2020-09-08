@@ -2,6 +2,7 @@ import React from "react";
 import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
 import userPhoto from '../../assets/images/user img/images_man.png'
+import sNetwork from '../../assets/images/network_icon/rss.png'
 
 type HeaderPropsType = {
     isAuth: boolean
@@ -12,12 +13,18 @@ type HeaderPropsType = {
 function Header(props: HeaderPropsType) {
     return (
         <header className={s.header}>
-            <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRYPGYbnTSEqgn9dtokDjdaZdVlRDitG8AVrg&usqp=CAU"
-                alt=""/>
+            <div className={s.network}>
+                <img className={s.network}
+                     src={sNetwork}
+                     alt=""/>
+                <div><span>s'NETWORK</span></div>
+            </div>
             <div className={s.loginBlock}>
                 {props.isAuth
-                    ? <div>{props.login}<img src={props.photo == null ? userPhoto : props.photo} alt=""/></div>
+                    ? <div className={s.profileLogin}>
+                        <div><span>{props.login}</span></div>
+                        <div><img src={props.photo == null ? userPhoto : props.photo} alt=""/></div>
+                    </div>
                     : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>

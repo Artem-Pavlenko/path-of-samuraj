@@ -71,14 +71,13 @@ export const setToggleFetchProfile = (isFetch: boolean): ToggleFetchProfileType 
 })
 
 export const getProfileThunk = (userID: string) => {
-    return(dispatch: DispatchType) => {
+    return (dispatch: DispatchType) => {
         profileAPI.getProfile(+userID)
             .then((responseData) => {
                 dispatch(setToggleFetchProfile(false))
                 dispatch(setUserProfile(responseData))
             })
     }
-
 }
 
 

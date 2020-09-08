@@ -1,8 +1,9 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
+import item from '../../../common/layout/item.module.css'
 import {UserProfileType} from "../../../redux/profileReducer";
 import userIcon from '../../../assets/images/user img/images_man.png'
-import panorama from '../../../assets/images/panorama-photo-big.jpg'
+import panorama2 from '../../../assets/images/background_img/pngfuel.com (2).png'
 import Preloader from "../../../common/Preloader/Preloader";
 
 type profile = {
@@ -12,14 +13,14 @@ type profile = {
 
 function ProfileInfo(props: profile) {
     return (
-        <div>
+        <div className={s.profileBlock}>
             <div className={s.content}>
-                <img src={panorama} alt=""/>
+                <img src={panorama2} alt=""/>
             </div>
             {
                 props.isFetch
                     ? <Preloader/>
-                    : <div className={s.descriptionBlock}>
+                    : <div className={`${s.descriptionBlock} ${item.itemCase}`}>
                         <img className={s.avatar}
                              src={props.profile.photos.large == null ? userIcon : props.profile.photos.large}
                              alt="..."/>
