@@ -48,12 +48,12 @@ export const setUsers = (users: Array<UsersReducerType>): SetUsers => ({type: SE
 export const setCurrentPage = (page: number): SetCurrentPage => ({type: SET_CURRENT_PAGE, currentPage: page})
 export const setTotalCount = (totalCount: number): SetTotalCount => ({type: SET_TOTAL_COUNT, totalCount})
 export const setToggleFetch = (isFetch: boolean): ToggleFetchingType => ({type: TOGGLE_FETCHING, isFetch: isFetch})
-export const setFollowing = (userID: number, isFetch: boolean): setFollowingType => ({
+export const setToggleFollowing = (userID: number, isFetch: boolean): setFollowingType => ({
     type: SET_TOGGLE_FOLLOWING,
     userID,
     isFetch
 })
-
+//thunk
 export const getUsersThunk = (currentPage: number, pageSize: number) => {
     return (dispatch: DispatchType) => {
         dispatch(setToggleFetch(true))
@@ -64,27 +64,29 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => {
         })
     }
 }
+//thunk
 export const unFollowThunk = (userID: number) => {
     return (dispatch: DispatchType) => {
-        dispatch(setFollowing(userID, true))
+        dispatch(setToggleFollowing(userID, true))
         followingAPI.unFollowing(userID)
             .then((responseResultCode) => {
                 if (responseResultCode === 0) {
                     dispatch(unFollow(userID))
                 }
-                dispatch(setFollowing(userID, false))
+                dispatch(setToggleFollowing(userID, false))
             })
     }
 }
+//thunk
 export const followThunk = (userID: number) => {
     return (dispatch: DispatchType) => {
-        dispatch(setFollowing(userID, true))
+        dispatch(setToggleFollowing(userID, true))
         followingAPI.following(userID)
             .then((response) => {
                 if (response === 0) {
                     dispatch(follow(userID))
                 }
-                dispatch(setFollowing(userID, false))
+                dispatch(setToggleFollowing(userID, false))
             })
     }
 }
@@ -139,7 +141,6 @@ const usersReducer = (state: UsersStateType = initialState, action: ActionsTypes
                         : state.followingInProgress.userID.filter(id => id !== action.userID)
                 }
             }
-
         default:
             return state
     }

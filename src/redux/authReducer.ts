@@ -49,25 +49,23 @@ export const setToggleFetchAuth = (isFetchHeader: boolean): setToggleFetchHeader
     isFetchHeader
 })
 export const setPhoto = (photo: string | null): setPhotoType => ({type: SET_PHOTO, photo})
-
-export const authMe = () => {
-    return (dispatch: DispatchType) => {
-        authAPI.authMe()
-            .then((responseData) => {
-                if (responseData.resultCode === 0) {
-                    dispatch(setToggleFetchAuth(false)) // отрисовка 'login' или имя залогиненого пользователя
-                    dispatch(setAuthUserData(responseData))
-                    profileAPI.getProfile(7546) // + мой ID 7546
-                        .then((response) => {
-                            dispatch(setPhoto(response.photos.small))
-                        })
-                } else if (responseData.resultCode !== 0) {
-                    alert(responseData.messages)
-                }
-            })
-    }
-
+//thunk
+export const authMe = () => (dispatch: DispatchType) => {
+    authAPI.authMe()
+        .then((responseData) => {
+            if (responseData.resultCode === 0) {
+                dispatch(setToggleFetchAuth(false)) // отрисовка 'login' или имя залогиненого пользователя
+                dispatch(setAuthUserData(responseData))
+                profileAPI.getProfile(7546) // + мой ID 7546
+                    .then((response) => {
+                        dispatch(setPhoto(response.photos.small))
+                    })
+            } else if (responseData.resultCode !== 0) {
+                alert(responseData.messages)
+            }
+        })
 }
+
 
 let initialState: HeaderReducerType = {
     data: {

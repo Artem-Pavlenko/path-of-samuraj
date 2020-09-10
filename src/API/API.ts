@@ -21,6 +21,7 @@ export const authAPI = {
         return instance.get(`auth/me`)
             .then(response => {
                 console.log("auth/me:", response.data)
+                //возвращает нужный "кусок" ответа.
                 return response.data
             })
     }
