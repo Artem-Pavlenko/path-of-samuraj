@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import Header from "./Header";
-import {ReduxStateType} from "../../redux/redux-store";
-import {authMe} from "../../redux/authReducer";
+import {authMe} from "../../store/authReducer";
+import {ReduxStateType} from "../../store/redux-store";
 
 type StateToProps = {
     isAuth: boolean

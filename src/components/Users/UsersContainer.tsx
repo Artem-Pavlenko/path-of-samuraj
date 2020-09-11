@@ -1,10 +1,12 @@
 import {connect} from "react-redux";
-import {ReduxStateType} from "../../redux/redux-store";
-import {followThunk, getUsersThunk, setCurrentPage,
+import {ReduxStateType} from "../../store/redux-store";
+import {
+    followThunk, getUsersThunk, setCurrentPage,
     unFollowThunk, UsersReducerType
-} from "../../redux/usersReducer";
+} from "../../store/usersReducer";
 import React from "react";
 import Users from "./Users";
+import {withAuthRedirect} from "../hoc/withAuthRedirect";
 
 type DispatchToPropsType = {
     setCurrentPage: (page: number) => void
@@ -72,6 +74,8 @@ let mapStateToProps = (state: ReduxStateType) => {
         followingInProgress: state.userPage.followingInProgress.userID
     }
 }
+let authRedirectComponent = withAuthRedirect(UsersPage)
+
 // let mapDispatchToProps = (dispatch: DispatchType) => {
 //     return {
 //         follow: (userID: number) => {
@@ -99,6 +103,6 @@ let UsersContainer = connect(mapStateToProps, {
     getUsers: getUsersThunk,
     unFollowUser: unFollowThunk,
     followUser: followThunk
-})(UsersPage)
+})(authRedirectComponent)
 
 export default UsersContainer

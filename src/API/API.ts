@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const instance = axios.create({
+const axiosInstance = axios.create({
     withCredentials: true,
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
     headers: {
@@ -10,7 +10,7 @@ const instance = axios.create({
 
 export const userAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`).then((response) => {
+        return axiosInstance.get(`users?page=${currentPage}&count=${pageSize}`).then((response) => {
             return response.data
         })
     }
@@ -18,7 +18,7 @@ export const userAPI = {
 
 export const authAPI = {
     authMe() {
-        return instance.get(`auth/me`)
+        return axiosInstance.get(`auth/me`)
             .then(response => {
                 console.log("auth/me:", response.data)
                 //возвращает нужный "кусок" ответа.
@@ -29,24 +29,25 @@ export const authAPI = {
 
 export const followingAPI = {
     following(userID: number) {
-        return instance.post(`/follow/${userID}`, {})
+        return axiosInstance.post(`/follow/${userID}`, {})
             .then(response => {
                 console.log("following response data", response.data.resultCode)
-                return response.data.resultCode
+                console.log("following response data", response)
+                return response.data
             })
     },
     unFollowing(userID: number) {
-        return instance.delete(`/follow/${userID}`)
+        return axiosInstance.delete(`/follow/${userID}`)
             .then(response => {
                 console.log("unFollowing response data:", response.data.resultCode)
-                return response.data.resultCode
+                return response.data
             })
     }
 }
 
 export const profileAPI = {
     getProfile(userID: number) {
-        return instance.get(`/profile/${userID}`)
+        return axiosInstance.get(`/profile/${userID}`)
             .then(response => {
                 console.log("get profile response data: ", response.data)
                 return response.data

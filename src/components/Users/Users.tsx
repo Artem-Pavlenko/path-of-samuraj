@@ -1,5 +1,5 @@
 import React from "react";
-import {UsersReducerType} from "../../redux/usersReducer";
+import {UsersReducerType} from "../../store/usersReducer";
 import UserItem from "./userItem/UserItem";
 import s from "./Users.module.css";
 import item from '../../common/layout/item.module.css'

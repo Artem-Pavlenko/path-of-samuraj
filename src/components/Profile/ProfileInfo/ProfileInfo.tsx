@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
 import item from '../../../common/layout/item.module.css'
-import {UserProfileType} from "../../../redux/profileReducer";
+import {UserProfileType} from "../../../store/profileReducer";
 import userIcon from '../../../assets/images/user img/images_man.png'
 import panorama2 from '../../../assets/images/background_img/pngfuel.com (2).png'
 import Preloader from "../../../common/Preloader/Preloader";

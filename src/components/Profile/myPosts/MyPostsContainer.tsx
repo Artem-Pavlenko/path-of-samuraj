@@ -1,6 +1,6 @@
-import {addPostActionCreator, changeNewTexActionCreator} from "../../../redux/profileReducer";
+import {addPostActionCreator, changeNewTexActionCreator} from "../../../store/profileReducer";
 import MyPosts from "./MyPosts";
-import {DispatchType, ReduxStateType} from "../../../redux/redux-store";
+import {DispatchType, ReduxStateType} from "../../../store/redux-store";
 import {connect} from "react-redux";
 
 

@@ -1,10 +1,11 @@
-import {addMessActionCreator, changeMessActionCreator} from "../../redux/dialogsReducer";
-import {DispatchType, ReduxStateType} from "../../redux/redux-store";
+import {addMessActionCreator, changeMessActionCreator} from "../../store/dialogsReducer";
+import {DispatchType, ReduxStateType} from "../../store/redux-store";
 import {connect} from "react-redux";
 import React, {ChangeEvent} from "react";
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {withAuthRedirect} from "../hoc/withAuthRedirect";
 
 type DialogsDataType = {
     id: string
@@ -19,12 +20,15 @@ type DialogsPageType = {
     mess: Array<MessageDataType>
     newMessText: string
 }
-type DialogsPropsType = {
+type DialogsStatePropsType = {
     dialogsPage: DialogsPageType
+}
+type DialogsDispatchToPropsType = {
     onMessChange: (text: string) => void
     onSendMess: () => void
 }
 
+type DialogsPropsType = DialogsDispatchToPropsType & DialogsStatePropsType
 
 export function Dialogs(props: DialogsPropsType) {
 
@@ -37,6 +41,7 @@ export function Dialogs(props: DialogsPropsType) {
     }
 
     let dialogsPage = props.dialogsPage
+
 
     return (
         <div className={s.dialogsBlock}>
@@ -80,6 +85,8 @@ let mapDispatchToProps = (dispatch: DispatchType) => {
     }
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+let withAuthRedirectComponent = withAuthRedirect(Dialogs)
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(withAuthRedirectComponent)
 
 export default DialogsContainer;

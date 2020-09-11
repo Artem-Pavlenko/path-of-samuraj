@@ -2,7 +2,7 @@ import React from "react";
 import {action} from "@storybook/addon-actions";
 import MyPosts from "../components/Profile/myPosts/MyPosts";
 import {v1} from "uuid";
-import {ProfileType} from "../redux/profileReducer";
+import {ProfileType} from "../store/profileReducer";
 
 export default {
     title: "s'NETWORK/MyPost stories",

@@ -56,7 +56,7 @@ export const authMe = () => (dispatch: DispatchType) => {
             if (responseData.resultCode === 0) {
                 dispatch(setToggleFetchAuth(false)) // отрисовка 'login' или имя залогиненого пользователя
                 dispatch(setAuthUserData(responseData))
-                profileAPI.getProfile(7546) // + мой ID 7546
+                profileAPI.getProfile(7546) // дальше делаем запрос на сервак чтобы отрисовать фото
                     .then((response) => {
                         dispatch(setPhoto(response.photos.small))
                     })
@@ -85,9 +85,7 @@ const authReducer = (state: HeaderReducerType = initialState, action: ActionsTyp
 
     switch (action.type) {
         case SET_AUTHORIZATION: {
-
             //придумать что-то перед ответом из сервака ! ! !
-
             return {
                 ...state,
                 ...action.data,

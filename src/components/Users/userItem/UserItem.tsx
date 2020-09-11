@@ -1,5 +1,5 @@
 import React from "react";
-import {UsersReducerType} from "../../../redux/usersReducer";
+import {UsersReducerType} from "../../../store/usersReducer";
 
 type UserItemType = {
     user: UsersReducerType

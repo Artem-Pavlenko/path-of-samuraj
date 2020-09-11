@@ -69,12 +69,15 @@ export const unFollowThunk = (userID: number) => {
     return (dispatch: DispatchType) => {
         dispatch(setToggleFollowing(userID, true))
         followingAPI.unFollowing(userID)
-            .then((responseResultCode) => {
-                if (responseResultCode === 0) {
+            .then((responseData) => {
+                debugger
+                if (responseData.resultCode === 0) {
                     dispatch(unFollow(userID))
+                } else if (responseData.resultCode !== 0) {
+                    alert(responseData.messages)
                 }
-                dispatch(setToggleFollowing(userID, false))
             })
+        dispatch(setToggleFollowing(userID, false))
     }
 }
 //thunk
@@ -82,12 +85,15 @@ export const followThunk = (userID: number) => {
     return (dispatch: DispatchType) => {
         dispatch(setToggleFollowing(userID, true))
         followingAPI.following(userID)
-            .then((response) => {
-                if (response === 0) {
+            .then((responseData) => {
+                debugger
+                if (responseData.resultCode === 0) {
                     dispatch(follow(userID))
+                } else if (responseData.resultCode !== 0) {
+                    alert(responseData.messages)
                 }
-                dispatch(setToggleFollowing(userID, false))
             })
+        dispatch(setToggleFollowing(userID, false))
     }
 }
 
