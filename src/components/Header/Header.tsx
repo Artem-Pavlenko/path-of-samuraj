@@ -1,7 +1,7 @@
 import React from "react";
 import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
-import userPhoto from '../../assets/images/user img/images_man.png'
+import userPhoto from '../../assets/images/user img/Без названия.png'
 import sNetwork from '../../assets/images/network_icon/rss.png'
 
 type HeaderPropsType = {
@@ -17,7 +17,7 @@ function Header(props: HeaderPropsType) {
                 <img className={s.network}
                      src={sNetwork}
                      alt=""/>
-                <div><span>s'NETWORK</span></div>
+                <div><span>f*** society</span></div>
             </div>
             <div className={s.loginBlock}>
                 {props.isAuth

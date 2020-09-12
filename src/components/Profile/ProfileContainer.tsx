@@ -1,5 +1,6 @@
 import React from "react";
 import Profile from "./Profile";
+import {compose} from "redux"
 import {connect} from "react-redux";
 import {getProfileThunk, setToggleFetchProfile, setUserProfile, UserProfileType} from "../../store/profileReducer";
 import {ReduxStateType} from "../../store/redux-store";
@@ -48,11 +49,17 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 }
 
 
-
 let mapStateToProps = (state: ReduxStateType): StateProfileType => {
     return {
         profile: state.profilePage.profile,
         isFetch: state.profilePage.isFetching
+    }
+}
+let mapDispatchToProps = () =>{
+    return {
+        setUserProfile,
+        setToggleFetchProfile,
+        getProfile: getProfileThunk
     }
 }
 // let mapDispatchToProps = (dispatch: DispatchType): DispatchProfileType => {
@@ -69,13 +76,22 @@ let mapStateToProps = (state: ReduxStateType): StateProfileType => {
 //     }
 // }
 //hoc который добавляет проверку на залогинен пользователь или нет
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+//закидываем в наш hoc, который добавить в компонент логику проверки на авторизацию пользователя
 
-//закидываем ProfileContainer в hoc, чтоб внутри компоненты был доступ к url
-let WithURLDataContainerComponent = withRouter(AuthRedirectComponent)
+// let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+// //закидываем ProfileContainer в hoc, чтоб внутри компоненты был доступ к url
+// let WithURLDataContainerComponent = withRouter(AuthRedirectComponent)
+//
+// export default connect(mapStateToProps, {
+//     setUserProfile,
+//     setToggleFetchProfile,
+//     getProfile: getProfileThunk
+// })(WithURLDataContainerComponent);
 
-export default connect(mapStateToProps, {
+export default compose<React.ComponentType>(connect(mapStateToProps, {
     setUserProfile,
     setToggleFetchProfile,
     getProfile: getProfileThunk
-})(WithURLDataContainerComponent);
+}), withRouter, withAuthRedirect)(ProfileContainer)
+
+//as React.ComponentClass

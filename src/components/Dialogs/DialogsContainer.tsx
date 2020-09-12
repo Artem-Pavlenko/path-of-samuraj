@@ -1,5 +1,6 @@
 import {addMessActionCreator, changeMessActionCreator} from "../../store/dialogsReducer";
 import {DispatchType, ReduxStateType} from "../../store/redux-store";
+import {compose} from "redux"
 import {connect} from "react-redux";
 import React, {ChangeEvent} from "react";
 import s from "./Dialogs.module.css";
@@ -85,8 +86,9 @@ let mapDispatchToProps = (dispatch: DispatchType) => {
     }
 }
 
-let withAuthRedirectComponent = withAuthRedirect(Dialogs)
-
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(withAuthRedirectComponent)
-
-export default DialogsContainer;
+// let withAuthRedirectComponent = withAuthRedirect(Dialogs)
+//
+// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(withAuthRedirectComponent)
+//
+// export default DialogsContainer;
+export default compose(connect(mapStateToProps, mapDispatchToProps), withAuthRedirect)(Dialogs) as React.ComponentClass

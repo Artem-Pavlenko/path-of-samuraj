@@ -5,7 +5,7 @@ import s from "./Users.module.css";
 import item from '../../common/layout/item.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
-import userIcon from '../../assets/images/user img/images_man.png'
+import userIcon from '../../assets/images/user img/fsociety-mask-549635.png'
 
 
 type DispatchToUsersPropsType = {

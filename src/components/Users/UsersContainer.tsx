@@ -74,7 +74,7 @@ let mapStateToProps = (state: ReduxStateType) => {
         followingInProgress: state.userPage.followingInProgress.userID
     }
 }
-let authRedirectComponent = withAuthRedirect(UsersPage)
+// let authRedirectComponent = withAuthRedirect(UsersPage)
 
 // let mapDispatchToProps = (dispatch: DispatchType) => {
 //     return {
@@ -98,11 +98,10 @@ let authRedirectComponent = withAuthRedirect(UsersPage)
 //         }
 //     }
 // }
-let UsersContainer = connect(mapStateToProps, {
-    setCurrentPage,
-    getUsers: getUsersThunk,
+let UsersContainer = withAuthRedirect(connect(mapStateToProps, {
+    setCurrentPage, getUsers: getUsersThunk,
     unFollowUser: unFollowThunk,
     followUser: followThunk
-})(authRedirectComponent)
+})(UsersPage))
 
 export default UsersContainer

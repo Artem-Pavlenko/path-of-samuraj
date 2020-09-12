@@ -2,7 +2,7 @@ import React from "react";
 import s from "./ProfileInfo.module.css";
 import item from '../../../common/layout/item.module.css'
 import {UserProfileType} from "../../../store/profileReducer";
-import userIcon from '../../../assets/images/user img/images_man.png'
+import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
 import panorama2 from '../../../assets/images/background_img/pngfuel.com (2).png'
 import Preloader from "../../../common/Preloader/Preloader";
 
@@ -22,7 +22,7 @@ function ProfileInfo(props: profile) {
                     ? <Preloader/>
                     : <div className={`${s.descriptionBlock} ${item.itemCase}`}>
                         <img className={s.avatar}
-                             src={props.profile.photos.large == null ? userIcon : props.profile.photos.large}
+                             src={props.profile.photos.large === null ? userIcon : props.profile.photos.large}
                              alt="..."/>
                         <div>
                             <span>Full name: </span>{props.profile.fullName}
