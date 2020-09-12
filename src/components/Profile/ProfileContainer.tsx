@@ -6,7 +6,6 @@ import {getProfileThunk, setToggleFetchProfile, setUserProfile, UserProfileType}
 import {ReduxStateType} from "../../store/redux-store";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
 
 type RouterType = RouteComponentProps<{ userID: string }>
 type DispatchProfileType = {
@@ -16,8 +15,7 @@ type DispatchProfileType = {
 
 }
 type StateProfileType = {
-    profile: UserProfileType
-    isFetch: boolean
+
 }
 type ProfilePropsType = DispatchProfileType & StateProfileType & RouterType
 
@@ -39,10 +37,11 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
     }
 
     render() {
+        console.log('profile component')
         // if (!this.props.isAuth)return <Redirect to={'/login'}/> // если пользователь не залогинен, то перенаправит на страницу Login
         return (
             <div>
-                <Profile profile={this.props.profile} isFetch={this.props.isFetch}/>
+                <Profile />
             </div>
         )
     }
@@ -51,17 +50,19 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
 let mapStateToProps = (state: ReduxStateType): StateProfileType => {
     return {
-        profile: state.profilePage.profile,
-        isFetch: state.profilePage.isFetching
+        profile: state.profile.profile,
+        isFetch: state.profile.isFetching
     }
 }
-let mapDispatchToProps = () =>{
-    return {
-        setUserProfile,
-        setToggleFetchProfile,
-        getProfile: getProfileThunk
-    }
-}
+//узнать почему не вызывает санки когда передаю через mapDispatchToProps
+// let mapDispatchToProps = () => {
+//     return {
+//         setUserProfile,
+//         setToggleFetchProfile,
+//         getProfile: getProfileThunk
+//     }
+// }
+
 // let mapDispatchToProps = (dispatch: DispatchType): DispatchProfileType => {
 //     return {
 //         setUserProfile:  (profile: UserProfileType) => {
@@ -92,6 +93,6 @@ export default compose<React.ComponentType>(connect(mapStateToProps, {
     setUserProfile,
     setToggleFetchProfile,
     getProfile: getProfileThunk
-}), withRouter, withAuthRedirect)(ProfileContainer)
+}), withRouter)(ProfileContainer)
 
 //as React.ComponentClass

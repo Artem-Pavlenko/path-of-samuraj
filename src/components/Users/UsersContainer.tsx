@@ -49,6 +49,7 @@ class UsersPage extends React.Component<UsersContainerType> {
     }
 
     render() {
+        console.log('user component')
         return <Users
             onPageChanged={this.onPageChanged}
             currentPage={this.props.currentPage}
@@ -66,12 +67,12 @@ class UsersPage extends React.Component<UsersContainerType> {
 
 let mapStateToProps = (state: ReduxStateType) => {
     return {
-        users: state.userPage.items,
-        pageSize: state.userPage.pageSize,
-        totalUsersCount: state.userPage.totalUsersCount,
-        currentPage: state.userPage.currentPage,
-        isFetching: state.userPage.isFetching,
-        followingInProgress: state.userPage.followingInProgress.userID
+        users: state.user.items,
+        pageSize: state.user.pageSize,
+        totalUsersCount: state.user.totalUsersCount,
+        currentPage: state.user.currentPage,
+        isFetching: state.user.isFetching,
+        followingInProgress: state.user.followingInProgress.userID
     }
 }
 // let authRedirectComponent = withAuthRedirect(UsersPage)

@@ -35,7 +35,9 @@ let initialState: ProfileType = {
             small: null
         }
     },
-    isFetching: true
+    isFetching: true,
+    profileStatusText: null,
+    newStatusText: ''
 }
 
 export const MyPostsBaseExample = (props: any) => {

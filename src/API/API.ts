@@ -29,7 +29,7 @@ export const authAPI = {
 
 export const followingAPI = {
     following(userID: number) {
-        return axiosInstance.post(`/follow/${userID}`, {})
+        return axiosInstance.post(`follow/${userID}`, {})
             .then(response => {
                 console.log("following response data", response.data.resultCode)
                 console.log("following response data", response)
@@ -37,7 +37,7 @@ export const followingAPI = {
             })
     },
     unFollowing(userID: number) {
-        return axiosInstance.delete(`/follow/${userID}`)
+        return axiosInstance.delete(`follow/${userID}`)
             .then(response => {
                 console.log("unFollowing response data:", response.data.resultCode)
                 return response.data
@@ -47,9 +47,15 @@ export const followingAPI = {
 
 export const profileAPI = {
     getProfile(userID: number) {
-        return axiosInstance.get(`/profile/${userID}`)
+        return axiosInstance.get(`profile/${userID}`)
             .then(response => {
                 console.log("get profile response data: ", response.data)
+                return response.data
+            })
+    },
+    getStatus(userID: number){
+        return axiosInstance.get(`profile/status/${userID}`)
+            .then(response => {
                 return response.data
             })
     }

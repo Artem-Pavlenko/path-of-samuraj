@@ -1,17 +1,12 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./myPosts/MyPostsContainer";
-import {UserProfileType} from "../../store/profileReducer";
 
-type profile = {
-    profile: UserProfileType
-    isFetch: boolean
-}
 
-function Profile(props: profile) {
+function Profile() {
     return (
         <div>
-            <ProfileInfo profile={props.profile} isFetch={props.isFetch}/>
+            <ProfileInfo />
             <MyPostsContainer/>
         </div>
     )

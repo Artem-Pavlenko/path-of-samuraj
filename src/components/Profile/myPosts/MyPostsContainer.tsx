@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 
 let mapStateToProps = (state: ReduxStateType) =>{
     return {
-        profilePage: state.profilePage
+        profilePage: state.profile
     }
 }
 let mapDispatchToProps = (dispatch: DispatchType) => {

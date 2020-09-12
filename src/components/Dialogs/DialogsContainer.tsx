@@ -28,7 +28,6 @@ type DialogsDispatchToPropsType = {
     onMessChange: (text: string) => void
     onSendMess: () => void
 }
-
 type DialogsPropsType = DialogsDispatchToPropsType & DialogsStatePropsType
 
 export function Dialogs(props: DialogsPropsType) {
@@ -72,7 +71,7 @@ export function Dialogs(props: DialogsPropsType) {
 
 let mapStateToProps = (state: ReduxStateType) => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogs
     }
 }
 let mapDispatchToProps = (dispatch: DispatchType) => {

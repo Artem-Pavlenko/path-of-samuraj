@@ -70,17 +70,25 @@ export type setFollowingType = {
     userID: number
     isFetch: boolean
 }
+export type changeStatusTextType = {
+    type: 'CHANGE_STATUS_TEXT',
+    newText: string
+}
+export type addStatusTextType = {
+    type: 'ADD_STATUS_TEXT'
+}
 
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUser |
     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
     ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
-    setAuthorization | setToggleFetchHeader | SetPhoto | setFollowingType
+    setAuthorization | setToggleFetchHeader | SetPhoto | setFollowingType |
+    changeStatusTextType | addStatusTextType
 
 const reducers = combineReducers({
-    profilePage: profileReducer,
-    dialogsPage: dialogsReducer,
-    userPage: usersReducer,
+    profile: profileReducer,
+    dialogs: dialogsReducer,
+    user: usersReducer,
     auth: authReducer
 })
 let store = createStore( reducers, applyMiddleware(thunkMiddleware))

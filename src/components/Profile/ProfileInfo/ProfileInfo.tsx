@@ -1,29 +1,48 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
 import item from '../../../common/layout/item.module.css'
-import {UserProfileType} from "../../../store/profileReducer";
+import {addStatusText, changeStatusText, UserProfileType} from "../../../store/profileReducer";
 import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
-import panorama2 from '../../../assets/images/background_img/pngfuel.com (2).png'
 import Preloader from "../../../common/Preloader/Preloader";
+import ProfileStatus from "./ProfileStatus";
+import {connect} from "react-redux";
+import {ReduxStateType} from "../../../store/redux-store";
+// import panorama2 from '../../../assets/images/background_img/pngfuel.com (2).png'
 
-type profile = {
+type ProfileStateToPropsType = {
     profile: UserProfileType
     isFetch: boolean
+    profileStatusText: string | null
 }
+type ProfileDispatchTOPropsType = {
+    changeStatusText: (newText: string) => void
+    addStatusText: () => void
+}
+
+type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType
+
+// let img = () => {
+//     return (
+//         <div className={s.content}>
+//             <img src={panorama2} alt=""/>
+//         </div>
+//     )
+// }
 
 function ProfileInfo(props: profile) {
     return (
         <div className={s.profileBlock}>
-            <div className={s.content}>
-                <img src={panorama2} alt=""/>
-            </div>
+
             {
                 props.isFetch
                     ? <Preloader/>
                     : <div className={`${s.descriptionBlock} ${item.itemCase}`}>
-                        <img className={s.avatar}
-                             src={props.profile.photos.large === null ? userIcon : props.profile.photos.large}
-                             alt="..."/>
+                        <div className={s.avaAndStatus}>
+                            <img className={s.avatar}
+                                  src={props.profile.photos.large === null ? userIcon : props.profile.photos.large}
+                                  alt="..."/>
+                            <ProfileStatus status={props.profileStatusText} changeStatusText={props.changeStatusText}
+                                           addStatusText={props.addStatusText}/></div>
                         <div>
                             <span>Full name: </span>{props.profile.fullName}
                         </div>
@@ -56,4 +75,13 @@ function ProfileInfo(props: profile) {
     )
 }
 
-export default ProfileInfo;
+let mapStateToProps = (state: ReduxStateType) => {
+    return {
+        profile: state.profile.profile,
+        isFetch: state.profile.isFetching,
+        profileStatusText: state.profile.profileStatusText
+    }
+}
+
+
+export default connect(mapStateToProps,{changeStatusText, addStatusText})(ProfileInfo)
