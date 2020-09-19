@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {ActionsTypes, addStatusTextType, changeStatusTextType, DispatchType} from "./redux-store";
+import {ActionsTypes, addStatusTextType, DispatchType, setProfileStatusType} from "./redux-store";
 import {profileAPI} from "../API/API";
 
 //типизация state/initialState
@@ -60,7 +60,7 @@ const ADD_POST = "ADD-POST"
 const CHANGE_NEW_TEXT = "CHANGE-NEW-TEXT"
 const SET_PROFILE = "SET_PROFILE"
 const TOGGLE_FETCHING_PROFILE = "TOGGLE_FETCHING_PROFILE"
-const CHANGE_STATUS_TEXT = "CHANGE_STATUS_TEXT"
+const SET_PROFILE_STATUS = "SET_PROFILE_STATUS"
 const ADD_STATUS_TEXT = "ADD_STATUS_TEXT"
 // ActionCreators
 export const addPostActionCreator = (): AddPostActionType => ({
@@ -74,8 +74,9 @@ export const setToggleFetchProfile = (isFetch: boolean): ToggleFetchProfileType 
     type: TOGGLE_FETCHING_PROFILE,
     isFetch
 })
-export const changeStatusText = (newText: string): changeStatusTextType => ({type: CHANGE_STATUS_TEXT, newText})
-export const addStatusText = (): addStatusTextType => ({type: ADD_STATUS_TEXT})
+export const setProfileStatus = (status: string): setProfileStatusType => ({type: SET_PROFILE_STATUS, status})
+export const addStatusText = (status: string): addStatusTextType => ({type: ADD_STATUS_TEXT, status})
+
 
 export const getProfileThunk = (userID: string) => {
     return (dispatch: DispatchType) => {
@@ -85,6 +86,23 @@ export const getProfileThunk = (userID: string) => {
                 dispatch(setUserProfile(responseData))
             })
     }
+}
+export const getProfileStatus = (userID: string) => (dispatch: DispatchType) => {
+    profileAPI.getStatus(+userID)
+        .then(responseData => {
+            dispatch(setProfileStatus(responseData))
+        })
+}
+export const updateProfileStatus = (status: string) => (dispatch: DispatchType) => {
+    profileAPI.updateStatus(status)
+        .then(responseData => {
+                if (responseData.resultCode === 0) {
+                    dispatch(addStatusText(status))
+                } else if (responseData.resultCode !== 0){
+                    alert(responseData.messages)
+                }
+            }
+        )
 }
 
 
@@ -117,9 +135,10 @@ let initialState: ProfileType = {
         }
     },
     isFetching: true,
-    profileStatusText: 'можно вАйти ?))',
-    newStatusText: 'можно вАйти ?))'
+    profileStatusText: '...',
+    newStatusText: '...'
 }
+//newStatusText не использу нигде, можно что-то придумать
 
 const profileReducer = (state: ProfileType = initialState, action: ActionsTypes): ProfileType => {
     switch (action.type) {
@@ -139,15 +158,14 @@ const profileReducer = (state: ProfileType = initialState, action: ActionsTypes)
             return {...state, profile: action.profile}
         case TOGGLE_FETCHING_PROFILE:
             return {...state, isFetching: action.isFetch}
-        case CHANGE_STATUS_TEXT:
-            return {...state, profileStatusText: action.newText, newStatusText: action.newText}
-        case ADD_STATUS_TEXT:
-            if (state.profileStatusText) {
-                return {...state, profileStatusText: state.newStatusText}
-            } else if (state.profileStatusText == '' || null) {
-                return {...state, profileStatusText: '...'}
+        case SET_PROFILE_STATUS:
+            return {
+                ...state,
+                profileStatusText: action.status,
+                newStatusText: action.status
             }
-            return state
+        case ADD_STATUS_TEXT:
+            return {...state, profileStatusText: action.status}
         default:
             return state
     }

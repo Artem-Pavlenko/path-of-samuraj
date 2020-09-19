@@ -26,7 +26,7 @@ type UsersItemPageType = DispatchToUsersPropsType & StateToUsersPropsType
 
 function Users(props: UsersItemPageType) {
 
-    let pageCount = Math.ceil((props.totalUsersCount / props.pageSize) / 100) //делю на 100 чтобы отображалось меньше страниц
+    let pageCount = Math.ceil((props.totalUsersCount / props.pageSize) / 50) //делю на 100 чтобы отображалось меньше страниц
     let pages = []
     for (let i = 1; i <= pageCount; i++) {
         pages.push(i)

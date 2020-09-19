@@ -5,7 +5,7 @@ import {authAPI, profileAPI} from "../API/API";
 // export type AuthDataType ={
 //     data: {
 //         id: number | null,
-//         login: string | null,
+//         Login: string | null,
 //         email: string | null
 //     },
 //     messages: [string] | [],
@@ -54,7 +54,7 @@ export const authMe = () => (dispatch: DispatchType) => {
     authAPI.authMe()
         .then((responseData) => {
             if (responseData.resultCode === 0) {
-                dispatch(setToggleFetchAuth(false)) // отрисовка 'login' или имя залогиненого пользователя
+                dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
                 dispatch(setAuthUserData(responseData))
                 profileAPI.getProfile(7546) // дальше делаем запрос на сервак чтобы отрисовать фото
                     .then((response) => {

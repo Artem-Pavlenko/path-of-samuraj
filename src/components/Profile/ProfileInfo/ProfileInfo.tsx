@@ -1,13 +1,12 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
 import item from '../../../common/layout/item.module.css'
-import {addStatusText, changeStatusText, UserProfileType} from "../../../store/profileReducer";
+import {updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
 import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
 import Preloader from "../../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import {connect} from "react-redux";
 import {ReduxStateType} from "../../../store/redux-store";
-// import panorama2 from '../../../assets/images/background_img/pngfuel.com (2).png'
 
 type ProfileStateToPropsType = {
     profile: UserProfileType
@@ -15,19 +14,9 @@ type ProfileStateToPropsType = {
     profileStatusText: string | null
 }
 type ProfileDispatchTOPropsType = {
-    changeStatusText: (newText: string) => void
-    addStatusText: () => void
+    updateProfileStatus: (status: string) => void
 }
-
 type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType
-
-// let img = () => {
-//     return (
-//         <div className={s.content}>
-//             <img src={panorama2} alt=""/>
-//         </div>
-//     )
-// }
 
 function ProfileInfo(props: profile) {
     return (
@@ -41,13 +30,15 @@ function ProfileInfo(props: profile) {
                             <img className={s.avatar}
                                   src={props.profile.photos.large === null ? userIcon : props.profile.photos.large}
                                   alt="..."/>
-                            <ProfileStatus status={props.profileStatusText} changeStatusText={props.changeStatusText}
-                                           addStatusText={props.addStatusText}/></div>
+                            <ProfileStatus status={props.profileStatusText}
+                                           updateProfileStatus={props.updateProfileStatus}
+                            />
+                        </div>
                         <div>
                             <span>Full name: </span>{props.profile.fullName}
                         </div>
                         <div>
-                            <span>About me:</span> {props.profile.aboutMe == null ? "..." : props.profile.aboutMe}
+                            <span>About me:</span> {props.profile.aboutMe === null ? "..." : props.profile.aboutMe}
                         </div>
                         <div className={s.jobBlock}>
                             {props.profile.lookingForAJob
@@ -84,4 +75,4 @@ let mapStateToProps = (state: ReduxStateType) => {
 }
 
 
-export default connect(mapStateToProps,{changeStatusText, addStatusText})(ProfileInfo)
+export default connect(mapStateToProps,{updateProfileStatus})(ProfileInfo)

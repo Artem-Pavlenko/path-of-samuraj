@@ -4,36 +4,39 @@ type StatusStateToPropsType = {
     status: string | null
 }
 type StatusDispatchToPropsType = {
-    changeStatusText: (newText: string) => void
-    addStatusText: () => void
+    updateProfileStatus: (status: string) => void
 }
 
 type ProfileStatusType = StatusStateToPropsType & StatusDispatchToPropsType
 
 class ProfileStatus extends React.Component<ProfileStatusType> {
     state = {
-        editMode: false
+        editMode: false,
+        statusText: this.props.status
     }
 
     activateEditMod() {
         this.setState({editMode: true})
     }
 
-    //или заюзать стрелочную fn и тогда не будет утерян контекст и не нужно будет bind(this)
-    // activatorEditMode = () => {
-    //     this.state.editMode = true
-    // }
     deactivateEditMode() {
         this.setState({editMode: false})
     }
 
     changeStatusText(e: ChangeEvent<HTMLInputElement>) {
-        this.props.changeStatusText(e.currentTarget.value)
+        this.setState({statusText: e.currentTarget.value})
     }
 
-    addStatusText() {
+    addStatusText(e: ChangeEvent<HTMLInputElement>) {
         this.deactivateEditMode()
-        this.props.addStatusText()
+        this.props.updateProfileStatus(e.currentTarget.value)
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({status: this.props.status})
+        }
+        console.log('component did upd')
     }
 
     render() {
@@ -43,15 +46,18 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
                     {this.state.editMode
                         ? <input
                             type="text"
-                            value={this.props.status === null ? '' : this.props.status}
+                            value={this.state.statusText === null  ? '' : this.state.statusText}
                             autoFocus={true}
                             onChange={this.changeStatusText.bind(this)}
                             onBlur={this.addStatusText.bind(this)}
                         />
-                        : <span onDoubleClick={this.activateEditMod.bind(this)} title={'status'}>{this.props.status}</span>}
+                        : <span onDoubleClick={this.activateEditMod.bind(this)} title={'status'} >
+                            {this.props.status === '' || this.props.status === null ? '---' : this.props.status}
+                        </span>
+                    }
                 </div>
                 <div>
-                    <button onClick={this.addStatusText.bind(this)}>save</button>
+                    {/*<button onClick={this.addStatusText.bind(this)}>save</button>*/}
                 </div>
             </div>
         )

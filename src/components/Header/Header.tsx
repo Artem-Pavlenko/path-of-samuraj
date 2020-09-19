@@ -25,7 +25,7 @@ function Header(props: HeaderPropsType) {
                         <div><span>{props.login}</span></div>
                         <div><img src={props.photo == null ? userPhoto : props.photo} alt=""/></div>
                     </div>
-                    : <NavLink to={'/login'}>Login</NavLink>
+                    : <NavLink to={'/Login'}>Login</NavLink>
                 }
             </div>
         </header>

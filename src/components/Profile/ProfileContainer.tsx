@@ -2,7 +2,13 @@ import React from "react";
 import Profile from "./Profile";
 import {compose} from "redux"
 import {connect} from "react-redux";
-import {getProfileThunk, setToggleFetchProfile, setUserProfile, UserProfileType} from "../../store/profileReducer";
+import {
+    getProfileStatus,
+    getProfileThunk,
+    setToggleFetchProfile,
+    setUserProfile,
+    UserProfileType
+} from "../../store/profileReducer";
 import {ReduxStateType} from "../../store/redux-store";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
@@ -12,7 +18,7 @@ type DispatchProfileType = {
     setUserProfile: (profile: UserProfileType) => void
     setToggleFetchProfile: (isFetch: boolean) => void
     getProfile: (profileIdFromURL: string) => void
-
+    getProfileStatus: (userID: string) => void
 }
 type StateProfileType = {
 
@@ -34,11 +40,12 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         //         this.props.setToggleFetchProfile(false)
         //         this.props.setUserProfile(responseData)
         //     })
+        this.props.getProfileStatus(userID)
     }
 
     render() {
         console.log('profile component')
-        // if (!this.props.isAuth)return <Redirect to={'/login'}/> // если пользователь не залогинен, то перенаправит на страницу Login
+        // if (!this.props.isAuth)return <Redirect to={'/Login'}/> // если пользователь не залогинен, то перенаправит на страницу Login
         return (
             <div>
                 <Profile />
@@ -47,21 +54,12 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
     }
 }
 
-
 let mapStateToProps = (state: ReduxStateType): StateProfileType => {
     return {
         profile: state.profile.profile,
         isFetch: state.profile.isFetching
     }
 }
-//узнать почему не вызывает санки когда передаю через mapDispatchToProps
-// let mapDispatchToProps = () => {
-//     return {
-//         setUserProfile,
-//         setToggleFetchProfile,
-//         getProfile: getProfileThunk
-//     }
-// }
 
 // let mapDispatchToProps = (dispatch: DispatchType): DispatchProfileType => {
 //     return {
@@ -76,8 +74,6 @@ let mapStateToProps = (state: ReduxStateType): StateProfileType => {
 //         //setToggleFetchProfile
 //     }
 // }
-//hoc который добавляет проверку на залогинен пользователь или нет
-//закидываем в наш hoc, который добавить в компонент логику проверки на авторизацию пользователя
 
 // let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
 // //закидываем ProfileContainer в hoc, чтоб внутри компоненты был доступ к url
@@ -92,7 +88,8 @@ let mapStateToProps = (state: ReduxStateType): StateProfileType => {
 export default compose<React.ComponentType>(connect(mapStateToProps, {
     setUserProfile,
     setToggleFetchProfile,
-    getProfile: getProfileThunk
+    getProfile: getProfileThunk,
+    getProfileStatus
 }), withRouter)(ProfileContainer)
 
 //as React.ComponentClass

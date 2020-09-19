@@ -4,6 +4,7 @@ import dialogsReducer from "./dialogsReducer";
 import usersReducer, { UsersReducerType } from "./usersReducer";
 import authReducer, {HeaderReducerType} from "./authReducer";
 import thunkMiddleware from "redux-thunk"
+import { reducer as formReducer } from 'redux-form'
 
 //типизация АС
 export type AddPostActionType = {
@@ -70,29 +71,33 @@ export type setFollowingType = {
     userID: number
     isFetch: boolean
 }
-export type changeStatusTextType = {
-    type: 'CHANGE_STATUS_TEXT',
-    newText: string
+export type setProfileStatusType = {
+    type: 'SET_PROFILE_STATUS'
+    status: string
 }
 export type addStatusTextType = {
-    type: 'ADD_STATUS_TEXT'
+    type: 'ADD_STATUS_TEXT',
+    status: string
 }
+
 
 export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
     ChangeNewMessActionType | AddMessActionType | FollowUser |
     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
     ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
     setAuthorization | setToggleFetchHeader | SetPhoto | setFollowingType |
-    changeStatusTextType | addStatusTextType
+    addStatusTextType | setProfileStatusType
 
 const reducers = combineReducers({
     profile: profileReducer,
     dialogs: dialogsReducer,
     user: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 })
 let store = createStore( reducers, applyMiddleware(thunkMiddleware))
-//type State
+
+
 export type ReduxStateType = ReturnType<typeof reducers>
 export type ReduxStore = typeof store
 export type DispatchType = typeof store.dispatch

@@ -22,7 +22,7 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
         // authAPI.authMe()
         //     .then((responseData) => {
         //         if (responseData.resultCode === 0) {
-        //             this.props.setToggleFetchAuth(false) // отрисовка 'login' или имя залогиненого пользователя
+        //             this.props.setToggleFetchAuth(false) // отрисовка 'Login' или имя залогиненого пользователя
         //             this.props.setAuthUserData(responseData)
         //             axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + 7546) // + мой ID
         //                 .then((response) => {
