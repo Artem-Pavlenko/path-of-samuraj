@@ -1,12 +1,14 @@
-import {addMessActionCreator, changeMessActionCreator} from "../../store/dialogsReducer";
+import { addMessActionCreator} from "../../store/dialogsReducer";
 import {DispatchType, ReduxStateType} from "../../store/redux-store";
 import {compose} from "redux"
 import {connect} from "react-redux";
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
+import  {TextareaFormType} from "./TextareaDialogsForm";
+import TextareaDialogsForm from "./TextareaDialogsForm";
 
 type DialogsDataType = {
     id: string
@@ -25,19 +27,14 @@ type DialogsStatePropsType = {
     dialogsPage: DialogsPageType
 }
 type DialogsDispatchToPropsType = {
-    onMessChange: (text: string) => void
-    onSendMess: () => void
+    onSendFormMess: (mess: string) => void
 }
 type DialogsPropsType = DialogsDispatchToPropsType & DialogsStatePropsType
 
 export function Dialogs(props: DialogsPropsType) {
 
-    function sendMess() {
-        props.onSendMess()
-    }
-
-    function onMessChange(e: ChangeEvent<HTMLTextAreaElement>) {
-        props.onMessChange(e.currentTarget.value)
+    function onSubmit (formData: TextareaFormType) {
+        props.onSendFormMess(formData.dialog)
     }
 
     let dialogsPage = props.dialogsPage
@@ -53,15 +50,9 @@ export function Dialogs(props: DialogsPropsType) {
                     <div className={s.messTextBlock}>
                         {dialogsPage.mess.map(mess => <Message key={mess.id} text={mess.message}/>)}
                     </div>
-                    <div className={s.sendMessBlock}>
-                        <div className={s.textAreaBlock}>
-                        <textarea
-                            placeholder={"write..."}
-                            value={dialogsPage.newMessText}
-                            onChange={onMessChange}
-                        />
-                        </div>
-                        <button onClick={sendMess}>send</button>
+                    <div>
+                        <h3>messages</h3>
+                        <TextareaDialogsForm onSubmit={onSubmit}/>
                     </div>
                 </div>
             </div>
@@ -76,11 +67,8 @@ let mapStateToProps = (state: ReduxStateType) => {
 }
 let mapDispatchToProps = (dispatch: DispatchType) => {
     return {
-        onMessChange: (text: string) => {
-            dispatch(changeMessActionCreator(text))
-        },
-        onSendMess: () => {
-            dispatch(addMessActionCreator())
+        onSendFormMess: (mess: string) => {
+            dispatch(addMessActionCreator(mess))
         }
     }
 }

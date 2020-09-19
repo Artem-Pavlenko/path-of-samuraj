@@ -31,7 +31,6 @@ export type UserProfileType = {
 }
 export type ProfileType = {
     post: Array<CommentType>
-    newText: string
     profile: UserProfileType
     isFetching: boolean
     profileStatusText: string | null
@@ -39,14 +38,11 @@ export type ProfileType = {
 
 }
 //типизация ActionCreators
-type AddPostActionType = {
+export type AddPostActionType = {
     type: "ADD-POST"
-    // postMessage: string
+    post: string
 }
-type ChangeNewTextActionType = {
-    type: "CHANGE-NEW-TEXT"
-    newText: string
-}
+
 type setProfileType = {
     type: "SET_PROFILE"
     profile: UserProfileType
@@ -57,18 +53,15 @@ type ToggleFetchProfileType = {
 }
 //CASE:
 const ADD_POST = "ADD-POST"
-const CHANGE_NEW_TEXT = "CHANGE-NEW-TEXT"
 const SET_PROFILE = "SET_PROFILE"
 const TOGGLE_FETCHING_PROFILE = "TOGGLE_FETCHING_PROFILE"
 const SET_PROFILE_STATUS = "SET_PROFILE_STATUS"
 const ADD_STATUS_TEXT = "ADD_STATUS_TEXT"
 // ActionCreators
-export const addPostActionCreator = (): AddPostActionType => ({
-    type: "ADD-POST"
+export const addPostActionCreator = (post: string): AddPostActionType => ({
+    type: "ADD-POST", post
 })
-export const changeNewTexActionCreator = (newText: string): ChangeNewTextActionType => ({
-    type: "CHANGE-NEW-TEXT", newText: newText
-})
+
 export const setUserProfile = (profile: UserProfileType): setProfileType => ({type: SET_PROFILE, profile})
 export const setToggleFetchProfile = (isFetch: boolean): ToggleFetchProfileType => ({
     type: TOGGLE_FETCHING_PROFILE,
@@ -112,7 +105,6 @@ let initialState: ProfileType = {
         {id: v1(), comm: "Hello World!", like: 7},
         {id: v1(), comm: "React it's cool!", like: 25}
     ],
-    newText: "",
     profile: {
         aboutMe: null,
         contacts: {
@@ -142,18 +134,15 @@ let initialState: ProfileType = {
 
 const profileReducer = (state: ProfileType = initialState, action: ActionsTypes): ProfileType => {
     switch (action.type) {
-        case CHANGE_NEW_TEXT:
-            return {...state, newText: action.newText}
         case ADD_POST:
-            if (state.newText.trim()) {
+            // if (action.post.trim()) {
                 return {
                     ...state,
                     post: [
-                        {id: v1(), comm: state.newText.trim(), like: 0}, ...state.post],
-                    newText: ""
+                        {id: v1(), comm: action.post, like: 0}, ...state.post]
                 }
-            }
-            return state
+            // }
+            // return state
         case SET_PROFILE:
             return {...state, profile: action.profile}
         case TOGGLE_FETCHING_PROFILE:

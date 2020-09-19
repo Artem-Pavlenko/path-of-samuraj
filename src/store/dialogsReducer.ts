@@ -18,22 +18,15 @@ export type DialogsPageType = {
 //типизация ActionCreators
 export type AddMessActionType = {
     type: "ADD-MESS"
-    //mess: string
-}
-export type ChangeNewMessActionType = {
-    type: "CHANGE-NEW-MESS-TEXT"
-    newMessText: string
+    mess: string
 }
 
 //case:
 const ADD_MESS = "ADD-MESS"
-const CHANGE_NEW_MESS_TEXT = "CHANGE-NEW-MESS-TEXT"
 //ActionCreators
-export const addMessActionCreator = (): AddMessActionType => ({
-    type: "ADD-MESS" //, mess: messText
-})
-export const changeMessActionCreator = (newMessText: string): ChangeNewMessActionType => ({
-    type: "CHANGE-NEW-MESS-TEXT", newMessText: newMessText
+
+export const addMessActionCreator = (mess: string): AddMessActionType => ({
+    type: "ADD-MESS" , mess
 })
 
 let initialState: DialogsPageType = {
@@ -58,22 +51,10 @@ let initialState: DialogsPageType = {
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
 
     switch (action.type) {
-        case CHANGE_NEW_MESS_TEXT:
-            // let stateCopy = {...state}
-            // stateCopy.newMessText = action.newMessText
-            // return stateCopy
-            return {...state, newMessText: action.newMessText}
         case ADD_MESS:
-            // let stateCopy = {
-            //     ...state,
-            //     mess: [...state.mess, {id: v1(), message: state.newMessText}],
-            //     newMessText: ""
-            // }
-            // return stateCopy
             return {
                 ...state,
-                mess: [...state.mess,{id: v1(), message: state.newMessText}],
-                newMessText: ""
+                mess: [...state.mess,{id: v1(), message: action.mess}]
             }
         default:
             return state

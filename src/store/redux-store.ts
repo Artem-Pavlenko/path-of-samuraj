@@ -1,27 +1,12 @@
 import {createStore, combineReducers, applyMiddleware} from "redux"
-import profileReducer, {UserProfileType} from "./profileReducer";
-import dialogsReducer from "./dialogsReducer";
+import profileReducer, {AddPostActionType, UserProfileType} from "./profileReducer";
+import dialogsReducer, {AddMessActionType} from "./dialogsReducer";
 import usersReducer, { UsersReducerType } from "./usersReducer";
 import authReducer, {HeaderReducerType} from "./authReducer";
 import thunkMiddleware from "redux-thunk"
 import { reducer as formReducer } from 'redux-form'
 
 //типизация АС
-export type AddPostActionType = {
-    type: "ADD-POST"
-}
-export type ChangeNewTextActionType = {
-    type: "CHANGE-NEW-TEXT"
-    newText: string
-}
-export type ChangeNewMessActionType = {
-    type: "CHANGE-NEW-MESS-TEXT"
-    newMessText: string
-}
-export type AddMessActionType = {
-    type: "ADD-MESS"
-    //mess: string
-}
 export type FollowUser = {
     type: "FOLLOW"
     userID: number
@@ -81,8 +66,7 @@ export type addStatusTextType = {
 }
 
 
-export type ActionsTypes = AddPostActionType | ChangeNewTextActionType |
-    ChangeNewMessActionType | AddMessActionType | FollowUser |
+export type ActionsTypes = AddPostActionType | AddMessActionType | FollowUser |
     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
     ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
     setAuthorization | setToggleFetchHeader | SetPhoto | setFollowingType |

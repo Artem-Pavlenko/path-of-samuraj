@@ -3,11 +3,8 @@ import Profile from "./Profile";
 import {compose} from "redux"
 import {connect} from "react-redux";
 import {
-    getProfileStatus,
-    getProfileThunk,
-    setToggleFetchProfile,
-    setUserProfile,
-    UserProfileType
+    getProfileStatus, getProfileThunk, setToggleFetchProfile,
+    setUserProfile,UserProfileType
 } from "../../store/profileReducer";
 import {ReduxStateType} from "../../store/redux-store";
 import {withRouter} from "react-router-dom";
