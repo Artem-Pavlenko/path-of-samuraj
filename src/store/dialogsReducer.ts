@@ -13,7 +13,6 @@ export type MessageDataType = {
 export type DialogsPageType = {
     dialog: Array<DialogsDataType>
     mess: Array<MessageDataType>
-    newMessText: string
 }
 //типизация ActionCreators
 export type AddMessActionType = {
@@ -44,8 +43,7 @@ let initialState: DialogsPageType = {
         {id: v1(), message: "What are you think about React?"},
         {id: v1(), message: "=)"},
         {id: v1(), message: "LOL"}
-    ],
-    newMessText: ""
+    ]
 }
 
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
