@@ -20,7 +20,6 @@ export const authAPI = {
     authMe() {
         return axiosInstance.get(`auth/me`)
             .then(response => {
-                console.log("auth/me:", response.data)
                 //возвращает нужный "кусок" ответа.
                 return response.data
             })
@@ -32,7 +31,6 @@ export const followingAPI = {
         return axiosInstance.post(`follow/${userID}`, {})
             .then(response => {
                 console.log("following response data", response.data.resultCode)
-                console.log("following response data", response)
                 return response.data
             })
     },
@@ -49,7 +47,6 @@ export const profileAPI = {
     getProfile(userID: number) {
         return axiosInstance.get(`profile/${userID}`)
             .then(response => {
-                console.log("get profile response data: ", response.data)
                 return response.data
             })
     },

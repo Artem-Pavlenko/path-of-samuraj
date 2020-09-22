@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import Post from "./Post/Post";
 import React from "react";
 import s from "./MyPosts.module.css";
-import FormPost, {FormPostType} from "./TextareaDialogsForm";
+import FormPost, {FormPostType} from "./TextareaPostForm";
 
 type MyPostPropsType = {
     addPost: (post: string) => void
@@ -38,7 +38,7 @@ let mapStateToProps = (state: ReduxStateType) =>{
 }
 let mapDispatchToProps = (dispatch: DispatchType) => {
     return {
-        addPost: (post: string)=> dispatch(addPostActionCreator(post)),
+        addPost: (post: string) => dispatch(addPostActionCreator(post)),
     }
 }
 

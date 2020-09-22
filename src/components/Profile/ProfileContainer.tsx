@@ -41,7 +41,6 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
     }
 
     render() {
-        console.log('profile component')
         // if (!this.props.isAuth)return <Redirect to={'/Login'}/> // если пользователь не залогинен, то перенаправит на страницу Login
         return (
             <div>

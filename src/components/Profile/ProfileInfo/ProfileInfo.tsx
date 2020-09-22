@@ -21,7 +21,6 @@ type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType
 function ProfileInfo(props: profile) {
     return (
         <div className={s.profileBlock}>
-
             {
                 props.isFetch
                     ? <Preloader/>

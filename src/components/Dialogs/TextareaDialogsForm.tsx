@@ -1,15 +1,21 @@
 import React from "react";
-import  {reduxForm, Field, InjectedFormProps} from "redux-form";
+import {reduxForm, Field, InjectedFormProps} from "redux-form";
+import {maxLength} from "../../utils/validators/validators";
+import {Textarea} from "../../common/FormsControls/FormsControls";
 
 export type TextareaFormType = {
     dialog: string
 }
 
-const Textarea: React.FC<InjectedFormProps<TextareaFormType>> = (props) => {
+const maxLength15 = maxLength(15)
+
+const TextareaDialog: React.FC<InjectedFormProps<TextareaFormType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={"textarea"} name={"dialog"} placeholder={"write..."}/>
+                <Field component={Textarea} name={"dialog"} placeholder={"write..."}
+                       validate={[maxLength15]}
+                />
             </div>
             <div>
                 <button>send</button>
@@ -18,25 +24,6 @@ const Textarea: React.FC<InjectedFormProps<TextareaFormType>> = (props) => {
     )
 }
 
-const TextareaDialogsForm = reduxForm<TextareaFormType>({form: 'dialog'})(Textarea)
-
-// type TextareaDispatchToPropsType = {
-//     sendMess: (mess: string) => void
-// }
-//
-// const TextareaForm: React.FC<TextareaDispatchToPropsType> = (props) => {
-//
-//     const onSubmit = (formData: TextareaFormType) => {
-//         props.sendMess(formData.dialog)
-//     }
-//
-//     return (
-//         <div>
-//             <h3>message</h3>
-//             <FormDialog onSubmit={onSubmit}/>
-//         </div>
-//     )
-//
-// }
+const TextareaDialogsForm = reduxForm<TextareaFormType>({form: 'dialog'})(TextareaDialog)
 
 export default TextareaDialogsForm;
