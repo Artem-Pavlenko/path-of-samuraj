@@ -23,6 +23,9 @@ export const authAPI = {
                 //возвращает нужный "кусок" ответа.
                 return response.data
             })
+    },
+    login() {
+
     }
 }
 

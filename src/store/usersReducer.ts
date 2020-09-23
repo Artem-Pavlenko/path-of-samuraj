@@ -1,13 +1,37 @@
-import {
-    ActionsTypes, DispatchType,
-    FollowUser,
-    SetCurrentPage, setFollowingType,
-    SetTotalCount,
-    SetUsers,
-    ToggleFetchingType,
-    UnfollowUser
-} from "./redux-store";
+import {ActionsTypes, DispatchType} from "./redux-store";
 import {followingAPI, userAPI} from "../API/API";
+
+
+//типизация action
+export type FollowUser = {
+    type: "FOLLOW"
+    userID: number
+}
+export type UnfollowUser = {
+    type: "UNFOLLOW"
+    userID: number
+}
+export type SetUsers = {
+    type: "SET_USERS"
+    items: Array<UsersReducerType>
+}
+export type SetCurrentPage = {
+    type: 'SET_CURRENT_PAGE'
+    currentPage: number
+}
+export type SetTotalCount = {
+    type: 'SET_TOTAL_COUNT'
+    totalCount: number
+}
+export type ToggleFetchingType = {
+    type: 'TOGGLE_FETCHING'
+    isFetch: boolean
+}
+export type setFollowingType = {
+    type: 'SET_TOGGLE_FOLLOWING'
+    userID: number
+    isFetch: boolean
+}
 
 //типизация state/initialState
 export type UsersReducerType = {

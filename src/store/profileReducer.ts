@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {ActionsTypes, addStatusTextType, DispatchType, setProfileStatusType} from "./redux-store";
+import {ActionsTypes, DispatchType} from "./redux-store";
 import {profileAPI} from "../API/API";
 
 //типизация state/initialState
@@ -37,19 +37,26 @@ export type ProfileType = {
     newStatusText: string | null
 
 }
-//типизация ActionCreators
+//типизация Action
 export type AddPostActionType = {
     type: "ADD-POST"
     post: string
 }
-
-type setProfileType = {
-    type: "SET_PROFILE"
+export type setUserProfileType = {
+    type: 'SET_PROFILE'
     profile: UserProfileType
 }
-type ToggleFetchProfileType = {
-    type: "TOGGLE_FETCHING_PROFILE"
+export type setToggleFetchProfile = {
+    type: 'TOGGLE_FETCHING_PROFILE'
     isFetch: boolean
+}
+export type setProfileStatusType = {
+    type: 'SET_PROFILE_STATUS'
+    status: string
+}
+export type addStatusTextType = {
+    type: 'ADD_STATUS_TEXT',
+    status: string
 }
 //CASE:
 const ADD_POST = "ADD-POST"
@@ -61,9 +68,8 @@ const ADD_STATUS_TEXT = "ADD_STATUS_TEXT"
 export const addPostActionCreator = (post: string): AddPostActionType => ({
     type: "ADD-POST", post
 })
-
-export const setUserProfile = (profile: UserProfileType): setProfileType => ({type: SET_PROFILE, profile})
-export const setToggleFetchProfile = (isFetch: boolean): ToggleFetchProfileType => ({
+export const setUserProfile = (profile: UserProfileType): setUserProfileType => ({type: SET_PROFILE, profile})
+export const setToggleFetchProfile = (isFetch: boolean): setToggleFetchProfile => ({
     type: TOGGLE_FETCHING_PROFILE,
     isFetch
 })

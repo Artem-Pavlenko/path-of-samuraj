@@ -2,15 +2,7 @@ import {ActionsTypes, DispatchType} from "./redux-store";
 import {authAPI, profileAPI} from "../API/API";
 
 //типизация state/initialState
-// export type AuthDataType ={
-//     data: {
-//         id: number | null,
-//         Login: string | null,
-//         email: string | null
-//     },
-//     messages: [string] | [],
-//     resultCode: 0 | 1
-// }
+
 export type HeaderReducerType = {
     data: {
         id: number | null
