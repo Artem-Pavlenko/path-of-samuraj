@@ -2,27 +2,34 @@ import React from 'react';
 import s from './Login.module.css'
 import {reduxForm, Field, InjectedFormProps} from "redux-form";
 import {Input} from "../../common/FormsControls/FormsControls";
-import {maxLength, requiredField} from "../../utils/validators/validators";
+import {requiredField} from "../../utils/validators/validators";
+import {connect} from "react-redux";
+import {login} from "../../store/authReducer";
+import {StateType} from "../../store/redux-store";
+import {Redirect} from 'react-router-dom';
 
 type FormDataType = {
-    login: string
+    email: string
     password: string
     rememberMe: boolean
 }
+type LoginType = {
+    isAuth: boolean
+    login: (email: string, password: string, rememberMe: boolean) => void
+}
 
-const maxLength20 = maxLength(20)
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={Input} type="text" name={"login"} placeholder={'login'}
-                       validate={[requiredField, maxLength20]}
+                <Field component={Input} type="text" name={"email"} placeholder={'login'}
+                       validate={[requiredField]}
                 />
             </div>
             <div>
                 <Field component={Input} type="password" name={"password"} placeholder={'password'}
-                       validate={[requiredField, maxLength20]}
+                       validate={[requiredField]}
                 />
             </div>
             <div>
@@ -37,11 +44,12 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
-const Login = () => {
+const Login = (props: LoginType) => {
     const onSubmit = (formData: FormDataType) => {
-        console.log('formData log', formData)
+        props.login(formData.email, formData.password, formData.rememberMe)
     }
-
+//если залогинен перенаправит на страницу profile, если нет - отрисует login
+    if (props.isAuth) return <Redirect to={'/profile'}/>
     return (
         <div className={s.login}>
             <div className={s.loginBlock}>
@@ -52,5 +60,9 @@ const Login = () => {
     )
 }
 
-export default Login;
+let mapStateToProps = (state: StateType) => ({
+    isAuth: state.auth.isAuth
+})
+
+export default connect(mapStateToProps, {login})(Login)
 

@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import Header from "./Header";
-import {authMe} from "../../store/authReducer";
-import {ReduxStateType} from "../../store/redux-store";
+import {authMe, logout} from "../../store/authReducer";
+import {StateType} from "../../store/redux-store";
 
 type StateToProps = {
     isAuth: boolean
@@ -11,6 +11,7 @@ type StateToProps = {
 }
 type DispatchToProps = {
     authMe: () => void
+    logout: () => void
 }
 type HeaderContainerType = StateToProps & DispatchToProps
 
@@ -19,29 +20,16 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
     componentDidMount() {
         //thunk
         this.props.authMe()
-        // authAPI.authMe()
-        //     .then((responseData) => {
-        //         if (responseData.resultCode === 0) {
-        //             this.props.setToggleFetchAuth(false) // отрисовка 'Login' или имя залогиненого пользователя
-        //             this.props.setAuthUserData(responseData)
-        //             axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + 7546) // + мой ID
-        //                 .then((response) => {
-        //                     this.props.setPhoto(response.data.photos.small)
-        //                 })
-        //         } else if (responseData.resultCode !== 0) {
-        //             alert(responseData.messages)
-        //         }
-        //     })
     }
 
     render() {
         return (
-            <Header isAuth={this.props.isAuth} login={this.props.login} photo={this.props.photo}/>
+            <Header isAuth={this.props.isAuth} login={this.props.login} photo={this.props.photo} logout={this.props.logout}/>
         )
     }
 }
 
-let mapStateToProps = (state: ReduxStateType) => {
+let mapStateToProps = (state: StateType) => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.data.login,
@@ -50,4 +38,4 @@ let mapStateToProps = (state: ReduxStateType) => {
 }
 
 
-export default connect(mapStateToProps, {authMe})(HeaderContainer)
+export default connect(mapStateToProps, {authMe, logout})(HeaderContainer)

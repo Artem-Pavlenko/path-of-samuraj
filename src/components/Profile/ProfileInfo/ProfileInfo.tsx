@@ -6,7 +6,7 @@ import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
 import Preloader from "../../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import {connect} from "react-redux";
-import {ReduxStateType} from "../../../store/redux-store";
+import {StateType} from "../../../store/redux-store";
 
 type ProfileStateToPropsType = {
     profile: UserProfileType
@@ -65,7 +65,7 @@ function ProfileInfo(props: profile) {
     )
 }
 
-let mapStateToProps = (state: ReduxStateType) => {
+let mapStateToProps = (state: StateType) => {
     return {
         profile: state.profile.profile,
         isFetch: state.profile.isFetching,

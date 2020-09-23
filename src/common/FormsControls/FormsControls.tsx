@@ -47,6 +47,6 @@ export const Input2 = (props: any) => {
 }
 
 export const Textarea2 = (props: any) => {
-    const {input, meta, restProps} = props
+    const {input, meta, ...restProps} = props
     return <FormControlCreator {...props}><textarea {...input} {...restProps}/> </FormControlCreator>
 }

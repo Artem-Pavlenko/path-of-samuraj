@@ -29,7 +29,7 @@ const reducers = combineReducers({
 let store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
 
-export type ReduxStateType = ReturnType<typeof reducers>
+export type StateType = ReturnType<typeof reducers>
 export type ReduxStore = typeof store
 export type DispatchType = typeof store.dispatch
 

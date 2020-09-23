@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {ReduxStateType} from "../../store/redux-store";
+import {StateType} from "../../store/redux-store";
 import {
     followThunk, getUsersThunk, setCurrentPage,
     unFollowThunk, UsersReducerType
@@ -64,7 +64,7 @@ class UsersPage extends React.Component<UsersContainerType> {
 }
 
 
-let mapStateToProps = (state: ReduxStateType) => {
+let mapStateToProps = (state: StateType) => {
     return {
         users: state.user.items,
         pageSize: state.user.pageSize,

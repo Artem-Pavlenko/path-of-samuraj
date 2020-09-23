@@ -4,11 +4,15 @@ import {NavLink} from "react-router-dom";
 import userPhoto from '../../assets/images/user img/Без названия.png'
 import sNetwork from '../../assets/images/network_icon/rss.png'
 
-type HeaderPropsType = {
+type DispatchToPropsType = {
+    logout: () => void
+}
+type StateToPropsType = {
     isAuth: boolean
     login: string | null
     photo: string | null
 }
+type HeaderPropsType = StateToPropsType & DispatchToPropsType
 
 function Header(props: HeaderPropsType) {
     return (
@@ -24,8 +28,9 @@ function Header(props: HeaderPropsType) {
                     ? <div className={s.profileLogin}>
                         <div><span>{props.login}</span></div>
                         <div><img src={props.photo == null ? userPhoto : props.photo} alt=""/></div>
+                        <button onClick={props.logout}>log out</button>
                     </div>
-                    : <NavLink to={'/Login'}>Login</NavLink>
+                    : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>
         </header>

@@ -6,7 +6,7 @@ import {
     getProfileStatus, getProfileThunk, setToggleFetchProfile,
     setUserProfile,UserProfileType
 } from "../../store/profileReducer";
-import {ReduxStateType} from "../../store/redux-store";
+import {StateType} from "../../store/redux-store";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
 
@@ -50,7 +50,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
     }
 }
 
-let mapStateToProps = (state: ReduxStateType): StateProfileType => {
+let mapStateToProps = (state: StateType): StateProfileType => {
     return {
         profile: state.profile.profile,
         isFetch: state.profile.isFetching

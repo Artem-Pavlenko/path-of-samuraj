@@ -1,5 +1,5 @@
 import {addPostActionCreator, ProfileType} from "../../../store/profileReducer";
-import {DispatchType, ReduxStateType} from "../../../store/redux-store";
+import {DispatchType, StateType} from "../../../store/redux-store";
 import {connect} from "react-redux";
 import Post from "./Post/Post";
 import React from "react";
@@ -31,7 +31,7 @@ function MyPosts(props: MyPostPropsType) {
 }
 
 
-let mapStateToProps = (state: ReduxStateType) =>{
+let mapStateToProps = (state: StateType) =>{
     return {
         profilePage: state.profile
     }

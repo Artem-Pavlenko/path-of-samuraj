@@ -11,7 +11,6 @@ export type HeaderReducerType = {
     }
     messages: [string] | []
     resultCode: 0 | 1
-    isFetchHead: boolean
     isAuth: boolean
     photo: string | null
 }
@@ -41,19 +40,38 @@ export const setToggleFetchAuth = (isFetchHeader: boolean): setToggleFetchHeader
     isFetchHeader
 })
 export const setPhoto = (photo: string | null): setPhotoType => ({type: SET_PHOTO, photo})
-//thunk
+
+
+//thunks
 export const authMe = () => (dispatch: DispatchType) => {
     authAPI.authMe()
         .then((responseData) => {
             if (responseData.resultCode === 0) {
+                console.log('res data', responseData)
                 dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
                 dispatch(setAuthUserData(responseData))
-                profileAPI.getProfile(7546) // дальше делаем запрос на сервак чтобы отрисовать фото
+                profileAPI.getProfile(responseData.data.id) // дальше делаем запрос на сервак чтобы отрисовать фото
                     .then((response) => {
                         dispatch(setPhoto(response.photos.small))
                     })
             } else if (responseData.resultCode !== 0) {
                 alert(responseData.messages)
+            }
+        })
+}
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: DispatchType) => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response === 0) {
+                dispatch<any>(authMe())
+            }
+        })
+}
+export const logout = () => (dispatch: DispatchType) => {
+    authAPI.logout()
+        .then(response => {
+            if (response === 0) {
+                dispatch(setToggleFetchAuth(false)) //зануляем state и авторизация = false
             }
         })
 }
@@ -67,7 +85,6 @@ let initialState: HeaderReducerType = {
     },
     messages: [],
     resultCode: 1,
-    isFetchHead: true,
     isAuth: false,
     photo: null
 }
@@ -86,7 +103,11 @@ const authReducer = (state: HeaderReducerType = initialState, action: ActionsTyp
         }
         case SET_FETCH_HEADER: {
             return {
-                ...state, isFetchHead: action.isFetchHeader
+                ...state,
+                // при выходе зануляем данные
+                data: {email: null, login: null, id: null},
+                messages: [],
+                isAuth: action.isFetchHeader
             }
         }
         case SET_PHOTO: {

@@ -1,5 +1,5 @@
 import { addMessActionCreator} from "../../store/dialogsReducer";
-import {DispatchType, ReduxStateType} from "../../store/redux-store";
+import {DispatchType, StateType} from "../../store/redux-store";
 import {compose} from "redux"
 import {connect} from "react-redux";
 import React from "react";
@@ -60,7 +60,7 @@ export function Dialogs(props: DialogsPropsType) {
     )
 }
 
-let mapStateToProps = (state: ReduxStateType) => {
+let mapStateToProps = (state: StateType) => {
     return {
         dialogsPage: state.dialogs
     }
