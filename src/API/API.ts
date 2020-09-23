@@ -28,7 +28,7 @@ export const authAPI = {
         return axiosInstance.post('/auth/login', {email, password, rememberMe})
             .then(response => {
                 console.log(response)
-                return response.data.resultCode
+                return response.data
            })
     },
     logout(){
@@ -39,7 +39,15 @@ export const authAPI = {
             })
     }
 }
-
+export const securityAPI = {
+    getCaptcha() {
+        return axiosInstance.get('/security/get-captcha-url')
+            .then(response => {
+                console.log(response.data)
+                return response.data.url
+            })
+    }
+}
 export const followingAPI = {
     following(userID: number) {
         return axiosInstance.post(`follow/${userID}`, {})

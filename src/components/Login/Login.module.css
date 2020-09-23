@@ -6,3 +6,6 @@
 .btn {
     text-align: center;
 }
+.errorSpan{
+    color: red;
+}

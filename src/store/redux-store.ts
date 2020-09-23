@@ -8,7 +8,13 @@ import usersReducer, {
     FollowUser, SetCurrentPage, setFollowingType, SetTotalCount,
     SetUsers, ToggleFetchingType, UnfollowUser
 } from "./usersReducer";
-import authReducer, {setAuthorizationType, setPhotoType, setToggleFetchHeaderType} from "./authReducer";
+import authReducer, {
+    setAuthorizationType,
+    setCaptchaIMGType,
+    setErrorMess,
+    setPhotoType,
+    setToggleFetchHeaderType
+} from "./authReducer";
 import thunkMiddleware from "redux-thunk"
 import {reducer as formReducer} from 'redux-form'
 
@@ -17,7 +23,7 @@ export type ActionsTypes = AddPostActionType | AddMessActionType | FollowUser |
     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
     ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
     setAuthorizationType | setToggleFetchHeaderType | setPhotoType | setFollowingType |
-    addStatusTextType | setProfileStatusType
+    addStatusTextType | setProfileStatusType | setErrorMess | setCaptchaIMGType
 
 const reducers = combineReducers({
     profile: profileReducer,

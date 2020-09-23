@@ -26,9 +26,12 @@ function Header(props: HeaderPropsType) {
             <div className={s.loginBlock}>
                 {props.isAuth
                     ? <div className={s.profileLogin}>
-                        <div><span>{props.login}</span></div>
+                        <div>
+                            <span>{props.login}</span>
+                            <button onClick={props.logout}>log out</button>
+                        </div>
                         <div><img src={props.photo == null ? userPhoto : props.photo} alt=""/></div>
-                        <button onClick={props.logout}>log out</button>
+
                     </div>
                     : <NavLink to={'/login'}>Login</NavLink>
                 }

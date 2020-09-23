@@ -4,7 +4,7 @@ import {compose} from "redux"
 import {connect} from "react-redux";
 import {
     getProfileStatus, getProfileThunk, setToggleFetchProfile,
-    setUserProfile,UserProfileType
+    setUserProfile, UserProfileType
 } from "../../store/profileReducer";
 import {StateType} from "../../store/redux-store";
 import {withRouter} from "react-router-dom";
@@ -17,9 +17,7 @@ type DispatchProfileType = {
     getProfile: (profileIdFromURL: string) => void
     getProfileStatus: (userID: string) => void
 }
-type StateProfileType = {
-
-}
+type StateProfileType = {}
 type ProfilePropsType = DispatchProfileType & StateProfileType & RouterType
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
@@ -32,11 +30,6 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         }
         //thunk
         this.props.getProfile(userID)
-        // profileAPI.getProfile(+userID)
-        //     .then((responseData) => {
-        //         this.props.setToggleFetchProfile(false)
-        //         this.props.setUserProfile(responseData)
-        //     })
         this.props.getProfileStatus(userID)
     }
 
@@ -44,7 +37,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         // if (!this.props.isAuth)return <Redirect to={'/Login'}/> // если пользователь не залогинен, то перенаправит на страницу Login
         return (
             <div>
-                <Profile />
+                <Profile/>
             </div>
         )
     }
