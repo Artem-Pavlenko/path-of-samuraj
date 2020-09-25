@@ -25,8 +25,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
     const [typeInput, setTypeInput] = useState<"password" | "text">("password")
     const onChangeShowPass = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.currentTarget.checked){
-            debugger
+        if (e.currentTarget.checked) {
             setTypeInput("text")
         } else {
             setTypeInput("password")
@@ -50,6 +49,9 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
             <div>
                 <Field component="input" type="checkbox" name={"rememberMe"}/> remember me
             </div>
+            {props.error && <div className={s.formSummeryError}>
+                {props.error}
+            </div>}
             <div className={s.btn}>
                 <button>Login</button>
             </div>

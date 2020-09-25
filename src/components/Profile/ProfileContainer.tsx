@@ -17,7 +17,10 @@ type DispatchProfileType = {
     getProfile: (profileIdFromURL: string) => void
     getProfileStatus: (userID: string) => void
 }
-type StateProfileType = {}
+type StateProfileType = {
+    userID: number
+    isAth: boolean
+}
 type ProfilePropsType = DispatchProfileType & StateProfileType & RouterType
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
@@ -26,7 +29,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         //переменной присваиваем ID который будет в URL при нажати на аватарку пользователя(в User.tsx)
         let userID = this.props.match.params.userID
         if (!userID) {   //если не передаём никой id профиля, то хададим по умолчанию id
-            userID = '7546' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
+            userID = this.props.userID.toString() //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
         }
         //thunk
         this.props.getProfile(userID)
@@ -45,34 +48,12 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
 let mapStateToProps = (state: StateType): StateProfileType => {
     return {
-        profile: state.profile.profile,
-        isFetch: state.profile.isFetching
+        // ID авторизованоего пользоваетля
+        userID: state.profile.profile.userId,
+        isAth: state.auth.isAuth
     }
 }
 
-// let mapDispatchToProps = (dispatch: DispatchType): DispatchProfileType => {
-//     return {
-//         setUserProfile:  (profile: UserProfileType) => {
-//             dispatch(setUserProfile(profile))
-//         },
-//         setToggleFetchProfile: (isFetch: boolean) => {
-//             dispatch(setToggleFetchProfile(isFetch))
-//         }
-//         //короткий вариант
-//         // setUserProfile,
-//         //setToggleFetchProfile
-//     }
-// }
-
-// let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
-// //закидываем ProfileContainer в hoc, чтоб внутри компоненты был доступ к url
-// let WithURLDataContainerComponent = withRouter(AuthRedirectComponent)
-//
-// export default connect(mapStateToProps, {
-//     setUserProfile,
-//     setToggleFetchProfile,
-//     getProfile: getProfileThunk
-// })(WithURLDataContainerComponent);
 
 export default compose<React.ComponentType>(connect(mapStateToProps, {
     setUserProfile,

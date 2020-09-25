@@ -1,5 +1,6 @@
 import {ActionsTypes, DispatchType} from "./redux-store";
 import {authAPI, profileAPI, securityAPI} from "../API/API";
+import {stopSubmit} from "redux-form";
 
 //типизация state/initialState
 export type HeaderReducerType = {
@@ -77,12 +78,15 @@ export const login = (email: string, password: string, rememberMe: boolean) => (
             } else if (response.resultCode === 10) {
                 securityAPI.getCaptcha()
                     .then(responseIMG => {
-                        dispatch(setErrorMess(response.messages[0]))
+                        dispatch(stopSubmit('login', {_error: response.messages[0]}))
+                        // dispatch(setErrorMess(response.messages[0]))
                         dispatch(setCaptcha(responseIMG))
                     })
             } else if (response.resultCode !== 0) {
+                debugger
                 console.log(response.messages)
-                dispatch(setErrorMess(response.messages[0]))
+                dispatch(stopSubmit('login', {_error: response.messages[0]}))
+                // dispatch(setErrorMess(response.messages[0]))
             }
         })
 }
