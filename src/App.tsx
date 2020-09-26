@@ -24,7 +24,7 @@ type AppDispatchToPropsType = {
 }
 type AppType = AppDispatchToPropsType & AppStateToPropsType
 
-class App extends React.Component<any, any> {
+class App extends React.Component<AppType> {
     componentDidMount() {
         //'thunk'
         this.props.initializeApp()
