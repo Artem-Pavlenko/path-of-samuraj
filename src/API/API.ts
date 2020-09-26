@@ -66,13 +66,13 @@ export const followingAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userID: number) {
+    getProfile(userID: string) {
         return axiosInstance.get(`profile/${userID}`)
             .then(response => {
                 return response.data
             })
     },
-    getStatus(userID: number){
+    getStatus(userID: string){
         return axiosInstance.get(`profile/status/${userID}`)
             .then(response => {
                 return response.data

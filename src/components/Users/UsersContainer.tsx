@@ -7,6 +7,7 @@ import {
 import React from "react";
 import Users from "./Users";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
+import {compose} from "redux"
 
 type DispatchToPropsType = {
     setCurrentPage: (page: number) => void
@@ -29,23 +30,12 @@ class UsersPage extends React.Component<UsersContainerType> {
     componentDidMount() {
         //thunk (преобразователь) сетает из сервака юзеров при зазруке users страници
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
-        // this.props.setToggleFetch(true)
-        // userAPI.getUsers(this.props.currentPage, this.props.pageSize).then((responseData) => {
-        //     this.props.setToggleFetch(false)
-        //     this.props.setUsers(responseData.items)
-        //     this.props.setTotalCount(responseData.totalCount)
-        // })
     }
 
     onPageChanged = (pageNumber: number) => {  //принажатии номера страници пользователей
         this.props.setCurrentPage(pageNumber)
         //thunk (преобразователь)
         this.props.getUsers(pageNumber, this.props.pageSize)
-        // this.props.setToggleFetch(true)
-        // userAPI.getUsers(pageNumber, this.props.pageSize).then((responseData) => {
-        //     this.props.setToggleFetch(false)
-        //     this.props.setUsers(responseData.items)
-        // })
     }
 
     render() {
@@ -74,34 +64,18 @@ let mapStateToProps = (state: StateType) => {
         followingInProgress: state.user.followingInProgress.userID
     }
 }
-// let authRedirectComponent = withAuthRedirect(UsersPage)
 
-// let mapDispatchToProps = (dispatch: DispatchType) => {
-//     return {
-//         follow: (userID: number) => {
-//             dispatch(follow(userID))
-//         },
-//         unFollow: (userID: number) => {
-//             dispatch(unFollow(userID))
-//         },
-//         setUsers: (users: Array<UsersReducerType>) => {
-//             dispatch(setUsers(users))
-//         },
-//         setCurrentPage: (page: number) => {
-//             dispatch(setCurrentPage(page))
-//         },
-//         setTotalCount: (totalCount: number) => {
-//             dispatch(setTotalCount(totalCount))
-//         },
-//         onFetch: (f: boolean) => {
-//             dispatch(setToggleFetch(f))
-//         }
-//     }
-// }
-let UsersContainer = withAuthRedirect(connect(mapStateToProps, {
-    setCurrentPage, getUsers: getUsersThunk,
-    unFollowUser: unFollowThunk,
-    followUser: followThunk
-})(UsersPage))
 
-export default UsersContainer
+// let UsersContainer = withAuthRedirect(connect(mapStateToProps, {
+//     setCurrentPage, getUsers: getUsersThunk,
+//     unFollowUser: unFollowThunk,
+//     followUser: followThunk
+// })(UsersPage))
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        setCurrentPage, getUsers: getUsersThunk,
+        unFollowUser: unFollowThunk,
+        followUser: followThunk}),
+    // withAuthRedirect
+)(UsersPage)

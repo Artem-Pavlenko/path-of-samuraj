@@ -10,12 +10,11 @@ export type HeaderReducerType = {
         email: string | null
     }
     messages: Array<string> | []
-    resultCode: 0 | 1
+    resultCode: number
     isAuth: boolean
     photo: string | null
     img: string | null
 }
-
 //типизация ActionCreators
 export type setAuthorizationType = {
     type: "SET_AUTHORIZATION"
@@ -53,52 +52,6 @@ export const setToggleFetchAuth = (isFetchHeader: boolean): setToggleFetchHeader
 export const setPhoto = (photo: string | null): setPhotoType => ({type: SET_PHOTO, photo})
 export const setErrorMess = (messages: string): setErrorMess => ({type: SET_ERROR_MESS, messages})
 export const setCaptcha = (captcha: string): setCaptchaIMGType => ({type: SET_CAPTCHA_IMG, captcha})
-//thunks
-export const authMe = () => (dispatch: DispatchType) => {
-    authAPI.authMe()
-        .then((responseData) => {
-            if (responseData.resultCode === 0) {
-                console.log('res data', responseData)
-                dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
-                dispatch(setAuthUserData(responseData))
-                profileAPI.getProfile(responseData.data.id) // дальше делаем запрос на сервак чтобы отрисовать фото
-                    .then((response) => {
-                        dispatch(setPhoto(response.photos.small))
-                    })
-            } else if (responseData.resultCode !== 0) {
-                alert(responseData.messages)
-            }
-        })
-}
-export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: DispatchType) => {
-    authAPI.login(email, password, rememberMe)
-        .then(response => {
-            if (response.resultCode === 0) {
-                dispatch<any>(authMe())
-            } else if (response.resultCode === 10) {
-                securityAPI.getCaptcha()
-                    .then(responseIMG => {
-                        dispatch(stopSubmit('login', {_error: response.messages[0]}))
-                        // dispatch(setErrorMess(response.messages[0]))
-                        dispatch(setCaptcha(responseIMG))
-                    })
-            } else if (response.resultCode !== 0) {
-                debugger
-                console.log(response.messages)
-                dispatch(stopSubmit('login', {_error: response.messages[0]}))
-                // dispatch(setErrorMess(response.messages[0]))
-            }
-        })
-}
-export const logout = () => (dispatch: DispatchType) => {
-    authAPI.logout()
-        .then(response => {
-            if (response === 0) {
-                dispatch(setToggleFetchAuth(false)) //зануляем state и авторизация = false
-            }
-        })
-}
-
 
 let initialState: HeaderReducerType = {
     data: {
@@ -149,5 +102,60 @@ const authReducer = (state: HeaderReducerType = initialState, action: ActionsTyp
             return state
     }
 }
+
+//thunks
+export const authMe = () => (dispatch: DispatchType) => {
+    return authAPI.authMe()
+        .then((responseData) => {
+            if (responseData.resultCode === 0) {
+                console.log('res data', responseData)
+                dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
+                dispatch(setAuthUserData(responseData))
+                profileAPI.getProfile(responseData.data.id) // дальше делаем запрос на сервак чтобы отрисовать фото
+                    .then((response) => {
+                        dispatch(setPhoto(response.photos.small))
+                    })
+            } else if (responseData.resultCode !== 0) {
+                alert(responseData.messages)
+            }
+        })
+        .catch( error => {
+            console.log('ошибка (authMe)',error)
+        })
+}
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: DispatchType) => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.resultCode === 0) {
+                dispatch<any>(authMe())
+            } else if (response.resultCode === 10) {
+                securityAPI.getCaptcha()
+                    .then(responseIMG => {
+                        dispatch(stopSubmit('login', {_error: response.messages[0]}))
+                        // dispatch(setErrorMess(response.messages[0]))
+                        dispatch(setCaptcha(responseIMG))
+                    })
+            } else if (response.resultCode !== 0) {
+                console.log(response.messages)
+                dispatch(stopSubmit('login', {_error: response.messages[0]}))
+                // dispatch(setErrorMess(response.messages[0]))
+            }
+        })
+        .catch( error => {
+            console.log('ошибка (login in authReducer)',error)
+        })
+}
+export const logout = () => (dispatch: DispatchType) => {
+    authAPI.logout()
+        .then(response => {
+            if (response === 0) {
+                dispatch(setToggleFetchAuth(false)) //зануляем state и авторизация = false
+            }
+        })
+        .catch( error => {
+            console.log('ошибка (logout in authReducer)',error)
+        })
+}
+
 
 export default authReducer;

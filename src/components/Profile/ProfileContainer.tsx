@@ -18,22 +18,39 @@ type DispatchProfileType = {
     getProfileStatus: (userID: string) => void
 }
 type StateProfileType = {
-    userID: number
-    isAth: boolean
+    userID: number | null
+    isAuth: boolean
 }
 type ProfilePropsType = DispatchProfileType & StateProfileType & RouterType
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
 
     componentDidMount() {
-        //переменной присваиваем ID который будет в URL при нажати на аватарку пользователя(в User.tsx)
-        let userID = this.props.match.params.userID
-        if (!userID) {   //если не передаём никой id профиля, то хададим по умолчанию id
-            userID = this.props.userID.toString() //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
+
+            //переменной присваиваем ID который будет в URL при нажати на аватарку пользователя(в User.tsx)
+            let userID = this.props.match.params.userID
+            if (!userID) {
+                userID = this.props.userID ? this.props.userID.toString() : '' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
+                if (!userID){
+                    this.props.history.push('/login')
+                }
+            }
+            //'thunk'
+            this.props.getProfile(userID)
+            this.props.getProfileStatus(userID)
+
+    }
+    componentDidUpdate(prevProps: Readonly<ProfilePropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (prevProps.isAuth !== this.props.isAuth) {
+            //переменной присваиваем ID который будет в URL при нажати на аватарку пользователя(в User.tsx)
+            let userID = this.props.match.params.userID
+            if (!userID) {//если не передаём никой id профиля, то хададим по умолчанию id
+                userID = this.props.userID ? this.props.userID.toString() : '' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
+            }
+            //'thunk'
+            this.props.getProfile(userID)
+            this.props.getProfileStatus(userID)
         }
-        //thunk
-        this.props.getProfile(userID)
-        this.props.getProfileStatus(userID)
     }
 
     render() {
@@ -49,8 +66,8 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 let mapStateToProps = (state: StateType): StateProfileType => {
     return {
         // ID авторизованоего пользоваетля
-        userID: state.profile.profile.userId,
-        isAth: state.auth.isAuth
+        userID: state.auth.data.id,
+        isAuth: state.auth.isAuth
     }
 }
 

@@ -17,6 +17,7 @@ import authReducer, {
 } from "./authReducer";
 import thunkMiddleware from "redux-thunk"
 import {reducer as formReducer} from 'redux-form'
+import appReducer from "./appReducer";
 
 
 export type ActionsTypes = AddPostActionType | AddMessActionType | FollowUser |
@@ -30,7 +31,9 @@ const reducers = combineReducers({
     dialogs: dialogsReducer,
     user: usersReducer,
     auth: authReducer,
+    app: appReducer,
     form: formReducer
+
 })
 let store = createStore(reducers, applyMiddleware(thunkMiddleware))
 

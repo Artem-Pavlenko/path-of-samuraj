@@ -79,18 +79,25 @@ export const addStatusText = (status: string): addStatusTextType => ({type: ADD_
 
 export const getProfileThunk = (userID: string) => {
     return (dispatch: DispatchType) => {
-        profileAPI.getProfile(+userID)
+        profileAPI.getProfile(userID)
             .then((responseData) => {
                 dispatch(setToggleFetchProfile(false))
                 dispatch(setUserProfile(responseData))
             })
+            .catch( error => {
+                console.log('ошибка (getProfileThunk)',error)
+            })
     }
 }
 export const getProfileStatus = (userID: string) => (dispatch: DispatchType) => {
-    profileAPI.getStatus(+userID)
+    profileAPI.getStatus(userID)
         .then(responseData => {
             dispatch(setProfileStatus(responseData))
         })
+        .catch( error => {
+            console.log('ошибка (getProfileStatus)',error)
+        })
+
 }
 export const updateProfileStatus = (status: string) => (dispatch: DispatchType) => {
     profileAPI.updateStatus(status)
@@ -102,6 +109,9 @@ export const updateProfileStatus = (status: string) => (dispatch: DispatchType) 
                 }
             }
         )
+        .catch( error => {
+            console.log('ошибка (upbProfileStatus)',error)
+        })
 }
 
 
@@ -126,7 +136,7 @@ let initialState: ProfileType = {
         fullName: null,
         lookingForAJob: false,
         lookingForAJobDescription: null,
-        userId: 1,
+        userId: 1120,
         photos: {
             large: null,
             small: null
@@ -147,8 +157,6 @@ const profileReducer = (state: ProfileType = initialState, action: ActionsTypes)
                     post: [
                         {id: v1(), comm: action.post, like: 0}, ...state.post]
                 }
-            // }
-            // return state
         case SET_PROFILE:
             return {...state, profile: action.profile}
         case TOGGLE_FETCHING_PROFILE:
