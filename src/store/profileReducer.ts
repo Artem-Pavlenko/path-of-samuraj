@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {DispatchType} from "./redux-store";
-import {profileAPI} from "../API/API";
+import {profileAPI, ResultCodesEnum} from "../API/API";
 
 //типизация initialState
 export type CommentType = {
@@ -90,7 +90,7 @@ let initialState: ProfileType = {
         fullName: null,
         lookingForAJob: false,
         lookingForAJobDescription: null,
-        userId: 1120,
+        userId: 0,
         photos: {
             large: null,
             small: null
@@ -143,7 +143,7 @@ export const setProfileStatus = (status: string): setProfileStatusType => ({type
 export const addStatusText = (status: string): addStatusTextType => ({type: ADD_STATUS_TEXT, status})
 
 //thunk
-export const getProfileThunk = (userID: string) => {
+export const getProfileThunk = (userID: number) => {
     return (dispatch: DispatchType) => {
         profileAPI.getProfile(userID)
             .then((responseData) => {
@@ -168,9 +168,9 @@ export const getProfileStatus = (userID: string) => (dispatch: DispatchType) => 
 export const updateProfileStatus = (status: string) => (dispatch: DispatchType) => {
     profileAPI.updateStatus(status)
         .then(responseData => {
-                if (responseData.resultCode === 0) {
+                if (responseData.resultCode === ResultCodesEnum.Success) {
                     dispatch(addStatusText(status))
-                } else if (responseData.resultCode !== 0){
+                } else if (responseData.resultCode !== ResultCodesEnum.Success){
                     alert(responseData.messages)
                 }
             }

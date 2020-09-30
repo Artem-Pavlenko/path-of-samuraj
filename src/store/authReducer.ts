@@ -1,9 +1,10 @@
 import {DispatchType} from "./redux-store";
-import {authAPI, profileAPI, securityAPI} from "../API/API";
+import {authAPI, profileAPI, ResultCodeForCaptcha, ResultCodesEnum, securityAPI} from "../API/API";
 import {stopSubmit} from "redux-form";
+import {Dispatch} from "redux";
 
 //типизация state/initialState
-export type HeaderReducerType = {
+export type AuthType = {
     data: {
         id: number | null
         login: string | null
@@ -16,10 +17,18 @@ export type HeaderReducerType = {
     img: string | null
 }
 //типизация ActionCreators
+type data = {
+    data: {
+        id: number
+        login: string
+        email: string
+    }
+    resultCode: number
+    messages: string[]
+}
 export type setAuthorizationType = {
     type: "SET_AUTHORIZATION"
-    data: HeaderReducerType
-
+    data: data
 }
 export type setToggleFetchHeaderType = {
     type: 'SET_TOGGLE_HEADER'
@@ -50,7 +59,7 @@ const SET_ERROR_MESS = 'SET_ERROR_MESS'
 const SET_CAPTCHA_IMG = 'SET_CAPTCHA_IMG'
 
 
-let initialState: HeaderReducerType = {
+let initialState: AuthType = {
     data: {
         id: null,
         login: null,
@@ -64,11 +73,10 @@ let initialState: HeaderReducerType = {
 }
 
 
-const authReducer = (state: HeaderReducerType = initialState, action: ActionsType): HeaderReducerType => {
+const authReducer = (state: AuthType = initialState, action: ActionsType): AuthType => {
 
     switch (action.type) {
         case SET_AUTHORIZATION: {
-            //придумать что-то перед ответом из сервака ! ! !
             return {
                 ...state,
                 ...action.data,
@@ -103,7 +111,7 @@ const authReducer = (state: HeaderReducerType = initialState, action: ActionsTyp
 export default authReducer;
 
 //ActionCreators
-export const setAuthUserData = (data: HeaderReducerType): setAuthorizationType => ({type: SET_AUTHORIZATION, data})
+export const setAuthUserData = (data: data): setAuthorizationType => ({type: SET_AUTHORIZATION, data})
 export const setToggleFetchAuth = (isFetchHeader: boolean): setToggleFetchHeaderType => ({
     type: SET_FETCH_HEADER,
     isFetchHeader
@@ -116,7 +124,7 @@ export const setCaptcha = (captcha: string): setCaptchaIMGType => ({type: SET_CA
 export const authMe = () => (dispatch: DispatchType) => {
     return authAPI.authMe()
         .then((responseData) => {
-            if (responseData.resultCode === 0) {
+            if (responseData.resultCode === ResultCodesEnum.Success) {
                 console.log('res data', responseData)
                 dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
                 dispatch(setAuthUserData(responseData))
@@ -124,7 +132,7 @@ export const authMe = () => (dispatch: DispatchType) => {
                     .then((response) => {
                         dispatch(setPhoto(response.photos.small))
                     })
-            } else if (responseData.resultCode !== 0) {
+            } else if (responseData.resultCode !== ResultCodesEnum.Success) {
                 alert(responseData.messages)
             }
         })
@@ -132,12 +140,12 @@ export const authMe = () => (dispatch: DispatchType) => {
             console.log('ошибка (authMe)', error)
         })
 }
-export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: DispatchType) => {
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
     authAPI.login(email, password, rememberMe)
         .then(response => {
-            if (response.resultCode === 0) {
+            if (response.resultCode === ResultCodesEnum.Success) {
                 dispatch<any>(authMe())
-            } else if (response.resultCode === 10) {
+            } else if (response.resultCode === ResultCodeForCaptcha.CaptchaIsRequired) {
                 securityAPI.getCaptcha()
                     .then(responseIMG => {
                         dispatch(stopSubmit('login', {_error: response.messages[0]}))
@@ -157,7 +165,7 @@ export const login = (email: string, password: string, rememberMe: boolean) => (
 export const logout = () => (dispatch: DispatchType) => {
     authAPI.logout()
         .then(response => {
-            if (response === 0) {
+            if (response === ResultCodesEnum.Success) {
                 dispatch(setToggleFetchAuth(false)) //зануляем state и авторизация = false
             }
         })

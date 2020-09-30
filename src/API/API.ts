@@ -7,10 +7,25 @@ const axiosInstance = axios.create({
         'API-KEY': '3e79c344-389c-4379-912f-1ab506d5006c'
     }
 })
+export enum ResultCodesEnum {
+    Success = 0,
+    Error = 1,
+
+}
+export enum ResultCodeForCaptcha {
+    CaptchaIsRequired = 10
+}
+type ResponseTyp<d = {}, n = number> = {
+    data: d
+    resultCode: n
+    messages: string[]
+}
 
 export const userAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return axiosInstance.get(`users?page=${currentPage}&count=${pageSize}`).then((response) => {
+        return axiosInstance.get(`users?page=${currentPage}&count=${pageSize}`)
+            .then((response) => {
+                debugger
             return response.data
         })
     }
@@ -18,27 +33,25 @@ export const userAPI = {
 
 export const authAPI = {
     authMe() {
-        return axiosInstance.get(`auth/me`)
+        return axiosInstance.get<ResponseTyp<{id: number, login: string, email: string}>>(`auth/me`)
             .then(response => {
-                //возвращает нужный "кусок" ответа.
                 return response.data
             })
     },
     login(email: string, password: string, rememberMe: boolean = false) {
-        return axiosInstance.post('/auth/login', {email, password, rememberMe})
+        return axiosInstance.post<ResponseTyp<{userId: number}>>('/auth/login', {email, password, rememberMe})
             .then(response => {
-                console.log(response)
                 return response.data
            })
     },
     logout(){
-        return axiosInstance.delete('/auth/login')
+        return axiosInstance.delete<ResponseTyp>('/auth/login')
             .then(response => {
-                console.log(response)
                 return response.data.resultCode
             })
     }
 }
+
 export const securityAPI = {
     getCaptcha() {
         return axiosInstance.get('/security/get-captcha-url')
@@ -64,7 +77,7 @@ export const followingAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userID: string) {
+    getProfile(userID: number) {
         return axiosInstance.get(`profile/${userID}`)
             .then(response => {
                 return response.data

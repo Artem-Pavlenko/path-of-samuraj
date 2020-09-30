@@ -1,5 +1,5 @@
-import {DispatchType} from "./redux-store";
 import {authMe} from "./authReducer";
+import {Dispatch} from "redux";
 
 
 type StateAppReducerType = {
@@ -32,7 +32,7 @@ const appReducer = (state: StateAppReducerType = initialState, action: ActionsTy
 export const setInitialize = (): setInitialized => ({type: "SET_INITIALIZED"})
 
 //thunk
-export const initializeApp = () => (dispatch: DispatchType) => {
+export const initializeApp = () => (dispatch: Dispatch) => {
     // если будет несколько асинхронных запросов и надо ПОСЛЕ выполнения ВСЕХ что-то сделать, то лучше закинуть все
     // промисы в Promise.all([]) (массив) и после уже в методе .then() выполнить что нужно
     // let promise = dispatch<any>(authMe())

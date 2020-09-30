@@ -6,10 +6,10 @@ function News() {
     const [count, setCount] = useState(0)
     useEffect( ()=> {
         const interval = setTimeout( () => {
-            console.log(count)
             setCount(count + 2)
         }, 10)
         count >= 400 && clearInterval(interval)
+        return () => clearInterval(interval)
     }, [count])
 
     return (

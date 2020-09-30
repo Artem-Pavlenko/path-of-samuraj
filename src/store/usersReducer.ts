@@ -1,5 +1,6 @@
-import {DispatchType} from "./redux-store";
-import {followingAPI, userAPI} from "../API/API";
+import {StateType} from "./redux-store";
+import {followingAPI, ResultCodesEnum, userAPI} from "../API/API";
+import {Dispatch} from "redux";
 
 
 //типизация action
@@ -145,9 +146,11 @@ export const setToggleFollowing = (userID: number, isFetch: boolean): setFollowi
     isFetch
 })
 
+type getStateType = () => StateType
+type DispatchUsersType = Dispatch<ActionsType>
 //thunk
 export const getUsersThunk = (currentPage: number, pageSize: number) => {
-    return (dispatch: DispatchType) => {
+    return (dispatch: Dispatch<ActionsType>, getState: getStateType) => {
         dispatch(setToggleFetch(true))
         userAPI.getUsers(currentPage, pageSize).then((responseData) => {
             dispatch(setToggleFetch(false))
@@ -158,14 +161,13 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => {
 }
 //thunk
 export const unFollowThunk = (userID: number) => {
-    return (dispatch: DispatchType) => {
+    return (dispatch: Dispatch) => {
         dispatch(setToggleFollowing(userID, true))
-        console.log(initialState.followingInProgress.userID)
         followingAPI.unFollowing(userID)
             .then((responseData) => {
-                if (responseData.resultCode === 0) {
+                if (responseData.resultCode === ResultCodesEnum.Success) {
                     dispatch(unFollow(userID))
-                } else if (responseData.resultCode !== 0) {
+                } else if (responseData.resultCode !== ResultCodesEnum.Success) {
                     alert(responseData.messages)
                 }
                 dispatch(setToggleFollowing(userID, false))
@@ -174,14 +176,13 @@ export const unFollowThunk = (userID: number) => {
     }
 }
 //thunk
-export const followThunk = (userID: number) => (dispatch: DispatchType) => {
+export const followThunk = (userID: number) => (dispatch: Dispatch) => {
     dispatch(setToggleFollowing(userID, true))
-    console.log(initialState.followingInProgress.userID)
     followingAPI.following(userID)
         .then((responseData) => {
-            if (responseData.resultCode === 0) {
+            if (responseData.resultCode === ResultCodesEnum.Success) {
                 dispatch(follow(userID))
-            } else if (responseData.resultCode !== 0) {
+            } else if (responseData.resultCode !== ResultCodesEnum.Success) {
                 alert(responseData.messages)
             }
             dispatch(setToggleFollowing(userID, false))
