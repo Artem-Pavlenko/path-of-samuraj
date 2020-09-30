@@ -6,7 +6,6 @@ import {
 } from "../../store/usersReducer";
 import React from "react";
 import Users from "./Users";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux"
 
 type DispatchToPropsType = {
@@ -28,13 +27,13 @@ type UsersContainerType = DispatchToPropsType & StateToPropsType
 class UsersPage extends React.Component<UsersContainerType> {
 
     componentDidMount() {
-        //thunk (преобразователь) сетает из сервака юзеров при зазруке users страници
+        //thunk (преобразователь) сэтает из сервака юзеров при зазруке users страници
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {  //принажатии номера страници пользователей
         this.props.setCurrentPage(pageNumber)
-        //thunk (преобразователь)
+        //thunk
         this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
@@ -66,16 +65,11 @@ let mapStateToProps = (state: StateType) => {
 }
 
 
-// let UsersContainer = withAuthRedirect(connect(mapStateToProps, {
-//     setCurrentPage, getUsers: getUsersThunk,
-//     unFollowUser: unFollowThunk,
-//     followUser: followThunk
-// })(UsersPage))
-
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         setCurrentPage, getUsers: getUsersThunk,
         unFollowUser: unFollowThunk,
-        followUser: followThunk}),
+        followUser: followThunk
+    }),
     // withAuthRedirect
 )(UsersPage)

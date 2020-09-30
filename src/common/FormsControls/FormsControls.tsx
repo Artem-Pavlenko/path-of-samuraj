@@ -2,7 +2,9 @@ import React from 'react'
 import s from './FormsControls.module.css'
 
 export const Textarea = ({input, meta, ...props}: any) => {
-    console.log(meta.error)
+
+    meta.error && console.log(meta.error)
+
     return (
         <div className={`${s.formControl} ${meta.error && s.error}`}>
             <div>
@@ -26,7 +28,6 @@ export const Input = ({input, meta, ...props}: any) => {
 }
 
 
-
 //или можно создать creator для элиментов
 
 const FormControlCreator = ({input, meta, ...props}: any) => {
@@ -42,7 +43,7 @@ const FormControlCreator = ({input, meta, ...props}: any) => {
 }
 
 export const Input2 = (props: any) => {
-    const {input,meta, ...restProps} = props
+    const {input, meta, ...restProps} = props
     return <FormControlCreator {...props}><input {...input} {...restProps}/> </FormControlCreator>
 }
 

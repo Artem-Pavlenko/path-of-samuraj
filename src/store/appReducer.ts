@@ -1,4 +1,3 @@
-import {Dispatch} from "react";
 import {DispatchType} from "./redux-store";
 import {authMe} from "./authReducer";
 
@@ -6,11 +5,14 @@ import {authMe} from "./authReducer";
 type StateAppReducerType = {
     initialized: boolean
 }
-// Action types
+// ActionCreators types
 type setInitialized = {
     type: 'SET_INITIALIZED'
 }
+
+//ActionsType
 type ActionsTypes = setInitialized
+
 let initialState: StateAppReducerType = {
     initialized: false // приложение проинициалтзтровано или нет
 }
@@ -20,7 +22,8 @@ const appReducer = (state: StateAppReducerType = initialState, action: ActionsTy
         case "SET_INITIALIZED": {
             return {...state, initialized: true}
         }
-        default: return state
+        default:
+            return state
     }
 }
 
@@ -37,9 +40,9 @@ export const initializeApp = () => (dispatch: DispatchType) => {
     //     dispatch(setInitialize)
     // })
     dispatch<any>(authMe())
-        .then(()=>{
+        .then(() => {
             dispatch(setInitialize())
-            console.log('setInitialize')
+            console.log('app initialize')
         })
 }
 

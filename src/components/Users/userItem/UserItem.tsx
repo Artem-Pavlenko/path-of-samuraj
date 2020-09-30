@@ -17,7 +17,6 @@ function UserItem(props: UserItemType) {
         props.follow(props.user.id)
     }
 
-
     return (
         <div key={props.user.id}>
             <span>

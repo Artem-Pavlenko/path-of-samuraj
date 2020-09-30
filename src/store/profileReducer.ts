@@ -1,8 +1,8 @@
 import {v1} from "uuid";
-import {ActionsTypes, DispatchType} from "./redux-store";
+import {DispatchType} from "./redux-store";
 import {profileAPI} from "../API/API";
 
-//типизация state/initialState
+//типизация initialState
 export type CommentType = {
     comm: string
     like: number
@@ -58,12 +58,78 @@ export type addStatusTextType = {
     type: 'ADD_STATUS_TEXT',
     status: string
 }
+type ActionsType = AddPostActionType | setUserProfileType | setToggleFetchProfile
+    | setProfileStatusType | addStatusTextType
 //CASE:
 const ADD_POST = "ADD-POST"
 const SET_PROFILE = "SET_PROFILE"
 const TOGGLE_FETCHING_PROFILE = "TOGGLE_FETCHING_PROFILE"
 const SET_PROFILE_STATUS = "SET_PROFILE_STATUS"
 const ADD_STATUS_TEXT = "ADD_STATUS_TEXT"
+
+
+
+let initialState: ProfileType = {
+    post: [
+        {id: v1(), comm: "It's my first post", like: 5},
+        {id: v1(), comm: "Hello World!", like: 7},
+        {id: v1(), comm: "React it's cool!", like: 25}
+    ],
+    profile: {
+        aboutMe: null,
+        contacts: {
+            facebook: null,
+            website: null,
+            github: null,
+            instagram: null,
+            mainLink: null,
+            twitter: null,
+            vk: null,
+            youtube: null
+        },
+        fullName: null,
+        lookingForAJob: false,
+        lookingForAJobDescription: null,
+        userId: 1120,
+        photos: {
+            large: null,
+            small: null
+        }
+    },
+    isFetching: true,
+    profileStatusText: '...',
+    newStatusText: '...'
+}
+//newStatusText не использу нигде, можно что-то придумать
+
+const profileReducer = (state: ProfileType = initialState, action: ActionsType): ProfileType => {
+    switch (action.type) {
+        case ADD_POST:
+            // if (action.post.trim()) {
+                return {
+                    ...state,
+                    post: [
+                        {id: v1(), comm: action.post, like: 0}, ...state.post]
+                }
+        case SET_PROFILE:
+            return {...state, profile: action.profile}
+        case TOGGLE_FETCHING_PROFILE:
+            return {...state, isFetching: action.isFetch}
+        case SET_PROFILE_STATUS:
+            return {
+                ...state,
+                profileStatusText: action.status,
+                newStatusText: action.status
+            }
+        case ADD_STATUS_TEXT:
+            return {...state, profileStatusText: action.status}
+        default:
+            return state
+    }
+}
+
+export default profileReducer;
+
 // ActionCreators
 export const addPostActionCreator = (post: string): AddPostActionType => ({
     type: "ADD-POST", post
@@ -76,7 +142,7 @@ export const setToggleFetchProfile = (isFetch: boolean): setToggleFetchProfile =
 export const setProfileStatus = (status: string): setProfileStatusType => ({type: SET_PROFILE_STATUS, status})
 export const addStatusText = (status: string): addStatusTextType => ({type: ADD_STATUS_TEXT, status})
 
-
+//thunk
 export const getProfileThunk = (userID: string) => {
     return (dispatch: DispatchType) => {
         profileAPI.getProfile(userID)
@@ -113,65 +179,3 @@ export const updateProfileStatus = (status: string) => (dispatch: DispatchType) 
             console.log('ошибка (upbProfileStatus)',error)
         })
 }
-
-
-let initialState: ProfileType = {
-    post: [
-        {id: v1(), comm: "It's my first post", like: 5},
-        {id: v1(), comm: "Hello World!", like: 7},
-        {id: v1(), comm: "React it's cool!", like: 25}
-    ],
-    profile: {
-        aboutMe: null,
-        contacts: {
-            facebook: null,
-            website: null,
-            github: null,
-            instagram: null,
-            mainLink: null,
-            twitter: null,
-            vk: null,
-            youtube: null
-        },
-        fullName: null,
-        lookingForAJob: false,
-        lookingForAJobDescription: null,
-        userId: 1120,
-        photos: {
-            large: null,
-            small: null
-        }
-    },
-    isFetching: true,
-    profileStatusText: '...',
-    newStatusText: '...'
-}
-//newStatusText не использу нигде, можно что-то придумать
-
-const profileReducer = (state: ProfileType = initialState, action: ActionsTypes): ProfileType => {
-    switch (action.type) {
-        case ADD_POST:
-            // if (action.post.trim()) {
-                return {
-                    ...state,
-                    post: [
-                        {id: v1(), comm: action.post, like: 0}, ...state.post]
-                }
-        case SET_PROFILE:
-            return {...state, profile: action.profile}
-        case TOGGLE_FETCHING_PROFILE:
-            return {...state, isFetching: action.isFetch}
-        case SET_PROFILE_STATUS:
-            return {
-                ...state,
-                profileStatusText: action.status,
-                newStatusText: action.status
-            }
-        case ADD_STATUS_TEXT:
-            return {...state, profileStatusText: action.status}
-        default:
-            return state
-    }
-}
-
-export default profileReducer;

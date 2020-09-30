@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {ActionsTypes} from "./redux-store";
 
 //типизация initialState
 export type DialogsDataType = {
@@ -19,11 +18,12 @@ export type AddMessActionType = {
     type: "ADD-MESS"
     mess: string
 }
-
+//ActionsType
+type ActionsType = AddMessActionType
 //case:
 const ADD_MESS = "ADD-MESS"
-//ActionCreators
 
+//ActionCreators
 export const addMessActionCreator = (mess: string): AddMessActionType => ({
     type: "ADD-MESS" , mess
 })
@@ -46,7 +46,7 @@ let initialState: DialogsPageType = {
     ]
 }
 
-const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
+const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): DialogsPageType => {
 
     switch (action.type) {
         case ADD_MESS:

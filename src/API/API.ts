@@ -52,14 +52,12 @@ export const followingAPI = {
     following(userID: number) {
         return axiosInstance.post(`follow/${userID}`, {})
             .then(response => {
-                console.log("following response data", response.data.resultCode)
                 return response.data
             })
     },
     unFollowing(userID: number) {
         return axiosInstance.delete(`follow/${userID}`)
             .then(response => {
-                console.log("unFollowing response data:", response.data.resultCode)
                 return response.data
             })
     }

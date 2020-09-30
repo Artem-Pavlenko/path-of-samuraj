@@ -1,4 +1,4 @@
-import {ActionsTypes, DispatchType} from "./redux-store";
+import {DispatchType} from "./redux-store";
 import {authAPI, profileAPI, securityAPI} from "../API/API";
 import {stopSubmit} from "redux-form";
 
@@ -37,21 +37,18 @@ export type setCaptchaIMGType = {
     type: 'SET_CAPTCHA_IMG'
     captcha: string
 }
+
+//ActionsType
+type ActionsType = setAuthorizationType | setToggleFetchHeaderType | setPhotoType
+    | setErrorMess | setCaptchaIMGType
+
 //case:
 const SET_AUTHORIZATION = "SET_AUTHORIZATION"
 const SET_FETCH_HEADER = 'SET_TOGGLE_HEADER'
 const SET_PHOTO = 'SET_PHOTO'
 const SET_ERROR_MESS = 'SET_ERROR_MESS'
 const SET_CAPTCHA_IMG = 'SET_CAPTCHA_IMG'
-//ActionCreators
-export const setAuthUserData = (data: HeaderReducerType): setAuthorizationType => ({type: SET_AUTHORIZATION, data})
-export const setToggleFetchAuth = (isFetchHeader: boolean): setToggleFetchHeaderType => ({
-    type: SET_FETCH_HEADER,
-    isFetchHeader
-})
-export const setPhoto = (photo: string | null): setPhotoType => ({type: SET_PHOTO, photo})
-export const setErrorMess = (messages: string): setErrorMess => ({type: SET_ERROR_MESS, messages})
-export const setCaptcha = (captcha: string): setCaptchaIMGType => ({type: SET_CAPTCHA_IMG, captcha})
+
 
 let initialState: HeaderReducerType = {
     data: {
@@ -67,7 +64,7 @@ let initialState: HeaderReducerType = {
 }
 
 
-const authReducer = (state: HeaderReducerType = initialState, action: ActionsTypes): HeaderReducerType => {
+const authReducer = (state: HeaderReducerType = initialState, action: ActionsType): HeaderReducerType => {
 
     switch (action.type) {
         case SET_AUTHORIZATION: {
@@ -103,6 +100,18 @@ const authReducer = (state: HeaderReducerType = initialState, action: ActionsTyp
     }
 }
 
+export default authReducer;
+
+//ActionCreators
+export const setAuthUserData = (data: HeaderReducerType): setAuthorizationType => ({type: SET_AUTHORIZATION, data})
+export const setToggleFetchAuth = (isFetchHeader: boolean): setToggleFetchHeaderType => ({
+    type: SET_FETCH_HEADER,
+    isFetchHeader
+})
+export const setPhoto = (photo: string | null): setPhotoType => ({type: SET_PHOTO, photo})
+export const setErrorMess = (messages: string): setErrorMess => ({type: SET_ERROR_MESS, messages})
+export const setCaptcha = (captcha: string): setCaptchaIMGType => ({type: SET_CAPTCHA_IMG, captcha})
+
 //thunks
 export const authMe = () => (dispatch: DispatchType) => {
     return authAPI.authMe()
@@ -119,8 +128,8 @@ export const authMe = () => (dispatch: DispatchType) => {
                 alert(responseData.messages)
             }
         })
-        .catch( error => {
-            console.log('ошибка (authMe)',error)
+        .catch(error => {
+            console.log('ошибка (authMe)', error)
         })
 }
 export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: DispatchType) => {
@@ -141,8 +150,8 @@ export const login = (email: string, password: string, rememberMe: boolean) => (
                 // dispatch(setErrorMess(response.messages[0]))
             }
         })
-        .catch( error => {
-            console.log('ошибка (login in authReducer)',error)
+        .catch(error => {
+            console.log('ошибка (login in authReducer)', error)
         })
 }
 export const logout = () => (dispatch: DispatchType) => {
@@ -152,10 +161,9 @@ export const logout = () => (dispatch: DispatchType) => {
                 dispatch(setToggleFetchAuth(false)) //зануляем state и авторизация = false
             }
         })
-        .catch( error => {
-            console.log('ошибка (logout in authReducer)',error)
+        .catch(error => {
+            console.log('ошибка (logout in authReducer)', error)
         })
 }
 
 
-export default authReducer;

@@ -1,30 +1,18 @@
 import {createStore, combineReducers, applyMiddleware} from "redux"
-import profileReducer, {
-    AddPostActionType, addStatusTextType, setProfileStatusType,
-    setToggleFetchProfile, setUserProfileType
-} from "./profileReducer";
-import dialogsReducer, {AddMessActionType} from "./dialogsReducer";
-import usersReducer, {
-    FollowUser, SetCurrentPage, setFollowingType, SetTotalCount,
-    SetUsers, ToggleFetchingType, UnfollowUser
-} from "./usersReducer";
-import authReducer, {
-    setAuthorizationType,
-    setCaptchaIMGType,
-    setErrorMess,
-    setPhotoType,
-    setToggleFetchHeaderType
-} from "./authReducer";
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+import usersReducer from "./usersReducer";
+import authReducer from "./authReducer";
 import thunkMiddleware from "redux-thunk"
 import {reducer as formReducer} from 'redux-form'
 import appReducer from "./appReducer";
 
 
-export type ActionsTypes = AddPostActionType | AddMessActionType | FollowUser |
-    UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
-    ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
-    setAuthorizationType | setToggleFetchHeaderType | setPhotoType | setFollowingType |
-    addStatusTextType | setProfileStatusType | setErrorMess | setCaptchaIMGType
+// export type ActionsTypes = AddPostActionType | AddMessActionType | FollowUser |
+//     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
+//     ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
+//     setAuthorizationType | setToggleFetchHeaderType | setPhotoType | setFollowingType |
+//     addStatusTextType | setProfileStatusType | setErrorMess | setCaptchaIMGType
 
 const reducers = combineReducers({
     profile: profileReducer,
