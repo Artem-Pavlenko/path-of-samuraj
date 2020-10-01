@@ -1,8 +1,8 @@
 import React from 'react'
 import s from './FormsControls.module.css'
+import {WrappedFieldProps} from "redux-form";
 
-export const Textarea = ({input, meta, ...props}: any) => {
-
+export const Textarea: React.FC<WrappedFieldProps> = ({input, meta, ...props}) => {
     meta.error && console.log(meta.error)
 
     return (
@@ -15,7 +15,7 @@ export const Textarea = ({input, meta, ...props}: any) => {
     )
 }
 
-export const Input = ({input, meta, ...props}: any) => {
+export const Input: React.FC<WrappedFieldProps> = ({input, meta, ...props}) => {
     const hasError = meta.touched && meta.error
     return (
         <div className={hasError ? s.error : ''}>
@@ -30,7 +30,7 @@ export const Input = ({input, meta, ...props}: any) => {
 
 //или можно создать creator для элиментов
 
-const FormControlCreator = ({input, meta, ...props}: any) => {
+const FormControlCreator: React.FC<WrappedFieldProps> = ({input, meta, ...props}) => {
     const hasError = meta.touched && meta.error
     return (
         <div className={hasError ? s.error : ''}>
@@ -42,7 +42,7 @@ const FormControlCreator = ({input, meta, ...props}: any) => {
     )
 }
 
-export const Input2 = (props: any) => {
+export const Input2: React.FC<WrappedFieldProps> = (props) => {
     const {input, meta, ...restProps} = props
     return <FormControlCreator {...props}><input {...input} {...restProps}/> </FormControlCreator>
 }

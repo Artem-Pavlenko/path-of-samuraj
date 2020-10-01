@@ -14,7 +14,7 @@ export type AuthType = {
     resultCode: number
     isAuth: boolean
     photo: string | null
-    img: string | null
+    captchaURL: string | null
 }
 //типизация ActionCreators
 type data = {
@@ -69,7 +69,7 @@ let initialState: AuthType = {
     resultCode: 1,
     isAuth: false,
     photo: null,
-    img: null
+    captchaURL: null
 }
 
 
@@ -101,7 +101,7 @@ const authReducer = (state: AuthType = initialState, action: ActionsType): AuthT
             return {...state, messages: [action.messages]}
         }
         case SET_CAPTCHA_IMG: {
-            return {...state, img: action.captcha}
+            return {...state, captchaURL: action.captcha}
         }
         default:
             return state
@@ -125,7 +125,6 @@ export const authMe = () => (dispatch: DispatchType) => {
     return authAPI.authMe()
         .then((responseData) => {
             if (responseData.resultCode === ResultCodesEnum.Success) {
-                console.log('res data', responseData)
                 dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
                 dispatch(setAuthUserData(responseData))
                 profileAPI.getProfile(responseData.data.id) // дальше делаем запрос на сервак чтобы отрисовать фото

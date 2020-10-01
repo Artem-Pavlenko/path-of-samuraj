@@ -7,14 +7,17 @@ const axiosInstance = axios.create({
         'API-KEY': '3e79c344-389c-4379-912f-1ab506d5006c'
     }
 })
+
 export enum ResultCodesEnum {
     Success = 0,
     Error = 1,
 
 }
+
 export enum ResultCodeForCaptcha {
     CaptchaIsRequired = 10
 }
+
 type ResponseTyp<d = {}, n = number> = {
     data: d
     resultCode: n
@@ -25,26 +28,25 @@ export const userAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return axiosInstance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then((response) => {
-                debugger
-            return response.data
-        })
+                return response.data
+            })
     }
 }
 
 export const authAPI = {
     authMe() {
-        return axiosInstance.get<ResponseTyp<{id: number, login: string, email: string}>>(`auth/me`)
+        return axiosInstance.get<ResponseTyp<{ id: number, login: string, email: string }>>(`auth/me`)
             .then(response => {
                 return response.data
             })
     },
     login(email: string, password: string, rememberMe: boolean = false) {
-        return axiosInstance.post<ResponseTyp<{userId: number}>>('/auth/login', {email, password, rememberMe})
+        return axiosInstance.post<ResponseTyp<{ userId: number }>>('/auth/login', {email, password, rememberMe})
             .then(response => {
                 return response.data
-           })
+            })
     },
-    logout(){
+    logout() {
         return axiosInstance.delete<ResponseTyp>('/auth/login')
             .then(response => {
                 return response.data.resultCode
@@ -83,13 +85,13 @@ export const profileAPI = {
                 return response.data
             })
     },
-    getStatus(userID: string){
+    getStatus(userID: string) {
         return axiosInstance.get(`profile/status/${userID}`)
             .then(response => {
                 return response.data
             })
     },
-    updateStatus(status: string){
+    updateStatus(status: string) {
         return axiosInstance.put('profile/status', {status: status})
             .then(response => {
                 return response.data

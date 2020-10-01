@@ -13,12 +13,16 @@ type FormDataType = {
     password: string
     rememberMe: boolean
 }
-type LoginType = {
-    img: string | null
+
+type LoginStatePropsType = {
+    captchaURL: string | null
     error: Array<string>
     isAuth: boolean
+}
+type LoginDispatchPropsType = {
     login: (email: string, password: string, rememberMe: boolean) => void
 }
+type LoginType = LoginStatePropsType & LoginDispatchPropsType
 
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
@@ -59,31 +63,38 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     )
 }
 
+
+// reduxForm - hoc, оборачивает в контейнерную компоненту и снабжает компоненту "своим" поведением
+// <FormDataType> уточнение с какими пропсами прийдёт компонент, что бы внутри "под капотом" было понятней что иммено приходит
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+
 
 const Login = (props: LoginType) => {
 
     const onSubmit = (formData: FormDataType) => {
         props.login(formData.email, formData.password, formData.rememberMe)
     }
-
+    //если залогинен прозойдёт редирект на стринице профиля
     if (props.isAuth) return <Redirect to={'/profile'}/>
+
     return (
         <div className={s.login}>
             <div className={s.loginBlock}>
                 <h2>L O G I N</h2>
                 {props.error.map((el) => <span className={s.errorSpan}>{el}</span>)}
                 <LoginReduxForm onSubmit={onSubmit}/>
-                {props.img ? <img src={props.img} alt=""/> : ''}
+                {props.captchaURL && <img src={props.captchaURL} alt=""/>}
+                {props.captchaURL && <input type="text"/>}
+
             </div>
         </div>
     )
 }
 
-let mapStateToProps = (state: StateType) => ({
+let mapStateToProps = (state: StateType): LoginStatePropsType => ({
     isAuth: state.auth.isAuth,
     error: state.auth.messages,
-    img: state.auth.img
+    captchaURL: state.auth.captchaURL
 })
 
 export default connect(mapStateToProps, {login})(Login)
