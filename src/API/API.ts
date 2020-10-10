@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
 export enum ResultCodesEnum {
     Success = 0,
     Error = 1,
-
 }
 
 export enum ResultCodeForCaptcha {
@@ -63,6 +62,7 @@ export const securityAPI = {
             })
     }
 }
+
 export const followingAPI = {
     following(userID: number) {
         return axiosInstance.post(`follow/${userID}`, {})

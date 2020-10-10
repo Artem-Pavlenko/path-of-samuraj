@@ -49,7 +49,7 @@ export type UsersReducerType = {
     status: null,
     followed: boolean
 }
-type UsersStateType = {
+export type UsersStateType = {
     items: Array<UsersReducerType>
     totalUsersCount: number
     pageSize: number

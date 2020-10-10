@@ -7,6 +7,12 @@ import {
 import React from "react";
 import Users from "./Users";
 import {compose} from "redux"
+import {
+    getCurrentPageSelector, getFollowingInProgressUserIdSelector, getIsFetchingSelector,
+    getPageSizeSelector,
+    getTotalUserCountSelector,
+    getUsersSelector
+} from "../../store/users-selectors";
 
 type DispatchToPropsType = {
     setCurrentPage: (page: number) => void
@@ -31,7 +37,7 @@ class UsersPage extends React.Component<UsersContainerType> {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
-    onPageChanged = (pageNumber: number) => {  //принажатии номера страници пользователей
+    onPageChanged = (pageNumber: number) => {  //при нажатии номера страници пользователей
         this.props.setCurrentPage(pageNumber)
         //thunk
         this.props.getUsers(pageNumber, this.props.pageSize)
@@ -53,22 +59,33 @@ class UsersPage extends React.Component<UsersContainerType> {
 }
 
 
+// let mapStateToProps = (state: StateType) => {
+//     return {
+//         users: state.user.items,
+//         pageSize: state.user.pageSize,
+//         totalUsersCount: state.user.totalUsersCount,
+//         currentPage: state.user.currentPage,
+//         isFetching: state.user.isFetching,
+//         followingInProgress: state.user.followingInProgress.userID
+//     }
+// }
+
 let mapStateToProps = (state: StateType) => {
+    console.log('users container mapStateToProps')
     return {
-        users: state.user.items,
-        pageSize: state.user.pageSize,
-        totalUsersCount: state.user.totalUsersCount,
-        currentPage: state.user.currentPage,
-        isFetching: state.user.isFetching,
-        followingInProgress: state.user.followingInProgress.userID
+        users: getUsersSelector(state),
+        pageSize: getPageSizeSelector(state),
+        totalUsersCount: getTotalUserCountSelector(state),
+        currentPage: getCurrentPageSelector(state),
+        isFetching: getIsFetchingSelector(state),
+        followingInProgress: getFollowingInProgressUserIdSelector(state)
     }
 }
 
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
-        setCurrentPage, getUsers: getUsersThunk,
-        unFollowUser: unFollowThunk,
+        setCurrentPage, getUsers: getUsersThunk, unFollowUser: unFollowThunk,
         followUser: followThunk
     }),
     // withAuthRedirect
