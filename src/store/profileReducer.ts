@@ -68,7 +68,6 @@ const SET_PROFILE_STATUS = "SET_PROFILE_STATUS"
 const ADD_STATUS_TEXT = "ADD_STATUS_TEXT"
 
 
-
 let initialState: ProfileType = {
     post: [
         {id: v1(), comm: "It's my first post", like: 5},
@@ -97,8 +96,8 @@ let initialState: ProfileType = {
         }
     },
     isFetching: true,
-    profileStatusText: '...',
-    newStatusText: '...'
+    profileStatusText: '',
+    newStatusText: ''
 }
 //newStatusText не использу нигде, можно что-то придумать
 
@@ -106,11 +105,11 @@ const profileReducer = (state: ProfileType = initialState, action: ActionsType):
     switch (action.type) {
         case ADD_POST:
             // if (action.post.trim()) {
-                return {
-                    ...state,
-                    post: [
-                        {id: v1(), comm: action.post, like: 0}, ...state.post]
-                }
+            return {
+                ...state,
+                post: [
+                    {id: v1(), comm: action.post, like: 0}, ...state.post]
+            }
         case SET_PROFILE:
             return {...state, profile: action.profile}
         case TOGGLE_FETCHING_PROFILE:
@@ -143,25 +142,23 @@ export const setProfileStatus = (status: string): setProfileStatusType => ({type
 export const addStatusText = (status: string): addStatusTextType => ({type: ADD_STATUS_TEXT, status})
 
 //thunk
-export const getProfileThunk = (userID: number) => {
-    return (dispatch: DispatchType) => {
-        profileAPI.getProfile(userID)
-            .then((responseData) => {
-                dispatch(setToggleFetchProfile(false))
-                dispatch(setUserProfile(responseData))
-            })
-            .catch( error => {
-                console.log('ошибка (getProfileThunk)',error)
-            })
-    }
+export const getProfileThunk = (userID: number) => (dispatch: DispatchType) => {
+    profileAPI.getProfile(userID)
+        .then((responseData) => {
+            dispatch(setToggleFetchProfile(false))
+            dispatch(setUserProfile(responseData))
+        })
+        .catch(error => {
+            console.log('ошибка (getProfileThunk)', error)
+        })
 }
 export const getProfileStatus = (userID: string) => (dispatch: DispatchType) => {
     profileAPI.getStatus(userID)
         .then(responseData => {
             dispatch(setProfileStatus(responseData))
         })
-        .catch( error => {
-            console.log('ошибка (getProfileStatus)',error)
+        .catch(error => {
+            console.log('ошибка (getProfileStatus)', error)
         })
 
 }
@@ -170,12 +167,12 @@ export const updateProfileStatus = (status: string) => (dispatch: DispatchType) 
         .then(responseData => {
                 if (responseData.resultCode === ResultCodesEnum.Success) {
                     dispatch(addStatusText(status))
-                } else if (responseData.resultCode !== ResultCodesEnum.Success){
+                } else if (responseData.resultCode !== ResultCodesEnum.Success) {
                     alert(responseData.messages)
                 }
             }
         )
-        .catch( error => {
-            console.log('ошибка (upbProfileStatus)',error)
+        .catch(error => {
+            console.log('ошибка (upbProfileStatus)', error)
         })
 }

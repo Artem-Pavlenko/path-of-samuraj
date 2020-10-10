@@ -1,20 +1,10 @@
 import {StateType} from "./redux-store";
-import {useCallback} from "react";
-import {useSelector} from "react-redux";
-import {UsersReducerType, UsersStateType} from "./usersReducer";
 
-const userItems = useSelector<StateType, UsersStateType>(state => state.user)
 
-export const getUsersSelector2 = useCallback((state: StateType) => {
-    return state.user.items
-}, [userItems.items])
 
 export const getUsersSelector = (state: StateType) => {
     return state.user.items
 }
-export const getPageSizeSelector2 = useCallback( (state: StateType) => {
-    return state.user.pageSize
-}, [userItems.pageSize])
 
 export const getPageSizeSelector = (state: StateType) => {
     return state.user.pageSize

@@ -7,6 +7,7 @@ import Preloader from "../../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import {connect} from "react-redux";
 import {StateType} from "../../../store/redux-store";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 type ProfileStateToPropsType = {
     profile: UserProfileType
@@ -29,7 +30,7 @@ function ProfileInfo(props: profile) {
                             <img className={s.avatar}
                                   src={props.profile.photos.large === null ? userIcon : props.profile.photos.large}
                                   alt="..."/>
-                            <ProfileStatus status={props.profileStatusText}
+                            <ProfileStatusWithHooks status={props.profileStatusText}
                                            updateProfileStatus={props.updateProfileStatus}
                             />
                         </div>
