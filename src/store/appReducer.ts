@@ -1,13 +1,15 @@
 import {authMe} from "./authReducer";
 import {Dispatch} from "redux";
 
+// type of actions
+const SET_INITIALIZED = 'app/SET_INITIALIZED'
 
 type StateAppReducerType = {
     initialized: boolean
 }
-// ActionCreators types
+// Action types
 type setInitialized = {
-    type: 'SET_INITIALIZED'
+    type: typeof SET_INITIALIZED
 }
 
 //ActionsType
@@ -19,7 +21,7 @@ let initialState: StateAppReducerType = {
 
 const appReducer = (state: StateAppReducerType = initialState, action: ActionsTypes): StateAppReducerType => {
     switch (action.type) {
-        case "SET_INITIALIZED": {
+        case SET_INITIALIZED: {
             return {...state, initialized: true}
         }
         default:
@@ -29,7 +31,7 @@ const appReducer = (state: StateAppReducerType = initialState, action: ActionsTy
 
 
 //ActionCreators
-export const setInitialize = (): setInitialized => ({type: "SET_INITIALIZED"})
+export const setInitialize = (): setInitialized => ({type: SET_INITIALIZED})
 
 //thunk
 export const initializeApp = () => (dispatch: Dispatch) => {

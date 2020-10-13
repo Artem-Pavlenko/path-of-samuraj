@@ -38,29 +38,29 @@ export type ProfileType = {
 }
 //типизация Action
 export type AddPostActionType = {
-    type: "ADD-POST"
+    type: typeof ADD_POST
     post: string
 }
 export type setUserProfileType = {
-    type: 'SET_PROFILE'
+    type: typeof SET_PROFILE
     profile: UserProfileType
 }
 export type setToggleFetchProfile = {
-    type: 'TOGGLE_FETCHING_PROFILE'
+    type: typeof TOGGLE_FETCHING_PROFILE
     isFetch: boolean
 }
 export type setProfileStatusType = {
-    type: 'SET_PROFILE_STATUS'
+    type: typeof SET_PROFILE_STATUS
     status: string
 }
 export type addStatusTextType = {
-    type: 'ADD_STATUS_TEXT',
+    type: typeof ADD_STATUS_TEXT,
     status: string
 }
 type ActionsType = AddPostActionType | setUserProfileType | setToggleFetchProfile
     | setProfileStatusType | addStatusTextType
 //CASE:
-const ADD_POST = "ADD-POST"
+const ADD_POST = "ADD_POST"
 const SET_PROFILE = "SET_PROFILE"
 const TOGGLE_FETCHING_PROFILE = "TOGGLE_FETCHING_PROFILE"
 const SET_PROFILE_STATUS = "SET_PROFILE_STATUS"
@@ -130,7 +130,7 @@ export default profileReducer;
 
 // ActionCreators
 export const addPostActionCreator = (post: string): AddPostActionType => ({
-    type: "ADD-POST", post
+    type: ADD_POST, post
 })
 export const setUserProfile = (profile: UserProfileType): setUserProfileType => ({type: SET_PROFILE, profile})
 export const setToggleFetchProfile = (isFetch: boolean): setToggleFetchProfile => ({

@@ -5,31 +5,31 @@ import {Dispatch} from "redux";
 
 //типизация action
 export type FollowUser = {
-    type: "FOLLOW"
+    type: typeof FOLLOW
     userID: number
 }
 export type UnfollowUser = {
-    type: "UNFOLLOW"
+    type: typeof UNFOLLOW
     userID: number
 }
 export type SetUsers = {
-    type: "SET_USERS"
+    type: typeof SET_USERS
     items: Array<UsersReducerType>
 }
 export type SetCurrentPage = {
-    type: 'SET_CURRENT_PAGE'
+    type: typeof SET_CURRENT_PAGE
     currentPage: number
 }
 export type SetTotalCount = {
-    type: 'SET_TOTAL_COUNT'
+    type: typeof SET_TOTAL_COUNT
     totalCount: number
 }
 export type ToggleFetchingType = {
-    type: 'TOGGLE_FETCHING'
+    type: typeof TOGGLE_FETCHING
     isFetch: boolean
 }
 export type setFollowingType = {
-    type: 'SET_TOGGLE_FOLLOWING'
+    type: typeof SET_TOGGLE_FOLLOWING
     userID: number
     isFetch: boolean
 }

@@ -27,23 +27,23 @@ type data = {
     messages: string[]
 }
 export type setAuthorizationType = {
-    type: "SET_AUTHORIZATION"
+    type: typeof SET_AUTHORIZATION
     data: data
 }
 export type setToggleFetchHeaderType = {
-    type: 'SET_TOGGLE_HEADER'
+    type: typeof SET_FETCH_HEADER
     isFetchHeader: boolean
 }
 export type setPhotoType = {
-    type: 'SET_PHOTO'
+    type: typeof SET_PHOTO
     photo: string | null
 }
 export type setErrorMess = {
-    type: 'SET_ERROR_MESS'
+    type: typeof SET_ERROR_MESS
     messages: string
 }
 export type setCaptchaIMGType = {
-    type: 'SET_CAPTCHA_IMG'
+    type: typeof SET_CAPTCHA_IMG
     captcha: string
 }
 
@@ -52,11 +52,11 @@ type ActionsType = setAuthorizationType | setToggleFetchHeaderType | setPhotoTyp
     | setErrorMess | setCaptchaIMGType
 
 //case:
-const SET_AUTHORIZATION = "SET_AUTHORIZATION"
-const SET_FETCH_HEADER = 'SET_TOGGLE_HEADER'
-const SET_PHOTO = 'SET_PHOTO'
-const SET_ERROR_MESS = 'SET_ERROR_MESS'
-const SET_CAPTCHA_IMG = 'SET_CAPTCHA_IMG'
+const SET_AUTHORIZATION = 'auth/SET_AUTHORIZATION'
+const SET_FETCH_HEADER = 'auth/SET_TOGGLE_HEADER'
+const SET_PHOTO = 'auth/SET_PHOTO'
+const SET_ERROR_MESS = 'auth/SET_ERROR_MESS'
+const SET_CAPTCHA_IMG = 'auth/SET_CAPTCHA_IMG'
 
 
 let initialState: AuthType = {

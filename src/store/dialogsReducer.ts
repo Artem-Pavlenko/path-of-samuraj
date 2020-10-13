@@ -15,17 +15,17 @@ export type DialogsPageType = {
 }
 //типизация ActionCreators
 export type AddMessActionType = {
-    type: "ADD-MESS"
+    type: typeof ADD_MESS
     mess: string
 }
 //ActionsType
 type ActionsType = AddMessActionType
 //case:
-const ADD_MESS = "ADD-MESS"
+const ADD_MESS = "dialogs/ADD_MESS"
 
 //ActionCreators
 export const addMessActionCreator = (mess: string): AddMessActionType => ({
-    type: "ADD-MESS" , mess
+    type: ADD_MESS , mess
 })
 
 let initialState: DialogsPageType = {
