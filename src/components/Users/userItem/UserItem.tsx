@@ -9,11 +9,12 @@ type UserItemType = {
 }
 
 function UserItem(props: UserItemType) {
-    function unFollow() {
+
+    const unFollow = () => {
         props.unFollow(props.user.id)
     }
 
-    function follow() {
+    const follow = () => {
         props.follow(props.user.id)
     }
 

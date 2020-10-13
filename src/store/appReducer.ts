@@ -34,18 +34,16 @@ const appReducer = (state: StateAppReducerType = initialState, action: ActionsTy
 export const setInitialize = (): setInitialized => ({type: SET_INITIALIZED})
 
 //thunk
-export const initializeApp = () => (dispatch: Dispatch) => {
+export const initializeApp = () => async (dispatch: Dispatch) => {
     // если будет несколько асинхронных запросов и надо ПОСЛЕ выполнения ВСЕХ что-то сделать, то лучше закинуть все
     // промисы в Promise.all([]) (массив) и после уже в методе .then() выполнить что нужно
     // let promise = dispatch<any>(authMe())
     // Promise.all([promise]).then(()=>{
     //     dispatch(setInitialize)
     // })
-    dispatch<any>(authMe())
-        .then(() => {
-            dispatch(setInitialize())
-            console.log('app initialize')
-        })
+    await dispatch<any>(authMe())
+    dispatch(setInitialize())
+    console.log('app initialize')
 }
 
 

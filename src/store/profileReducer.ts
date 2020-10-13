@@ -141,37 +141,34 @@ export const setProfileStatus = (status: string): setProfileStatusType => ({type
 export const addStatusText = (status: string): addStatusTextType => ({type: ADD_STATUS_TEXT, status})
 
 //thunk
-export const getProfileThunk = (userID: number) => (dispatch: DispatchType) => {
-    profileAPI.getProfile(userID)
-        .then((responseData) => {
-            dispatch(setToggleFetchProfile(false))
-            dispatch(setUserProfile(responseData))
-        })
-        .catch(error => {
-            console.log('ошибка (getProfileThunk)', error)
-        })
+export const getProfileThunk = (userID: number) => async (dispatch: DispatchType) => {
+    try {
+        const responseData = await profileAPI.getProfile(userID)
+        dispatch(setToggleFetchProfile(false))
+        dispatch(setUserProfile(responseData))
+    } catch (error) {
+        console.log('ошибка (getProfileThunk)', error)
+    }
 }
-export const getProfileStatus = (userID: string) => (dispatch: DispatchType) => {
-    profileAPI.getStatus(userID)
-        .then(responseData => {
-            dispatch(setProfileStatus(responseData))
-        })
-        .catch(error => {
-            console.log('ошибка (getProfileStatus)', error)
-        })
 
+export const getProfileStatus = (userID: string) => async (dispatch: DispatchType) => {
+    try {
+        const responseData = await profileAPI.getStatus(userID)
+        dispatch(setProfileStatus(responseData))
+    } catch (error) {
+        console.log('ошибка (getProfileStatus)', error)
+    }
 }
-export const updateProfileStatus = (status: string) => (dispatch: DispatchType) => {
-    profileAPI.updateStatus(status)
-        .then(responseData => {
-                if (responseData.resultCode === ResultCodesEnum.Success) {
-                    dispatch(addStatusText(status))
-                } else if (responseData.resultCode !== ResultCodesEnum.Success) {
-                    alert(responseData.messages)
-                }
-            }
-        )
-        .catch(error => {
-            console.log('ошибка (upbProfileStatus)', error)
-        })
+
+export const updateProfileStatus = (status: string) => async (dispatch: DispatchType) => {
+    try {
+        const responseData = await profileAPI.updateStatus(status)
+        if (responseData.resultCode === ResultCodesEnum.Success) {
+            dispatch(addStatusText(status))
+        } else if (responseData.resultCode !== ResultCodesEnum.Success) {
+            alert(responseData.messages)
+        }
+    } catch (error) {
+        console.log('ошибка (upbProfileStatus)', error)
+    }
 }

@@ -1,6 +1,7 @@
 import {StateType} from "./redux-store";
 import {followingAPI, ResultCodesEnum, userAPI} from "../API/API";
 import {Dispatch} from "redux";
+import {updateObjectInArray} from "../utils/object-helpers";
 
 
 //типизация action
@@ -88,22 +89,26 @@ const usersReducer = (state: UsersStateType = initialState, action: ActionsType)
         case FOLLOW:
             return {
                 ...state,
-                items: state.items.map(u => {
-                    if (u.id === action.userID) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
+                //updateObjectInArray вспомогательная fn, которая помогает имьютабельно изменить в массиве какой-то объект
+                items: updateObjectInArray(state.items, action.userID, true)
+                // items: state.items.map(u => {
+                //     if (u.id === action.userID) {
+                //         return {...u, followed: true}
+                //     }
+                //     return u
+                // })
             }
         case UNFOLLOW:
             return {
                 ...state,
-                items: state.items.map(u => {
-                    if (u.id === action.userID) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })
+                //updateObjectInArray вспомогательная fn, которая помогает имьютабельно изменить в массиве какой-то объект
+                items: updateObjectInArray(state.items, action.userID, false)
+                // items: state.items.map(u => {
+                //     if (u.id === action.userID) {
+                //         return {...u, followed: false}
+                //     }
+                //     return u
+                // })
             }
         case SET_USERS:
             return {...state, items: [...action.items]}
@@ -148,44 +153,74 @@ export const setToggleFollowing = (userID: number, isFetch: boolean): setFollowi
 
 type getStateType = () => StateType
 type DispatchUsersType = Dispatch<ActionsType>
+
+
+
 //thunk
 export const getUsersThunk = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch<ActionsType>, getState: getStateType) => {
+    return async (dispatch: Dispatch<ActionsType>, getState: getStateType) => {
         dispatch(setToggleFetch(true))
-        userAPI.getUsers(currentPage, pageSize).then((responseData) => {
-            dispatch(setToggleFetch(false))
-            dispatch(setUsers(responseData.items))
-            dispatch(setTotalCount(responseData.totalCount))
-        })
+        let responseData = await userAPI.getUsers(currentPage, pageSize)
+        dispatch(setToggleFetch(false))
+        dispatch(setUsers(responseData.items))
+        dispatch(setTotalCount(responseData.totalCount))
     }
 }
-//thunk
-export const unFollowThunk = (userID: number) => {
-    return (dispatch: Dispatch) => {
-        dispatch(setToggleFollowing(userID, true))
-        followingAPI.unFollowing(userID)
-            .then((responseData) => {
-                if (responseData.resultCode === ResultCodesEnum.Success) {
-                    dispatch(unFollow(userID))
-                } else if (responseData.resultCode !== ResultCodesEnum.Success) {
-                    alert(responseData.messages)
-                }
-                dispatch(setToggleFollowing(userID, false))
-            })
 
+type followUnfollowFlowType = {
+    dispatch: Dispatch
+    userID: number
+    apiMethod: (userID: number) => any
+    actionCreator: (userID: number) => any
+}
+
+const followUnfollowFlow = async (dispatch: Dispatch, userID: number, apiMethod: (userID: number) => any, actionCreator: (userID: number) => any) => {
+    try {
+        dispatch(setToggleFollowing(userID, true))
+        const responseData = await apiMethod(userID)
+        if (responseData.resultCode === ResultCodesEnum.Success) {
+            dispatch(actionCreator(userID))
+        } else if (responseData.resultCode !== ResultCodesEnum.Success) {
+            alert(responseData.messages)
+        }
+        dispatch(setToggleFollowing(userID, false))
+    } catch (error) {
+        console.log('userReducer FOLLOW/UNFOLLOW: ', error)
     }
+}
+
+export const unFollowThunk = (userID: number) => (dispatch: Dispatch) => {
+    let apiMethod = followingAPI.unFollowing.bind(followingAPI)
+    followUnfollowFlow(dispatch, userID, apiMethod, unFollow)
+
+    // dispatch(setToggleFollowing(userID, true))
+    // try {
+    //     const responseData = await apiMethod(userID)
+    //     if (responseData.resultCode === ResultCodesEnum.Success) {
+    //         dispatch(actionCreator(userID))
+    //     } else if (responseData.resultCode !== ResultCodesEnum.Success) {
+    //         alert(responseData.messages)
+    //     }
+    //     dispatch(setToggleFollowing(userID, false))
+    // } catch (error) {
+    //     console.log('userReducer FOLLOW/UNFOLLOW: ', error)
+    // }
 }
 //thunk
 export const followThunk = (userID: number) => (dispatch: Dispatch) => {
-    dispatch(setToggleFollowing(userID, true))
-    followingAPI.following(userID)
-        .then((responseData) => {
-            if (responseData.resultCode === ResultCodesEnum.Success) {
-                dispatch(follow(userID))
-            } else if (responseData.resultCode !== ResultCodesEnum.Success) {
-                alert(responseData.messages)
-            }
-            dispatch(setToggleFollowing(userID, false))
-        })
+    let apiMethod = followingAPI.following.bind(followingAPI)
+    followUnfollowFlow(dispatch, userID, apiMethod, follow)
 
+    // dispatch(setToggleFollowing(userID, true))
+    // try {
+    //     const responseData = await apiMethod(userID)
+    //     if (responseData.resultCode === ResultCodesEnum.Success) {
+    //         dispatch(actionCreator(userID))
+    //     } else if (responseData.resultCode !== ResultCodesEnum.Success) {
+    //         alert(responseData.messages)
+    //     }
+    //     dispatch(setToggleFollowing(userID, false))
+    // }catch (error) {
+    //     console.log('userReducer FOLLOW: ', error)
+    // }
 }
