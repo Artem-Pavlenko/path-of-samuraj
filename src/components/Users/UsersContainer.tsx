@@ -59,6 +59,17 @@ class UsersPage extends React.Component<UsersContainerType> {
 }
 
 
+// let mapStateToProps = (state: StateType) => {
+//     return {
+//         users: state.user.items,
+//         pageSize: state.user.pageSize,
+//         totalUsersCount: state.user.totalUsersCount,
+//         currentPage: state.user.currentPage,
+//         isFetching: state.user.isFetching,
+//         followingInProgress: state.user.followingInProgress.userID
+//     }
+// }
+
 let mapStateToProps = (state: StateType) => {
     return {
         users: getUsersSelector(state),
@@ -69,6 +80,7 @@ let mapStateToProps = (state: StateType) => {
         followingInProgress: getFollowingInProgressUserIdSelector(state)
     }
 }
+
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {

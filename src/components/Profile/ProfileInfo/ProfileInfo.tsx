@@ -4,10 +4,9 @@ import item from '../../../common/layout/item.module.css'
 import {updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
 import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
 import Preloader from "../../../common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus";
 import {connect} from "react-redux";
 import {StateType} from "../../../store/redux-store";
-import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import ProfileStatus from "./ProfileStatus";
 
 type ProfileStateToPropsType = {
     profile: UserProfileType
@@ -30,9 +29,10 @@ function ProfileInfo(props: profile) {
                             <img className={s.avatar}
                                   src={props.profile.photos.large === null ? userIcon : props.profile.photos.large}
                                   alt="..."/>
-                            <ProfileStatusWithHooks status={props.profileStatusText}
-                                           updateProfileStatus={props.updateProfileStatus}
-                            />
+
+                            <ProfileStatus status={props.profileStatusText}
+                                           updateProfileStatus={props.updateProfileStatus}/>
+
                         </div>
                         <div>
                             <span>Full name: </span>{props.profile.fullName}
