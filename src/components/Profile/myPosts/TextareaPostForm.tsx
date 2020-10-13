@@ -5,7 +5,6 @@ import {Textarea} from "../../../common/FormsControls/FormsControls";
 
 export type FormPostType = {
     post: string
-    //post = <Field ... name={"post"}.../>
 }
 const maxLength15 = maxLength(15)
 

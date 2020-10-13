@@ -35,7 +35,6 @@ export type ProfileType = {
     isFetching: boolean
     profileStatusText: string | null
     newStatusText: string | null
-
 }
 //типизация Action
 export type AddPostActionType = {

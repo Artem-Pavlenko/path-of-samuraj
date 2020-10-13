@@ -11,7 +11,8 @@ type MyPostPropsType = {
     profilePage: ProfileType
 }
 
-function MyPosts(props: MyPostPropsType) {
+const MyPosts = React.memo((props: MyPostPropsType) => {
+
     //отмапил посты
     let posts = props.profilePage.post.map(post => <Post comment={post.comm} likeCount={post.like} key={post.id}/>)
 
@@ -28,7 +29,7 @@ function MyPosts(props: MyPostPropsType) {
             {posts}
         </div>
     )
-}
+})
 
 
 let mapStateToProps = (state: StateType) =>{

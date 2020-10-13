@@ -6,7 +6,7 @@ type CommentType = {
     likeCount: number
 }
 
-function Post(props: CommentType) {
+const Post = React.memo((props: CommentType) => {
     return (
         <div className={s.posts}>
             <div className={s.item}>
@@ -20,6 +20,6 @@ function Post(props: CommentType) {
             </div>
         </div>
     )
-}
+})
 
 export default Post;
