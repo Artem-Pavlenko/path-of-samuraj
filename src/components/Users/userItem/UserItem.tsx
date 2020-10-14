@@ -1,5 +1,8 @@
 import React from "react";
 import {UsersReducerType} from "../../../store/usersReducer";
+import s from "../Users.module.css";
+import userIcon from "../../../assets/images/user img/fsociety-mask-549635.png";
+import {NavLink} from "react-router-dom";
 
 type UserItemType = {
     user: UsersReducerType
@@ -17,9 +20,17 @@ function UserItem(props: UserItemType) {
     const follow = () => {
         props.follow(props.user.id)
     }
-
+//При нажатии(NavLink) на аватарку пользователя в URL попадёт его ID.
     return (
         <div key={props.user.id}>
+            <NavLink to={'/profile/' + props.user.id}>
+                <img className={s.avatarIMG}
+                     src={props.user.photos.small === null
+                         ? userIcon
+                         : props.user.photos.small}
+                     alt={''}
+                />
+            </NavLink>
             <span>
                 <div>
                     {props.user.followed
@@ -29,16 +40,10 @@ function UserItem(props: UserItemType) {
                                   onClick={follow}>Follow</button>}
                 </div>
             </span>
-            <span>
-                <span>
-                    <div>{props.user.name}</div>
-                    <div>{props.user.status}</div>
-                </span>
-                <span>
-                    <div>{'country'}</div>
-                    <div>{'cities'}</div>
-                </span>
-            </span>
+            <div>{props.user.name}</div>
+            <div>{props.user.status}</div>
+            <div>{'country: '}</div>
+            <div>{'cities: '}</div>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import {createStore, combineReducers, applyMiddleware} from "redux"
+import {createStore, combineReducers, applyMiddleware, compose} from "redux"
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 import usersReducer from "./usersReducer";
@@ -7,12 +7,6 @@ import thunkMiddleware from "redux-thunk"
 import {reducer as formReducer} from 'redux-form'
 import appReducer from "./appReducer";
 
-
-// export type ActionsTypes = AddPostActionType | AddMessActionType | FollowUser |
-//     UnfollowUser | SetUsers | SetCurrentPage | SetTotalCount |
-//     ToggleFetchingType | setUserProfileType | setToggleFetchProfile |
-//     setAuthorizationType | setToggleFetchHeaderType | setPhotoType | setFollowingType |
-//     addStatusTextType | setProfileStatusType | setErrorMess | setCaptchaIMGType
 
 const reducers = combineReducers({
     profile: profileReducer,
@@ -23,6 +17,10 @@ const reducers = combineReducers({
     form: formReducer
 
 })
+
+
+
+
 let store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
 
@@ -33,4 +31,4 @@ export type DispatchType = typeof store.dispatch
 export default store;
 
 // @ts-ignore
-window.store = store
+window._store_ = store

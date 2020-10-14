@@ -4,8 +4,6 @@ import UserItem from "./userItem/UserItem";
 import s from "./Users.module.css";
 import item from '../../common/layout/item.module.css'
 import Preloader from "../../common/Preloader/Preloader";
-import {NavLink} from "react-router-dom";
-import userIcon from '../../assets/images/user img/fsociety-mask-549635.png'
 import Paginator from "../../common/Paginator/Paginator";
 
 
@@ -47,20 +45,9 @@ const Users = ({onPageChanged, totalUsersCount, pageSize, currentPage, ...props}
                     //thunk
                     props.followUser(user.id)
                 }
-//При нажатии(NavLink) на аватарку пользователя в URL попадёт его ID.
+
                 return <div key={user.id} className={item.itemCase}>
-                    <NavLink to={'/profile/' + user.id}>
-                        <img
-                            key={user.id}
-                            className={s.avatarIMG}
-                            src={user.photos.small === null
-                                ? userIcon
-                                : user.photos.small}
-                            alt={''}
-                        />
-                    </NavLink>
                     <UserItem
-                        key={user.id}
                         follow={follow}
                         unFollow={unFollow}
                         user={user}
