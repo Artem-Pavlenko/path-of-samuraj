@@ -27,6 +27,7 @@ type StateToPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: Array<number>
+    portionSize: number
 }
 type UsersContainerType = DispatchToPropsType & StateToPropsType
 
@@ -45,6 +46,7 @@ class UsersPage extends React.Component<UsersContainerType> {
 
     render() {
         return <Users
+            portionSize={this.props.portionSize}
             onPageChanged={this.onPageChanged}
             currentPage={this.props.currentPage}
             pageSize={this.props.pageSize}
@@ -77,7 +79,8 @@ let mapStateToProps = (state: StateType) => {
         totalUsersCount: getTotalUserCountSelector(state),
         currentPage: getCurrentPageSelector(state),
         isFetching: getIsFetchingSelector(state),
-        followingInProgress: getFollowingInProgressUserIdSelector(state)
+        followingInProgress: getFollowingInProgressUserIdSelector(state),
+        portionSize: state.user.portionSize
     }
 }
 

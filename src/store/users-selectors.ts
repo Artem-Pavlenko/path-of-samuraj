@@ -21,3 +21,4 @@ export const getIsFetchingSelector = (state: StateType) => {
 export const getFollowingInProgressUserIdSelector = (state: StateType) => {
     return state.user.followingInProgress.userID
 }
+

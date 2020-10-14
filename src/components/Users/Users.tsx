@@ -19,6 +19,7 @@ type StateToUsersPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: Array<number>
+    portionSize: number
 }
 type UsersItemPageType = DispatchToUsersPropsType & StateToUsersPropsType
 
@@ -28,8 +29,9 @@ const Users = ({onPageChanged, totalUsersCount, pageSize, currentPage, ...props}
     return (
         <div>
             <Paginator
+                portionSize={props.portionSize}
                 onPageChanged={onPageChanged}
-                totalUsersCount={totalUsersCount}
+                totalItemsCount={totalUsersCount}
                 pageSize={pageSize}
                 currentPage={currentPage}
             />

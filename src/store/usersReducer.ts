@@ -54,6 +54,7 @@ export type UsersStateType = {
     items: Array<UsersReducerType>
     totalUsersCount: number
     pageSize: number
+    portionSize: number
     currentPage: number
     isFetching: boolean
     followingInProgress: {
@@ -76,6 +77,7 @@ let initialState: UsersStateType = {
     items: [],
     pageSize: 5,
     totalUsersCount: 0,
+    portionSize: 10,
     currentPage: 1,
     isFetching: true,
     followingInProgress: {
@@ -152,8 +154,6 @@ export const setToggleFollowing = (userID: number, isFetch: boolean): setFollowi
 })
 
 type getStateType = () => StateType
-type DispatchUsersType = Dispatch<ActionsType>
-
 
 
 //thunk

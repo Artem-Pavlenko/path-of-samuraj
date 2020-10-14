@@ -18,10 +18,15 @@ const reducers = combineReducers({
 
 })
 
+//для работы с Redux Dev Tools
+
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)))
 
 
-
-let store = createStore(reducers, applyMiddleware(thunkMiddleware))
+//store без работы с Redux Dev Tools
+// let store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
 
 export type StateType = ReturnType<typeof reducers>

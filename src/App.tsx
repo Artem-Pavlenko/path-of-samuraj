@@ -31,11 +31,12 @@ class App extends React.Component<AppType> {
     }
 
     render() {
+
         if (!this.props.setInitialize) {
             return <Preloader/>
         }
-        return (
 
+        return (
             <div className={"app-wrapper"}>
                 <HeaderContainer/>
                 <NavBar/>
