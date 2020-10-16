@@ -6,19 +6,19 @@ import './index.css';
 import App from './App';
 import store from "./store/redux-store";
 import {Provider} from "react-redux";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter} from "react-router-dom";
 
 
-    ReactDOM.render(
-        <React.StrictMode>
-            <BrowserRouter>
+ReactDOM.render(
+    <React.StrictMode>
+        <HashRouter>
             <Provider store={store}>
-                <App />
+                <App/>
             </Provider>
-            </BrowserRouter>
-        </React.StrictMode>,
-        document.getElementById('root')
-    );
+        </HashRouter>
+    </React.StrictMode>,
+    document.getElementById('root')
+);
 
 
 // If you want your app to work offline and load faster, you can change
