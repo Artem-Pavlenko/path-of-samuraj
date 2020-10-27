@@ -27,7 +27,7 @@ function ProfileInfo(props: profile) {
                     : <div className={`${s.descriptionBlock} ${item.itemCase}`}>
                         <div className={s.avaAndStatus}>
                             <img className={s.avatar}
-                                  src={props.profile.photos.large === null ? userIcon : props.profile.photos.large}
+                                  src={props.profile.photos.large || userIcon}
                                   alt="..."/>
 
                             <ProfileStatus status={props.profileStatusText}

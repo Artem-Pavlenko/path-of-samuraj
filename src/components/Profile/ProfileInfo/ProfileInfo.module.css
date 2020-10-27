@@ -14,7 +14,7 @@
 }
 .avatar {
     border-radius: 28px;
-    width: 80px;
+    max-width: 150px;
 }
 .contacts {
     font-weight: bold;
