@@ -1,5 +1,4 @@
 import React from "react";
-import Profile from "./Profile";
 import {compose} from "redux"
 import {connect} from "react-redux";
 import {
@@ -9,6 +8,8 @@ import {
 import {StateType} from "../../store/redux-store";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import MyPostsContainer from "./myPosts/MyPostsContainer";
 
 type RouterType = RouteComponentProps<{ userID: string }>
 type DispatchProfileType = {
@@ -49,7 +50,8 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         // if (!this.props.isAuth)return <Redirect to={'/Login'}/> // если пользователь не залогинен, то перенаправит на страницу Login
         return (
             <div>
-                <Profile/>
+                <ProfileInfo />
+                <MyPostsContainer/>
             </div>
         )
     }

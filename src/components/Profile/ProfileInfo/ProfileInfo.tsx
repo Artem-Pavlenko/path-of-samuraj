@@ -1,13 +1,18 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from "./ProfileInfo.module.css";
 import item from '../../../common/layout/item.module.css'
-import {updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
+import {savePhoto, updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
 import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
 import Preloader from "../../../common/Preloader/Preloader";
 import {connect} from "react-redux";
+import {compose} from "redux"
 import {StateType} from "../../../store/redux-store";
 import ProfileStatus from "./ProfileStatus";
+import {withRouter} from "react-router-dom";
+import {RouteComponentProps} from "react-router";
 
+
+type RouterType = RouteComponentProps<{ userID: string }>
 type ProfileStateToPropsType = {
     profile: UserProfileType
     isFetch: boolean
@@ -15,10 +20,18 @@ type ProfileStateToPropsType = {
 }
 type ProfileDispatchTOPropsType = {
     updateProfileStatus: (status: string) => void
+    savePhoto: (photo: object) => void
 }
-type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType
+type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType & RouterType
 
-function ProfileInfo(props: profile) {
+const ProfileInfo = (props: profile) => {
+
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            props.savePhoto(e.target.files[0])
+        }
+    }
+
     return (
         <div className={s.profileBlock}>
             {
@@ -26,14 +39,12 @@ function ProfileInfo(props: profile) {
                     ? <Preloader/>
                     : <div className={`${s.descriptionBlock} ${item.itemCase}`}>
                         <div className={s.avaAndStatus}>
-                            <img className={s.avatar}
-                                  src={props.profile.photos.large || userIcon}
-                                  alt="..."/>
-
+                            <img className={s.avatar} src={props.profile.photos.large || userIcon} alt=''/>
                             <ProfileStatus status={props.profileStatusText}
-                                           updateProfileStatus={props.updateProfileStatus}/>
-
+                                           updateProfileStatus={props.updateProfileStatus}
+                            />
                         </div>
+                        {!props.match.params.userID && <input type='file' onChange={onMainPhotoSelected}/>}
                         <div>
                             <span>Full name: </span>{props.profile.fullName}
                         </div>
@@ -75,4 +86,5 @@ let mapStateToProps = (state: StateType) => {
 }
 
 
-export default connect(mapStateToProps,{updateProfileStatus})(ProfileInfo)
+export default compose<React.ComponentType>(connect(mapStateToProps,
+    {updateProfileStatus, savePhoto}), withRouter)(ProfileInfo)

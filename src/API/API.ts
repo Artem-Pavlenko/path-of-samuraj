@@ -80,21 +80,21 @@ export const followingAPI = {
 
 export const profileAPI = {
     getProfile(userID: number) {
-        return axiosInstance.get(`profile/${userID}`)
-            .then(response => {
-                return response.data
-            })
+        return axiosInstance.get(`profile/${userID}`).then(response =>  response.data)
     },
     getStatus(userID: string) {
-        return axiosInstance.get(`profile/status/${userID}`)
-            .then(response => {
-                return response.data
-            })
+        return axiosInstance.get(`profile/status/${userID}`).then(response => response.data)
     },
     updateStatus(status: string) {
-        return axiosInstance.put('profile/status', {status: status})
-            .then(response => {
-                return response.data
-            })
+        return axiosInstance.put('profile/status', {status: status}).then(response => response.data)
+    },
+    updPhotos(photo: string | Blob) {
+        const formData = new FormData()
+        formData.append('image', photo)
+        return axiosInstance.put('/profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => response.data)
     }
 }

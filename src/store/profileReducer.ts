@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {DispatchType} from "./redux-store";
 import {profileAPI, ResultCodesEnum} from "../API/API";
+import {Dispatch} from 'redux'
 
 //типизация initialState
 export type CommentType = {
@@ -57,15 +58,20 @@ export type addStatusTextType = {
     type: typeof ADD_STATUS_TEXT,
     status: string
 }
+export type addPhotoType = {
+    type: typeof ADD_PHOTO
+    largePhoto: string
+    smallPhoto: string
+}
 type ActionsType = AddPostActionType | setUserProfileType | setToggleFetchProfile
-    | setProfileStatusType | addStatusTextType
+    | setProfileStatusType | addStatusTextType | addPhotoType
 //CASE:
 const ADD_POST = "ADD_POST"
 const SET_PROFILE = "SET_PROFILE"
 const TOGGLE_FETCHING_PROFILE = "TOGGLE_FETCHING_PROFILE"
 const SET_PROFILE_STATUS = "SET_PROFILE_STATUS"
 const ADD_STATUS_TEXT = "ADD_STATUS_TEXT"
-
+const ADD_PHOTO = "ADD_PHOTO"
 
 let initialState: ProfileType = {
     post: [
@@ -106,8 +112,7 @@ const profileReducer = (state: ProfileType = initialState, action: ActionsType):
             // if (action.post.trim()) {
             return {
                 ...state,
-                post: [
-                    {id: v1(), comm: action.post, like: 0}, ...state.post]
+                post: [{id: v1(), comm: action.post, like: 0}, ...state.post]
             }
         case SET_PROFILE:
             return {...state, profile: action.profile}
@@ -121,6 +126,17 @@ const profileReducer = (state: ProfileType = initialState, action: ActionsType):
             }
         case ADD_STATUS_TEXT:
             return {...state, profileStatusText: action.status}
+        case ADD_PHOTO:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: {
+                        small: action.smallPhoto,
+                        large: action.largePhoto
+                    }
+                }
+            }
         default:
             return state
     }
@@ -139,7 +155,11 @@ export const setToggleFetchProfile = (isFetch: boolean): setToggleFetchProfile =
 })
 export const setProfileStatus = (status: string): setProfileStatusType => ({type: SET_PROFILE_STATUS, status})
 export const addStatusText = (status: string): addStatusTextType => ({type: ADD_STATUS_TEXT, status})
-
+export const addPhoto = (largePhoto: string, smallPhoto: string): addPhotoType => ({
+    type: ADD_PHOTO,
+    largePhoto,
+    smallPhoto
+})
 //thunk
 export const getProfileThunk = (userID: number) => async (dispatch: DispatchType) => {
     try {
@@ -170,5 +190,17 @@ export const updateProfileStatus = (status: string) => async (dispatch: Dispatch
         }
     } catch (error) {
         console.log('ошибка (upbProfileStatus)', error)
+    }
+}
+export const savePhoto = (photo: string | Blob) => async (dispatch: Dispatch) => {
+    try {
+        const responseData = await profileAPI.updPhotos(photo)
+        console.log(responseData)
+        if (responseData.resultCode === ResultCodesEnum.Success) {
+            dispatch(addPhoto(responseData.data.photos.large, responseData.data.photos.small))
+        }
+    } catch (e) {
+        debugger
+        console.log('error in save photo: ', e)
     }
 }
