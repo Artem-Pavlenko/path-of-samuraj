@@ -160,6 +160,7 @@ export const addPhoto = (largePhoto: string, smallPhoto: string): addPhotoType =
     largePhoto,
     smallPhoto
 })
+
 //thunk
 export const getProfileThunk = (userID: number) => async (dispatch: DispatchType) => {
     try {
@@ -167,7 +168,7 @@ export const getProfileThunk = (userID: number) => async (dispatch: DispatchType
         dispatch(setToggleFetchProfile(false))
         dispatch(setUserProfile(responseData))
     } catch (error) {
-        console.log('ошибка (getProfileThunk)', error)
+        console.log('ошибка (getProfileThunk)', error.message)
     }
 }
 
@@ -176,7 +177,7 @@ export const getProfileStatus = (userID: string) => async (dispatch: DispatchTyp
         const responseData = await profileAPI.getStatus(userID)
         dispatch(setProfileStatus(responseData))
     } catch (error) {
-        console.log('ошибка (getProfileStatus)', error)
+        console.log('ошибка (getProfileStatus)', error.message)
     }
 }
 
@@ -189,9 +190,10 @@ export const updateProfileStatus = (status: string) => async (dispatch: Dispatch
             alert(responseData.messages)
         }
     } catch (error) {
-        console.log('ошибка (upbProfileStatus)', error)
+        console.log('ошибка (upbProfileStatus)', error.message)
     }
 }
+
 export const savePhoto = (photo: string | Blob) => async (dispatch: Dispatch) => {
     try {
         const responseData = await profileAPI.updPhotos(photo)
@@ -200,7 +202,6 @@ export const savePhoto = (photo: string | Blob) => async (dispatch: Dispatch) =>
             dispatch(addPhoto(responseData.data.photos.large, responseData.data.photos.small))
         }
     } catch (e) {
-        debugger
-        console.log('error in save photo: ', e)
+        console.log('error in save photo: ', e.message)
     }
 }

@@ -80,7 +80,7 @@ export const followingAPI = {
 
 export const profileAPI = {
     getProfile(userID: number) {
-        return axiosInstance.get(`profile/${userID}`).then(response =>  response.data)
+        return axiosInstance.get(`profile/${userID}`).then(response => response.data)
     },
     getStatus(userID: string) {
         return axiosInstance.get(`profile/status/${userID}`).then(response => response.data)
@@ -89,10 +89,13 @@ export const profileAPI = {
         return axiosInstance.put('profile/status', {status: status}).then(response => response.data)
     },
     updPhotos(photo: string | Blob) {
+        // формируем объект
         const formData = new FormData()
+        // добавляем парамерт 'image'(в документации к серваку) и добавляем файл
         formData.append('image', photo)
         return axiosInstance.put('/profile/photo', formData, {
             headers: {
+                //при отправки файла настраиваем специфический заголовок. Потому как мы отпавляем не JSON данные, а файл
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => response.data)
