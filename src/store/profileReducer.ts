@@ -12,7 +12,7 @@ export type CommentType = {
 export type UserProfileType = {
     aboutMe: string | null,
     contacts: {
-        facebook: string | null,
+        facebook: string | null
         website: string | null
         vk: string | null
         twitter: string | null

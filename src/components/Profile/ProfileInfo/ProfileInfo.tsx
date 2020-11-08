@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import s from "./ProfileInfo.module.css";
 import item from '../../../common/layout/item.module.css'
 import {savePhoto, updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
@@ -11,6 +11,10 @@ import ProfileStatus from "./ProfileStatus";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
 
+type ContactType = {
+    contactTitle: string
+    contactValue: string | null
+}
 
 type RouterType = RouteComponentProps<{ userID: string }>
 type ProfileStateToPropsType = {
@@ -26,10 +30,19 @@ type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType & RouterType
 
 const ProfileInfo = (props: profile) => {
 
+    const [editMode, setEditMode] = useState<boolean>(false)
+    const [editBtn, setEditBtn] = useState<'edit' | 'cancel'>('edit')
+
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             props.savePhoto(e.target.files[0])
         }
+    }
+    const onEditMode = () => {
+        !editMode && setEditMode(true)
+        editMode && setEditMode(false)
+        editBtn === 'edit' && setEditBtn('cancel')
+        editBtn === 'cancel' && setEditBtn('edit')
     }
 
     return (
@@ -45,37 +58,59 @@ const ProfileInfo = (props: profile) => {
                             />
                         </div>
                         {!props.match.params.userID && <input type='file' onChange={onMainPhotoSelected}/>}
-                        <div>
-                            <span>Full name: </span>{props.profile.fullName}
-                        </div>
-                        <div>
-                            <span>About me:</span> {props.profile.aboutMe === null ? "..." : props.profile.aboutMe}
-                        </div>
-                        <div className={s.jobBlock}>
-                            {props.profile.lookingForAJob
-                                ? <div><span>I`m looking for a job</span></div>
-                                : "I have job"}
-                            {props.profile.lookingForAJobDescription
-                            && <div>
-                                <span>Description: </span>{props.profile.lookingForAJobDescription}
-                            </div>}
-                        </div>
-                        <div className={s.contactsBlock}>
-                            <div className={s.contacts}>Contacts:</div>
-                            <div>{props.profile.contacts.facebook && ' facebook : ' + props.profile.contacts.facebook}</div>
-                            <div>{props.profile.contacts.instagram && ' instagram : ' + props.profile.contacts.instagram}</div>
-                            <div>{props.profile.contacts.github && ' GitHub : ' + props.profile.contacts.github}</div>
-                            <div>{props.profile.contacts.mainLink && ' main Link : ' + props.profile.contacts.mainLink}</div>
-                            <div>{props.profile.contacts.twitter && ' twitter : ' + props.profile.contacts.twitter}</div>
-                            <div>{props.profile.contacts.vk && ' vk : ' + props.profile.contacts.vk}</div>
-                            <div>{props.profile.contacts.website && ' website : ' + props.profile.contacts.website}</div>
-                            <div>{props.profile.contacts.youtube && ' youtube : ' + props.profile.contacts.youtube}</div>
-                        </div>
+                        {!props.match.params.userID && <div><button onClick={onEditMode}>{editBtn}</button></div>}
+
+                        {editMode
+                            ? <ProfileDataForm />
+                            : <ProfileData{...props.profile}/>}
                     </div>
             }
         </div>
     )
 }
+
+
+
+const Contact = ({contactTitle, contactValue}: ContactType) => {
+    return <div style={{paddingLeft: '10px'}}><b>{contactTitle}</b>: {contactValue !== null ? contactValue : ''}</div>
+}
+
+const ProfileData = ({ ...profile}: UserProfileType) => {
+    return (
+        <div>
+
+            <div>
+                <span>Full name: </span>{profile.fullName}
+            </div>
+            <div>
+                <span>About me:</span> {profile.aboutMe === null ? "..." : profile.aboutMe}
+            </div>
+            <div className={s.jobBlock}>
+                {profile.lookingForAJob
+                    ? <div><span>I`m looking for a job</span></div>
+                    : "I have job"}
+                {profile.lookingForAJobDescription && <div>
+                    <span>Description: </span>{profile.lookingForAJobDescription}
+                </div>}
+            </div>
+            <div className={s.contactsBlock}>
+                <div className={s.contacts}>
+                    Contacts: {(Object.keys(profile.contacts) as Array<keyof typeof profile.contacts>).map(key => {
+                    return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+                })}
+                </div>
+            </div>
+        </div>
+    )
+}
+const ProfileDataForm = () => {
+    return (
+        <div>
+            F O R M A
+        </div>
+    )
+}
+
 
 let mapStateToProps = (state: StateType) => {
     return {
