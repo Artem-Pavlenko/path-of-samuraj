@@ -2,8 +2,7 @@ import React from "react";
 import {compose} from "redux"
 import {connect} from "react-redux";
 import {
-    getProfileStatus, getProfileThunk, setToggleFetchProfile,
-    setUserProfile, UserProfileType
+    getProfileStatus, getProfileThunk
 } from "../../store/profileReducer";
 import {StateType} from "../../store/redux-store";
 import {withRouter} from "react-router-dom";
@@ -13,8 +12,6 @@ import MyPostsContainer from "./myPosts/MyPostsContainer";
 
 type RouterType = RouteComponentProps<{ userID: string }>
 type DispatchProfileType = {
-    setUserProfile: (profile: UserProfileType) => void
-    setToggleFetchProfile: (isFetch: boolean) => void
     getProfile: (profileIdFromURL: string) => void
     getProfileStatus: (userID: string) => void
 }
@@ -28,10 +25,9 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
     refreshProfile = () => {
         let userID = this.props.match.params.userID
-        if (!userID) {//если не передаём никой id профиля, то хададим по умолчанию id
+        if (!userID) {//если не передаём никакой id профиля, то зададим по умолчанию id
             userID = this.props.userID ? this.props.userID.toString() : '' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
         }
-        //'thunk'
         this.props.getProfile(userID)
         this.props.getProfileStatus(userID)
     }
@@ -67,8 +63,6 @@ let mapStateToProps = (state: StateType): StateProfileType => {
 
 
 export default compose<React.ComponentType>(connect(mapStateToProps, {
-    setUserProfile,
-    setToggleFetchProfile,
     getProfile: getProfileThunk,
     getProfileStatus
 }), withRouter)(ProfileContainer)

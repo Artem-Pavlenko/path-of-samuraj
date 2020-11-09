@@ -60,9 +60,15 @@ type CreateField = {
     validate: any
 }
 
-export const createField = (component: any, name: string, placeholder?: string, validate?: any, type: string = 'text', text: string = '') => (
+export const createField = (
+    component: any,
+    name: string,
+    placeholder?: string,
+    validate?: any,
+    type: string = 'text',
+    text: string = '',
+) => (
     <div>
-        <Field component={component} type={type} name={name} placeholder={placeholder}
-               validate={[validate]}/> {text}
+        <Field component={component} type={type} name={name} placeholder={placeholder} validate={[validate]}/>{text}
     </div>
 )

@@ -151,7 +151,6 @@ export const login = (email: string, password: string, rememberMe: boolean) => a
             // dispatch(setErrorMess(response.messages[0]))
             dispatch(setCaptcha(responseIMG))
         } else if (response.resultCode !== ResultCodesEnum.Success) {
-            console.log(response.messages)
             dispatch(stopSubmit('login', {_error: response.messages[0]}))
             // dispatch(setErrorMess(response.messages[0]))
         }

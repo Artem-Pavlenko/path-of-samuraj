@@ -22,6 +22,22 @@ type ResponseTyp<d = {}, n = number> = {
     resultCode: n
     messages: string[]
 }
+export type EditProfile = {
+    userId?: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts?: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+}
 
 export const userAPI = {
     getUsers(currentPage: number, pageSize: number) {
@@ -91,7 +107,7 @@ export const profileAPI = {
     updPhotos(photo: string | Blob) {
         // формируем объект
         const formData = new FormData()
-        // добавляем парамерт 'image'(в документации к серваку) и добавляем файл
+        // добавляем парамерт 'image'(требование в документации к серваку) и добавляем файл
         formData.append('image', photo)
         return axiosInstance.put('/profile/photo', formData, {
             headers: {
@@ -99,5 +115,8 @@ export const profileAPI = {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => response.data)
+    },
+    saveProfileChange(profile: EditProfile) {
+        return axiosInstance.put('profile', profile).then(response => response.data)
     }
 }

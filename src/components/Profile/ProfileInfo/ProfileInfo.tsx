@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from "react";
 import s from "./ProfileInfo.module.css";
 import item from '../../../common/layout/item.module.css'
-import {savePhoto, updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
+import {savePhoto, saveProfileChange, updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
 import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
 import Preloader from "../../../common/Preloader/Preloader";
 import {connect} from "react-redux";
@@ -10,11 +10,10 @@ import {StateType} from "../../../store/redux-store";
 import ProfileStatus from "./ProfileStatus";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
+import {ProfileReduxFormType} from "./ProfileData/ProfileDataForm";
+import ProfileData from "./ProfileData/ProfileData";
+import ProfileReduxForm from "./ProfileData/ProfileDataForm";
 
-type ContactType = {
-    contactTitle: string
-    contactValue: string | null
-}
 
 type RouterType = RouteComponentProps<{ userID: string }>
 type ProfileStateToPropsType = {
@@ -25,11 +24,12 @@ type ProfileStateToPropsType = {
 type ProfileDispatchTOPropsType = {
     updateProfileStatus: (status: string) => void
     savePhoto: (photo: object) => void
+    saveProfileChange: (data: ProfileReduxFormType) => Promise<void>
 }
 type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType & RouterType
 
-const ProfileInfo = (props: profile) => {
 
+const ProfileInfo = (props: profile) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [editBtn, setEditBtn] = useState<'edit' | 'cancel'>('edit')
 
@@ -45,6 +45,13 @@ const ProfileInfo = (props: profile) => {
         editBtn === 'cancel' && setEditBtn('edit')
     }
 
+    const onEditSubmit = (data: ProfileReduxFormType) => {
+        props.saveProfileChange(data).then( () => {
+            setEditMode(false)
+            setEditBtn('edit')
+        })
+    }
+
     return (
         <div className={s.profileBlock}>
             {
@@ -58,55 +65,15 @@ const ProfileInfo = (props: profile) => {
                             />
                         </div>
                         {!props.match.params.userID && <input type='file' onChange={onMainPhotoSelected}/>}
-                        {!props.match.params.userID && <div><button onClick={onEditMode}>{editBtn}</button></div>}
+                        {!props.match.params.userID && <div>
+                            <button onClick={onEditMode}>{editBtn}</button>
+                        </div>}
 
                         {editMode
-                            ? <ProfileDataForm />
-                            : <ProfileData{...props.profile}/>}
+                            ? <ProfileReduxForm onSubmit={onEditSubmit} initialValues={props.profile}/>
+                            : <ProfileData {...props.profile}/>}
                     </div>
             }
-        </div>
-    )
-}
-
-
-
-const Contact = ({contactTitle, contactValue}: ContactType) => {
-    return <div style={{paddingLeft: '10px'}}><b>{contactTitle}</b>: {contactValue !== null ? contactValue : ''}</div>
-}
-
-const ProfileData = ({ ...profile}: UserProfileType) => {
-    return (
-        <div>
-
-            <div>
-                <span>Full name: </span>{profile.fullName}
-            </div>
-            <div>
-                <span>About me:</span> {profile.aboutMe === null ? "..." : profile.aboutMe}
-            </div>
-            <div className={s.jobBlock}>
-                {profile.lookingForAJob
-                    ? <div><span>I`m looking for a job</span></div>
-                    : "I have job"}
-                {profile.lookingForAJobDescription && <div>
-                    <span>Description: </span>{profile.lookingForAJobDescription}
-                </div>}
-            </div>
-            <div className={s.contactsBlock}>
-                <div className={s.contacts}>
-                    Contacts: {(Object.keys(profile.contacts) as Array<keyof typeof profile.contacts>).map(key => {
-                    return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
-                })}
-                </div>
-            </div>
-        </div>
-    )
-}
-const ProfileDataForm = () => {
-    return (
-        <div>
-            F O R M A
         </div>
     )
 }
@@ -122,4 +89,4 @@ let mapStateToProps = (state: StateType) => {
 
 
 export default compose<React.ComponentType>(connect(mapStateToProps,
-    {updateProfileStatus, savePhoto}), withRouter)(ProfileInfo)
+    {updateProfileStatus, savePhoto, saveProfileChange}), withRouter)(ProfileInfo)

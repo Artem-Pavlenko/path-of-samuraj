@@ -8,8 +8,6 @@ import {login} from "../../store/authReducer";
 import {StateType} from "../../store/redux-store";
 import {Redirect} from 'react-router-dom';
 
-
-
 type LoginStatePropsType = {
     captchaURL: string | null
     error: Array<string>
@@ -19,6 +17,8 @@ type LoginDispatchPropsType = {
     login: (email: string, password: string, rememberMe: boolean) => void
 }
 type LoginType = LoginStatePropsType & LoginDispatchPropsType
+
+
 
 const maxLength8 = maxLength(8)
 

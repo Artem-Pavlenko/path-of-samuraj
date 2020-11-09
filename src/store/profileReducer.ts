@@ -1,7 +1,8 @@
 import {v1} from "uuid";
-import {DispatchType} from "./redux-store";
-import {profileAPI, ResultCodesEnum} from "../API/API";
+import {DispatchType, StateType} from "./redux-store";
+import {EditProfile, profileAPI, ResultCodesEnum} from "../API/API";
 import {Dispatch} from 'redux'
+import {stopSubmit} from "redux-form";
 
 //типизация initialState
 export type CommentType = {
@@ -10,23 +11,23 @@ export type CommentType = {
     id: string
 }
 export type UserProfileType = {
-    aboutMe: string | null,
+    aboutMe: string
     contacts: {
-        facebook: string | null
-        website: string | null
-        vk: string | null
-        twitter: string | null
-        instagram: string | null
-        youtube: string | null
-        github: string | null
-        mainLink: string | null
+        facebook: string
+        website: string
+        vk: string
+        twitter: string
+        instagram: string
+        youtube: string
+        github: string
+        mainLink: string
     },
-    lookingForAJob: boolean,
-    lookingForAJobDescription: string | null,
-    fullName: string | null,
-    userId: number,
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
     photos: {
-        small: string | null,
+        small: string | null
         large: string | null
     }
 }
@@ -63,8 +64,13 @@ export type addPhotoType = {
     largePhoto: string
     smallPhoto: string
 }
+export type setProfileChangeType = {
+    type: typeof SET_PROFILE_CHANGE
+    profile: EditProfile
+}
 type ActionsType = AddPostActionType | setUserProfileType | setToggleFetchProfile
     | setProfileStatusType | addStatusTextType | addPhotoType
+    | setProfileChangeType
 //CASE:
 const ADD_POST = "ADD_POST"
 const SET_PROFILE = "SET_PROFILE"
@@ -72,6 +78,8 @@ const TOGGLE_FETCHING_PROFILE = "TOGGLE_FETCHING_PROFILE"
 const SET_PROFILE_STATUS = "SET_PROFILE_STATUS"
 const ADD_STATUS_TEXT = "ADD_STATUS_TEXT"
 const ADD_PHOTO = "ADD_PHOTO"
+const SET_PROFILE_CHANGE = "SET_PROFILE_CHANGE"
+
 
 let initialState: ProfileType = {
     post: [
@@ -80,20 +88,20 @@ let initialState: ProfileType = {
         {id: v1(), comm: "React it's cool!", like: 25}
     ],
     profile: {
-        aboutMe: null,
+        aboutMe: '',
         contacts: {
-            facebook: null,
-            website: null,
-            github: null,
-            instagram: null,
-            mainLink: null,
-            twitter: null,
-            vk: null,
-            youtube: null
+            facebook: '',
+            website: '',
+            github: '',
+            instagram: '',
+            mainLink: '',
+            twitter: '',
+            vk: '',
+            youtube: ''
         },
-        fullName: null,
+        fullName: '',
         lookingForAJob: false,
-        lookingForAJobDescription: null,
+        lookingForAJobDescription: '',
         userId: 0,
         photos: {
             large: null,
@@ -137,6 +145,10 @@ const profileReducer = (state: ProfileType = initialState, action: ActionsType):
                     }
                 }
             }
+        case SET_PROFILE_CHANGE:
+            return {
+                ...state, profile: {...state.profile, ...action.profile}
+            }
         default:
             return state
     }
@@ -160,6 +172,7 @@ export const addPhoto = (largePhoto: string, smallPhoto: string): addPhotoType =
     largePhoto,
     smallPhoto
 })
+export const setProfileChange = (profile: EditProfile): setProfileChangeType => ({type: SET_PROFILE_CHANGE, profile})
 
 //thunk
 export const getProfileThunk = (userID: number) => async (dispatch: DispatchType) => {
@@ -203,5 +216,21 @@ export const savePhoto = (photo: string | Blob) => async (dispatch: Dispatch) =>
         }
     } catch (e) {
         console.log('error in save photo: ', e.message)
+    }
+}
+
+export const saveProfileChange = (profile: EditProfile) => async (dispatch: Dispatch, getState: () => StateType) => {
+    try {
+        const responseData = await profileAPI.saveProfileChange({...profile, userId: getState().profile.profile.userId})
+        if (responseData.resultCode === ResultCodesEnum.Success) {
+            dispatch<any>(getProfileThunk(getState().profile.profile.userId))
+        } else if (responseData.resultCode !== ResultCodesEnum.Success) {
+            console.log(responseData)
+            dispatch(stopSubmit('editProfile', {_error: responseData.messages}))
+            // возвращаем Промис чтобы
+            return Promise.reject(responseData.messages)
+        }
+    } catch (e) {
+        console.log('error in save edit profile: ', e.message)
     }
 }
