@@ -226,8 +226,22 @@ export const saveProfileChange = (profile: EditProfile) => async (dispatch: Disp
             dispatch<any>(getProfileThunk(getState().profile.profile.userId))
         } else if (responseData.resultCode !== ResultCodesEnum.Success) {
             console.log(responseData)
-            dispatch(stopSubmit('editProfile', {_error: responseData.messages}))
-            // возвращаем Промис чтобы
+            //if (responseData.messages.length > 1) {
+              // let errors =  responseData.messages
+              //   errors.map((d: string ) => {
+              //       return d.toLowerCase().indexOf('(contact->facebook)')
+              //   })
+              //   dispatch(stopSubmit('editProfile', {'contacts': {'facebook': responseData.messages[0]}}))
+            //}
+            if (responseData.messages.length > 0) {
+                dispatch(stopSubmit('editProfile', {_error: responseData.messages}))
+            } else if (responseData.messages.length <= 0 ) {
+                if (responseData.messages[0].toLowerCase().indexOf('(contacts->facebook)')) {
+                    dispatch(stopSubmit('editProfile', {'contacts': {'facebook': responseData.messages[0]}}))
+                }
+            }
+
+            // возвращаем Промис чтобы в случае ошибки  в ProfileInfo->onEditSubmit можно бло заюзать .then()
             return Promise.reject(responseData.messages)
         }
     } catch (e) {

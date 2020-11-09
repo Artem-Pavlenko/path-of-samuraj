@@ -1,14 +1,14 @@
 import React from "react";
 import {compose} from "redux"
 import {connect} from "react-redux";
-import {
-    getProfileStatus, getProfileThunk
-} from "../../store/profileReducer";
+import {getProfileStatus, getProfileThunk} from "../../store/profileReducer";
 import {StateType} from "../../store/redux-store";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./myPosts/MyPostsContainer";
+
+
 
 type RouterType = RouteComponentProps<{ userID: string }>
 type DispatchProfileType = {

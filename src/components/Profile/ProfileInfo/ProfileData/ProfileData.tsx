@@ -3,6 +3,7 @@ import {UserProfileType} from "../../../../store/profileReducer";
 import s from "../ProfileInfo.module.css";
 import Contact from "./Contact";
 
+
 const ProfileData = (profile: UserProfileType) => {
 
     const [showContacts, setShowContacts] = useState<boolean>(false)
