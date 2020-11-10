@@ -8,21 +8,28 @@ import {login} from "../../store/authReducer";
 import {StateType} from "../../store/redux-store";
 import {Redirect} from 'react-router-dom';
 
+
+type FormDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
 type LoginStatePropsType = {
-    captchaURL: string | null
     error: Array<string>
     isAuth: boolean
 }
 type LoginDispatchPropsType = {
-    login: (email: string, password: string, rememberMe: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean, captcha?: string) => void
 }
 type LoginType = LoginStatePropsType & LoginDispatchPropsType
-
-
+type LoginForm = {
+    captchaURL: string | null
+}
 
 const maxLength8 = maxLength(8)
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType> & LoginForm> = (props) => {
 
     const [typeInput, setTypeInput] = useState<"password" | "text">("password")
     const onChangeShowPass = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,27 +44,13 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
     return (
         <form onSubmit={props.handleSubmit}>
-            {createField(Input, 'email','login', requiredField)}
-            {/*<div>*/}
-            {/*    <Field component={Input} type="text" name={"email"} placeholder={'login'}*/}
-            {/*           validate={[requiredField]}*/}
-            {/*    />*/}
-            {/*</div>*/}
-
-            {createField(Input, 'password','password', validators, typeInput)}
-            {/*<div>*/}
-            {/*    <Field component={Input} type={typeInput} name={"password"} placeholder={'password'}*/}
-            {/*           validate={[requiredField, maxLength8]}*/}
-            {/*    />*/}
-            {/*</div>*/}
-            {/*{createField('input', 'rememberMe',undefined, null, 'checkbox', 'remember me')}*/}
-            <input type="checkbox" onChange={onChangeShowPass}/>show password
-            <div>
-                <Field component="input" type="checkbox" name={"rememberMe"}/> remember me
-            </div>
-            {props.error && <div className={s.formSummeryError}>
-                {props.error}
-            </div>}
+            {createField(Input, 'email', 'login', requiredField)}
+            {createField(Input, 'password', 'password', validators, typeInput)}
+            <input type="checkbox" onChange={onChangeShowPass}/> show password
+            {createField(Input, "rememberMe", 'password', validators, "checkbox", "remember me")}
+            {props.error && <div className={s.formSummeryError}>{props.error}</div>}
+            {props.captchaURL && <img src={props.captchaURL} alt=""/>}
+            {props.captchaURL && createField(Input, 'captcha', 'captcha', requiredField, 'text')}
             <div className={s.btn}>
                 <button>Login</button>
             </div>
@@ -65,20 +58,22 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     )
 }
 
-type FormDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
+
+const mapStateToProps1 = (state: StateType) => ({
+    captchaURL: state.auth.captchaURL
+})
+
+const LoginWithConnect = connect(mapStateToProps1)(LoginForm)
+
 // reduxForm - hoc, оборачивает в контейнерную компоненту и снабжает компоненту "своим" поведением
 // <FormDataType> уточнение с какими пропсами прийдёт компонент, что бы внутри "под капотом" было понятней что иммено приходит
-const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginWithConnect)
 
 
-const Login = ({error, isAuth, login, captchaURL}: LoginType) => {
+const Login = ({error, isAuth, login}: LoginType) => {
 
     const onSubmit = (formData: FormDataType) => {
-        login(formData.email, formData.password, formData.rememberMe)
+        login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
     //если залогинен прозойдёт редирект на стринице профиля
     if (isAuth) return <Redirect to={'/profile'}/>
@@ -89,9 +84,6 @@ const Login = ({error, isAuth, login, captchaURL}: LoginType) => {
                 <h2>L O G I N</h2>
                 {error.map((el) => <span className={s.errorSpan}>{el}</span>)}
                 <LoginReduxForm onSubmit={onSubmit}/>
-                {captchaURL && <img src={captchaURL} alt=""/>}
-                {captchaURL && <input type="text"/>}
-
             </div>
         </div>
     )
@@ -99,8 +91,7 @@ const Login = ({error, isAuth, login, captchaURL}: LoginType) => {
 
 let mapStateToProps = (state: StateType): LoginStatePropsType => ({
     isAuth: state.auth.isAuth,
-    error: state.auth.messages,
-    captchaURL: state.auth.captchaURL
+    error: state.auth.messages
 })
 
 export default connect(mapStateToProps, {login})(Login)

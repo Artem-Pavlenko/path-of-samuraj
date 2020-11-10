@@ -235,12 +235,11 @@ export const saveProfileChange = (profile: EditProfile) => async (dispatch: Disp
             //}
             if (responseData.messages.length > 0) {
                 dispatch(stopSubmit('editProfile', {_error: responseData.messages}))
-            } else if (responseData.messages.length <= 0 ) {
+            } else if (responseData.messages.length === 0 ) {
                 if (responseData.messages[0].toLowerCase().indexOf('(contacts->facebook)')) {
                     dispatch(stopSubmit('editProfile', {'contacts': {'facebook': responseData.messages[0]}}))
                 }
             }
-
             // возвращаем Промис чтобы в случае ошибки  в ProfileInfo->onEditSubmit можно бло заюзать .then()
             return Promise.reject(responseData.messages)
         }

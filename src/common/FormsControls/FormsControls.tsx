@@ -68,7 +68,7 @@ export const createField = (
     type: string = 'text',
     text: string = '',
 ) => (
-    <div>
+    <div style={{display: 'flex'}}>
         <Field component={component} type={type} name={name} placeholder={placeholder} validate={[validate]}/>{text}
     </div>
 )

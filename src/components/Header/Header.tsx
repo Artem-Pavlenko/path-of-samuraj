@@ -21,7 +21,7 @@ function Header(props: HeaderPropsType) {
                 <img className={s.network}
                      src={sNetwork}
                      alt=""/>
-                <div><span>f*** society</span></div>
+                <div><span>dev. society</span></div>
             </div>
             <div className={s.loginBlock}>
                 {props.isAuth

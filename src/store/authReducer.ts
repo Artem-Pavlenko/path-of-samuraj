@@ -125,29 +125,26 @@ export const authMe = () => async (dispatch: DispatchType) => {
     try {
         const responseData = await authAPI.authMe()
         if (responseData.resultCode === ResultCodesEnum.Success) {
-            dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
+            // dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
             dispatch(setAuthUserData(responseData))
-
             let response = await profileAPI.getProfile(responseData.data.id) // дальше делаем запрос на сервак чтобы отрисовать фото
             dispatch(setPhoto(response.photos.small))
         } else if (responseData.resultCode !== ResultCodesEnum.Success) {
             alert(responseData.messages)
         }
     } catch (error) {
-        console.log('ошибка (authMe)', error)
+        console.log('ошибка (authMe)', error.message)
     }
-
-
 }
-export const login = (email: string, password: string, rememberMe: boolean) => async (dispatch: Dispatch) => {
+
+export const login = (email: string, password: string, rememberMe: boolean, captcha?: string) => async (dispatch: Dispatch) => {
     try {
-        const response = await authAPI.login(email, password, rememberMe)
+        const response = await authAPI.login(email, password, rememberMe, captcha)
         if (response.resultCode === ResultCodesEnum.Success) {
             dispatch<any>(authMe())
         } else if (response.resultCode === ResultCodeForCaptcha.CaptchaIsRequired) {
-
             let responseIMG = await securityAPI.getCaptcha()
-            dispatch(stopSubmit('login', {_error: response.messages[0]}))
+            dispatch(stopSubmit('login', {_error: response.messages}))
             // dispatch(setErrorMess(response.messages[0]))
             dispatch(setCaptcha(responseIMG))
         } else if (response.resultCode !== ResultCodesEnum.Success) {
@@ -155,9 +152,11 @@ export const login = (email: string, password: string, rememberMe: boolean) => a
             // dispatch(setErrorMess(response.messages[0]))
         }
     } catch (error) {
-        console.log('ошибка (login in authReducer)', error)
+        console.log('ошибка (login in authReducer)', error.message)
+        dispatch(stopSubmit('login', {_error: error.message}))
     }
 }
+
 export const logout = () => async (dispatch: DispatchType) => {
     try {
         const response = await authAPI.logout()
@@ -165,7 +164,7 @@ export const logout = () => async (dispatch: DispatchType) => {
             dispatch(setToggleFetchAuth(false)) //зануляем state и авторизация = false
         }
     } catch (error) {
-        console.log('ошибка (logout in authReducer)', error)
+        console.log('ошибка (logout in authReducer)', error.message)
     }
 }
 

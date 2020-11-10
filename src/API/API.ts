@@ -55,8 +55,8 @@ export const authAPI = {
                 return response.data
             })
     },
-    login(email: string, password: string, rememberMe: boolean = false) {
-        return axiosInstance.post<ResponseTyp<{ userId: number }>>('/auth/login', {email, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean = false, captcha?: string) {
+        return axiosInstance.post<ResponseTyp<{ userId: number }>>('/auth/login', {email, password, rememberMe, captcha})
             .then(response => {
                 return response.data
             })
@@ -73,7 +73,6 @@ export const securityAPI = {
     getCaptcha() {
         return axiosInstance.get('/security/get-captcha-url')
             .then(response => {
-                console.log(response.data)
                 return response.data.url
             })
     }
