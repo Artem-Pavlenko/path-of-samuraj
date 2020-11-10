@@ -13,10 +13,12 @@ import {RouteComponentProps} from "react-router";
 import {ProfileReduxFormType} from "./ProfileData/ProfileDataForm";
 import ProfileData from "./ProfileData/ProfileData";
 import ProfileReduxForm from "./ProfileData/ProfileDataForm";
+import Preloader2 from "../../../common/Preloader/PreloaderWithStyle/Preloader2";
 
 
 type RouterType = RouteComponentProps<{ userID: string }>
 type ProfileStateToPropsType = {
+    isAuth: boolean
     profile: UserProfileType
     isFetch: boolean
     profileStatusText: string | null
@@ -56,7 +58,7 @@ const ProfileInfo = (props: profile) => {
         <div className={s.profileBlock}>
             {
                 props.isFetch
-                    ? <Preloader/>
+                    ? <Preloader2/>
                     : <div className={`${s.descriptionBlock} ${item.itemCase}`}>
                         <div className={s.avaAndStatus}>
                             <img className={s.avatar} src={props.profile.photos.large || userIcon} alt=''/>
@@ -64,8 +66,8 @@ const ProfileInfo = (props: profile) => {
                                            updateProfileStatus={props.updateProfileStatus}
                             />
                         </div>
-                        {!props.match.params.userID && <input type='file' onChange={onMainPhotoSelected}/>}
-                        {!props.match.params.userID && <div>
+                        {!props.match.params.userID && props.isAuth && <input type='file' onChange={onMainPhotoSelected}/>}
+                        {!props.match.params.userID && props.isAuth &&  <div>
                             <button onClick={onEditMode}>{editBtn}</button>
                         </div>}
 
@@ -83,7 +85,8 @@ let mapStateToProps = (state: StateType) => {
     return {
         profile: state.profile.profile,
         isFetch: state.profile.isFetching,
-        profileStatusText: state.profile.profileStatusText
+        profileStatusText: state.profile.profileStatusText,
+        isAuth: state.auth.isAuth
     }
 }
 

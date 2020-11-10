@@ -1,0 +1,74 @@
+$light_blue_color1: #03e9f4;
+
+.cssload_container {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  position: absolute;
+  z-index: 100;
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #282c34;
+  opacity: 0.5;
+
+
+  .cssload_speeding_wheel {
+    width: 294px;
+    height: 294px;
+    margin: 0 auto;
+    border: 18px solid $light_blue_color1;
+    border-radius: 50%;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    animation: cssload-spin 1475ms infinite linear;
+    -o-animation: cssload-spin 1475ms infinite linear;
+    -webkit-animation: cssload-spin 1475ms infinite linear;
+    -moz-animation: cssload-spin 1475ms infinite linear;
+
+
+    @media (max-width: 800px) {
+      width: 106px;
+      height: 106px;
+      border: 8px solid $light_blue_color1;
+      border-left-color: transparent;
+      border-right-color: transparent;
+    }
+  }
+
+
+
+  @keyframes cssload-spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @-o-keyframes cssload-spin {
+    100% {
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @-ms-keyframes cssload-spin {
+    100% {
+      -ms-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @-webkit-keyframes cssload-spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @-moz-keyframes cssload-spin {
+    100% {
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+}

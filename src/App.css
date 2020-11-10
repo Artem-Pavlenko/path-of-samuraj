@@ -1,7 +1,5 @@
 body {
   background-color: #e9ebee;
-  /*background-image: url("./assets/images/background_img/Whatsapp_Green_Wallpaper.png");*/
-  /*background-attachment: fixed;*/
 }
 
 .app-wrapper {
@@ -16,7 +14,6 @@ body {
   grid-template-rows: 60px 1fr;
   grid-template-columns: 1fr 10fr;
   grid-gap: 7px;
-  /*border: 2px solid;*/
 }
 
 .app-wrapper-content {

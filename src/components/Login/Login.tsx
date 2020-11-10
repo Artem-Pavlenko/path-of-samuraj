@@ -15,6 +15,9 @@ type FormDataType = {
     rememberMe: boolean
     captcha?: string
 }
+type LoginForm = {
+    captchaURL: string | null
+}
 type LoginStatePropsType = {
     error: Array<string>
     isAuth: boolean
@@ -23,9 +26,7 @@ type LoginDispatchPropsType = {
     login: (email: string, password: string, rememberMe: boolean, captcha?: string) => void
 }
 type LoginType = LoginStatePropsType & LoginDispatchPropsType
-type LoginForm = {
-    captchaURL: string | null
-}
+
 
 const maxLength8 = maxLength(8)
 
@@ -75,6 +76,7 @@ const Login = ({error, isAuth, login}: LoginType) => {
     const onSubmit = (formData: FormDataType) => {
         login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
+
     //если залогинен прозойдёт редирект на стринице профиля
     if (isAuth) return <Redirect to={'/profile'}/>
 

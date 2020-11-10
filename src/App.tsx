@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react';
 import './App.css';
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, Redirect} from "react-router-dom";
 import NavBar from "./components/Navbar/Navbar";
 import News from './components/News/News';
 import Music from './components/Music/Music';
@@ -12,7 +12,7 @@ import {connect} from "react-redux";
 import {compose} from "redux"
 import {initializeApp} from "./store/appReducer";
 import {StateType} from "./store/redux-store";
-import Preloader from "./common/Preloader/Preloader";
+import Preloader2 from "./common/Preloader/PreloaderWithStyle/Preloader2";
 
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
 // import Profile from "./components/Profile/ProfileContainer";
@@ -28,15 +28,23 @@ type AppDispatchToPropsType = {
 type AppType = AppDispatchToPropsType & AppStateToPropsType
 
 class App extends React.Component<AppType> {
+    catchAllUnhandledErrors = (rej: any) => {
+        alert('some error')
+        console.log(typeof rej)
+        console.log('error(window) :', rej)
+    }
+
     componentDidMount() {
-        //'thunk'
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
         this.props.initializeApp()
+    }
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
-
         if (!this.props.setInitialize) {
-            return <Preloader/>
+            return <Preloader2/>
         }
 
         return (
@@ -46,15 +54,20 @@ class App extends React.Component<AppType> {
                 <div className={"app-wrapper-content"}>
                     <Suspense fallback={<div>load</div>}>
                         <Switch>
-                            <Route path={'/dialog'} render={()=><DialogsContainer/>}/>
-                            <Route path={'/profile/:userID?'} render={()=><Profile/>}/>
+                            <Route path={'/dialog'} render={() => <DialogsContainer/>}/>
+                            <Route path={'/profile/:userID?'} render={() => <Profile/>}/>
                             <Route path={'/news'} render={() => <News/>}/>
                             <Route path={'/music'} render={() => <Music/>}/>
                             <Route path={'/settings'} render={() => <Settings/>}/>
+
+                            <Route path={'/users'} render={() => <UsersContainer/>}/>
+                            <Route path={'/login'} render={() => <Login/>}/>
+
+                            {/*<Route exact path={'/'}><Redirect to={'/login'} /></Route>*/}
+                            <Redirect from={'/'} to={'/login'}/>
+                            <Route render={ () => <div>404 not found</div>}/>
                         </Switch>
                     </Suspense>
-                    <Route path={'/users'} render={() => <UsersContainer/>}/>
-                    <Route path={'/login'} render={() => <Login/>}/>
                 </div>
             </div>
         );

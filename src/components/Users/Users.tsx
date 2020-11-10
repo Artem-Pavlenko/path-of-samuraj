@@ -5,6 +5,7 @@ import s from "./Users.module.css";
 import item from '../../common/layout/item.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import Paginator from "../../common/Paginator/Paginator";
+import Preloader2 from "../../common/Preloader/PreloaderWithStyle/Preloader2";
 
 
 type DispatchToUsersPropsType = {
@@ -36,15 +37,13 @@ const Users = ({onPageChanged, totalUsersCount, pageSize, currentPage, ...props}
                 currentPage={currentPage}
             />
             <div className={s.PreloaderBlock}>
-                {props.isFetching && <Preloader/>}
+                {props.isFetching && <Preloader2/>}
             </div>
             {props.users.map(user => {        //отрисовка пользователей
                 let unFollow = () => {
-                    //thunk
                     props.unFollowUser(user.id)
                 }
                 let follow = () => {
-                    //thunk
                     props.followUser(user.id)
                 }
 
