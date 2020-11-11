@@ -1,0 +1,44 @@
+.header {
+    grid-area: h;
+    background: #4267b2;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0 0 15px 15px;
+    .network {
+        display: flex;
+        img {
+            width: 60px;
+            border-radius: 50px;
+        }
+        div {
+            align-self: center;
+        }
+        span{
+            color: aliceblue;
+        }
+    }
+    .loginBlock {
+        .profileLogin {
+            display: flex;
+            align-items: center;
+            >div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            button {
+                border-radius: 10px;
+                color: #4267b2;
+            }
+        }
+        img {
+            width: 50px;
+            padding: 5px;
+            border-radius: 10px;
+        }
+        a {
+            color: aliceblue;
+        }
+
+    }
+}

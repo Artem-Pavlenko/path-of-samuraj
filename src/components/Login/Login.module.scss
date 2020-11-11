@@ -1,0 +1,20 @@
+
+.login {
+    .loginBlock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .errorSpan{
+            color: red;
+        }
+    }
+}
+
+.formSummeryError {
+    border: 1px red solid;
+    padding: 5px;
+    color: red;
+}
+.btn {
+    text-align: center;
+}

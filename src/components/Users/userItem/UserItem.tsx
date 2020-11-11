@@ -1,6 +1,6 @@
 import React from "react";
 import {UsersReducerType} from "../../../store/usersReducer";
-import s from "../Users.module.css";
+import s from "../Users.module.scss";
 import userIcon from "../../../assets/images/user img/fsociety-mask-549635.png";
 import {NavLink} from "react-router-dom";
 

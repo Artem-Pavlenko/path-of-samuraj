@@ -1,0 +1,20 @@
+//.content {
+//}
+//.content img {
+//    width: 100%;
+//    border-radius: 0 0 10px 10px;
+//}
+
+.descriptionBlock {
+    .avaAndStatus {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        .avatar {
+            border-radius: 28px;
+            max-width: 150px;
+        }
+    }
+}
+

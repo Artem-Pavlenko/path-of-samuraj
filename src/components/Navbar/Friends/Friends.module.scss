@@ -1,0 +1,25 @@
+
+.wrapper {
+    font-family: cursive;
+    .frTitle{
+        color: teal;
+        grid-area: h;
+        text-align: center;
+        font-family: cursive;
+    }
+    .friendProfileBlock {
+        display: flex;
+        text-align: center;
+        .acc {
+            padding: 4px;
+            img {
+                border-radius: 50%;
+                width: 45px;
+            }
+        }
+    }
+}
+
+
+
+

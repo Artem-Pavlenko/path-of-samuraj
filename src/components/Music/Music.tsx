@@ -1,7 +1,7 @@
 import React from "react";
-import s from "./Music.module.css"
+import s from "./Music.module.scss"
 
-function Music() {
+const Music = () => {
     return (
         <div className={s.musicWrapper}>
             <div>

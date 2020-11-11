@@ -1,5 +1,5 @@
 import React from "react";
-import s from './Header.module.css';
+import s from './Header.module.scss';
 import {NavLink} from "react-router-dom";
 import userPhoto from '../../assets/images/user img/Без названия.png'
 import sNetwork from '../../assets/images/network_icon/rss.png'

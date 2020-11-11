@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
-import s from './Login.module.css'
-import {reduxForm, Field, InjectedFormProps} from "redux-form";
+import s from './Login.module.scss'
+import {reduxForm, InjectedFormProps} from "redux-form";
 import {createField, Input} from "../../common/FormsControls/FormsControls";
 import {maxLength, requiredField} from "../../utils/validators/validators";
 import {connect} from "react-redux";

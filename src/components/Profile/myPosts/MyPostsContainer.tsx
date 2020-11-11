@@ -3,7 +3,7 @@ import {DispatchType, StateType} from "../../../store/redux-store";
 import {connect} from "react-redux";
 import Post from "./Post/Post";
 import React from "react";
-import s from "./MyPosts.module.css";
+import s from "./MyPosts.module.scss";
 import FormPost, {FormPostType} from "./TextareaPostForm";
 
 type MyPostPropsType = {

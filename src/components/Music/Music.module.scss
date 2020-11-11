@@ -1,0 +1,16 @@
+.musicWrapper {
+    .titleSearch {
+        font-style: oblique;
+        margin-right: 15px;
+        .input {
+            box-shadow: 7px 7px 5px teal;
+            margin: 10px;
+            border-radius: 20px;
+        }
+    }
+    .playList {
+        word-spacing: 10px;
+        font-style: italic;
+        margin: 30px;
+    }
+}

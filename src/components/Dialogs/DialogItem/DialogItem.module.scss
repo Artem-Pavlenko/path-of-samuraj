@@ -1,0 +1,20 @@
+
+.dialog {
+    border-radius: 5px;
+    background-color: white;
+    padding: 3px;
+    margin: 5px 0;
+    a {
+        font-family: cursive;
+        color: #363a42;
+        text-decoration: none;
+    }
+    a.active {
+        display: flex;
+        color: #2b2f36;
+        font-weight: bold;
+        width: 100%;
+        border-radius: 3px;
+        background-color: #e9ebee;
+    }
+}

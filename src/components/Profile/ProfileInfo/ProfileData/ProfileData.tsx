@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {UserProfileType} from "../../../../store/profileReducer";
-import s from "../ProfileInfo.module.css";
+import s from "../ProfileData/ProfileData.module.scss";
 import Contact from "./Contact";
 
 

@@ -2,8 +2,8 @@ import React from "react"
 import {createField, Input, Textarea} from "../../../../common/FormsControls/FormsControls";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import {maxLength} from "../../../../utils/validators/validators";
-import s from "../ProfileInfo.module.css";
-import style from "../../../Login/Login.module.css"
+import s from "../ProfileData/ProfileData.module.scss";
+import style from "../../../Login/Login.module.scss"
 import {UserProfileType} from "../../../../store/profileReducer";
 import {connect} from "react-redux";
 import {StateType} from "../../../../store/redux-store";

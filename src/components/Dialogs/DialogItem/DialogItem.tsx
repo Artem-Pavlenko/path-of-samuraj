@@ -1,5 +1,5 @@
 import React from "react";
-import s from "./DialogItem.module.css";
+import s from "./DialogItem.module.scss";
 import { NavLink } from "react-router-dom";
 
 type DialogType = {
@@ -8,7 +8,7 @@ type DialogType = {
 }
 
 //имена, кто написал  в сообщениях
-function DialogItem(props: DialogType) {
+const DialogItem = (props: DialogType) => {
     // let path = "/dialogs/" + props.id
     return (
         <div className={s.dialog}>

@@ -1,0 +1,23 @@
+
+.nav {
+    grid-area: n;
+    padding: 20px;
+    .item {
+        a {
+            font-family: cursive;
+            /*color: #f7fbf7;*/
+            color: #363a42;
+            text-decoration: none;
+            display: block;
+            padding: 5px;
+        }
+        a.active {
+            width: 100%;
+            color: #2b2f36;
+            font-weight: bold;
+            border-radius: 3px;
+            background-color: #f5f6f7;
+
+        }
+    }
+}

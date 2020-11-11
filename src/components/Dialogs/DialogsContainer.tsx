@@ -3,7 +3,7 @@ import {DispatchType, StateType} from "../../store/redux-store";
 import {compose} from "redux"
 import {connect} from "react-redux";
 import React from "react";
-import s from "./Dialogs.module.css";
+import s from "./Dialogs.module.scss";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
@@ -38,7 +38,6 @@ export function Dialogs(props: DialogsPropsType) {
     }
 
     let dialogsPage = props.dialogsPage
-
 
     return (
         <div className={s.dialogsBlock}>

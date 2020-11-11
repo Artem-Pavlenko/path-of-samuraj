@@ -2,6 +2,8 @@ import React from "react";
 import {reduxForm, Field, InjectedFormProps} from "redux-form";
 import {maxLength} from "../../../utils/validators/validators";
 import {Textarea} from "../../../common/FormsControls/FormsControls";
+import s from "../../../common/layout/BTN.module.scss"
+
 
 export type FormPostType = {
     post: string
@@ -17,7 +19,7 @@ const TextareaPost: React.FC<InjectedFormProps<FormPostType>> = (props) => {
                 />
             </div>
             <div>
-                <button>add post</button>
+                <button className={s.btn}>add post</button>
             </div>
         </form>
     )

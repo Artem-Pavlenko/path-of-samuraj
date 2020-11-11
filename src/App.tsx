@@ -52,7 +52,7 @@ class App extends React.Component<AppType> {
                 <HeaderContainer/>
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
-                    <Suspense fallback={<div>load</div>}>
+                        <Suspense fallback={<Preloader2/>}>
                         <Switch>
                             <Route path={'/dialog'} render={() => <DialogsContainer/>}/>
                             <Route path={'/profile/:userID?'} render={() => <Profile/>}/>

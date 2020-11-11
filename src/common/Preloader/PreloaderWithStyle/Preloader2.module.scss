@@ -3,15 +3,14 @@ $light_blue_color1: #03e9f4;
 .cssload_container {
   width: 100%;
   height: 100vh;
-  text-align: center;
-  position: absolute;
+  //text-align: center;
+  position: relative;
   z-index: 100;
   display:flex;
   flex-wrap: wrap;
   align-items: center;
   background-color: #282c34;
-  opacity: 0.5;
-
+  opacity: 0.2;
 
   .cssload_speeding_wheel {
     width: 294px;

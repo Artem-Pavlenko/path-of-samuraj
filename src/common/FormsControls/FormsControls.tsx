@@ -1,5 +1,5 @@
 import React from 'react'
-import s from './FormsControls.module.css'
+import s from './FormsControls.module.scss'
 import {Field, WrappedFieldProps} from "redux-form";
 
 export const Textarea: React.FC<WrappedFieldProps> = ({input, meta, ...props}) => {
@@ -38,7 +38,7 @@ const FormControlCreator: React.FC<WrappedFieldProps> = ({input, meta, ...props}
             <div>
                 {props.children}
             </div>
-            {hasError && <span>{meta.error}</span>}
+            <div>{hasError && <span>{meta.error}</span>}</div>
         </div>
     )
 }

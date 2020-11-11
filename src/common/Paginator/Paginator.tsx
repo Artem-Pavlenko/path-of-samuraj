@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import s from "../../common/Paginator/Paginator.module.css";
+import s from "./Paginator.module.scss";
 import cn from "classnames"
 
 type DispatchToUsersPropsType = {

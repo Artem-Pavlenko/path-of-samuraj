@@ -1,9 +1,8 @@
 import React, {ChangeEvent, useState} from "react";
-import s from "./ProfileInfo.module.css";
-import item from '../../../common/layout/item.module.css'
+import s from "./ProfileInfo.module.scss";
+import item from '../../../common/layout/item.module.scss'
 import {savePhoto, saveProfileChange, updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
 import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
-import Preloader from "../../../common/Preloader/Preloader";
 import {connect} from "react-redux";
 import {compose} from "redux"
 import {StateType} from "../../../store/redux-store";

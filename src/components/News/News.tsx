@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import s from "./News.module.css";
+import s from "./News.module.scss";
 
 function News() {
 
