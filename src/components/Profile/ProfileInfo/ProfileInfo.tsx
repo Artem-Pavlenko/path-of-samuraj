@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from "react";
 import s from "./ProfileInfo.module.scss";
-import item from '../../../common/layout/item.module.scss'
+import item from "../../../common/layout/item.module.scss"
+import btn from "../../../common/layout/BTN.module.scss"
 import {savePhoto, saveProfileChange, updateProfileStatus, UserProfileType} from "../../../store/profileReducer";
 import userIcon from '../../../assets/images/user img/fsociety-mask-549635.png'
 import {connect} from "react-redux";
@@ -67,7 +68,7 @@ const ProfileInfo = (props: profile) => {
                         </div>
                         {!props.match.params.userID && props.isAuth && <input type='file' onChange={onMainPhotoSelected}/>}
                         {!props.match.params.userID && props.isAuth &&  <div>
-                            <button onClick={onEditMode}>{editBtn}</button>
+                            <button onClick={onEditMode} className={btn.btn}>{editBtn}</button>
                         </div>}
 
                         {editMode

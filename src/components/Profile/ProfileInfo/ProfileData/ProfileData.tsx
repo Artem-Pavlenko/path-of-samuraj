@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import {UserProfileType} from "../../../../store/profileReducer";
 import s from "../ProfileData/ProfileData.module.scss";
 import Contact from "./Contact";
+import btn from "../../../../common/layout/BTN.module.scss";
 
 
 const ProfileData = (profile: UserProfileType) => {
@@ -32,7 +33,7 @@ const ProfileData = (profile: UserProfileType) => {
                     <span>My skills : </span>{profile.lookingForAJobDescription}
                 </div>}
             </div>
-            <button onClick={showHideContacts}>{btnValue}</button>
+            <button onClick={showHideContacts} className={btn.btn}>{btnValue}</button>
             {showContacts &&<div className={s.contactsBlock}>
                 <div className={s.contacts}>
                     Contacts: {(Object.keys(profile.contacts) as Array<keyof typeof profile.contacts>).map(key => {
