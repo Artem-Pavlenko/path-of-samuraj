@@ -21,6 +21,7 @@ type StateToUsersPropsType = {
     isFetching: boolean
     followingInProgress: Array<number>
     portionSize: number
+    isAuth: boolean
 }
 type UsersItemPageType = DispatchToUsersPropsType & StateToUsersPropsType
 
@@ -49,6 +50,7 @@ const Users = ({onPageChanged, totalUsersCount, pageSize, currentPage, ...props}
 
                 return <div key={user.id} className={item.itemCase}>
                     <UserItem
+                        isAuth={props.isAuth}
                         follow={follow}
                         unFollow={unFollow}
                         user={user}

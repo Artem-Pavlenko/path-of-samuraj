@@ -9,6 +9,7 @@ type UserItemType = {
     unFollow: (userID: number) => void
     follow: (userID: number) => void
     followingInProgress: Array<number>
+    isAuth: boolean
 }
 
 function UserItem(props: UserItemType) {
@@ -32,13 +33,14 @@ function UserItem(props: UserItemType) {
                 />
             </NavLink>
             <span>
+                {props.isAuth &&
                 <div>
                     {props.user.followed
                         ? <button disabled={props.followingInProgress.some(id => id === props.user.id)}
                                   onClick={unFollow}>unFollow</button>
                         : <button disabled={props.followingInProgress.some(id => id === props.user.id)}
                                   onClick={follow}>Follow</button>}
-                </div>
+                </div>}
             </span>
             <div>{props.user.name}</div>
             <div>{props.user.status}</div>
