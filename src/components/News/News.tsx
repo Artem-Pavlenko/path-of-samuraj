@@ -4,8 +4,9 @@ import s from "./News.module.scss";
 function News() {
 
     const [count, setCount] = useState(0)
-    useEffect( ()=> {
-        const interval = setTimeout( () => {
+
+    useEffect(() => {
+        const interval = setTimeout(() => {
             setCount(count + 2)
         }, 10)
         count >= 400 && clearInterval(interval)
@@ -16,10 +17,10 @@ function News() {
         <div className={s.newsWrapper}>
             <span>Новости в мире</span>
             <ul>
-                <li>Илон Маск запустил новый проект и набирает новых программистов</li>
-                <li>Из-за короновируса айтиха должна прорватся ещё сильнее </li>
-                <li>React библеотека прогресирует всё больше и больше</li>
-                <li>Не забудь стать react-разработчиком </li>
+                <li>news news news news news news news news news news</li>
+                <li>Из-за короновируса ....</li>
+                <li>React .......</li>
+                <li>it it it it it it</li>
             </ul>
             <div>
                 <span>{count}</span>
