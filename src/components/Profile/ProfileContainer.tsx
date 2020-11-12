@@ -24,9 +24,10 @@ type ProfilePropsType = DispatchProfileType & StateProfileType & RouterType
 class ProfileContainer extends React.Component<ProfilePropsType> {
 
     refreshProfile = () => {
+
         let userID = this.props.match.params.userID
-        if (!userID) {//если не передаём никакой id профиля, то зададим по умолчанию id
-            userID = this.props.userID ? this.props.userID.toString() : '' //здесь мы передаём ID как строку, но приходят как integer(целое число).В URL всё строки(string)
+        if (!userID) {              //если не передаём никакой id профиля, то зададим по умолчанию id
+            userID = this.props.userID ? this.props.userID.toString() : ''
         }
         this.props.getProfile(userID)
         this.props.getProfileStatus(userID)
