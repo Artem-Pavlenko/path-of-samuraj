@@ -17,7 +17,6 @@ type HeaderContainerType = StateToProps & DispatchToProps
 
 class HeaderContainer extends React.Component<HeaderContainerType> {
 
-
     render() {
         return (
             <Header isAuth={this.props.isAuth} login={this.props.login} photo={this.props.photo}

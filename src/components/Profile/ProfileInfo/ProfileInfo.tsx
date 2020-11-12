@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import {compose} from "redux"
 import {StateType} from "../../../store/redux-store";
 import ProfileStatus from "./ProfileStatus";
-import {withRouter} from "react-router-dom";
+import {withRouter, Redirect} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
 import {ProfileReduxFormType} from "./ProfileData/ProfileDataForm";
 import ProfileData from "./ProfileData/ProfileData";
@@ -53,6 +53,8 @@ const ProfileInfo = (props: profile) => {
             setEditBtn('edit')
         })
     }
+
+    if (!props.match.params.userID && !props.isAuth) return <Redirect to={'/login'} />
 
     return (
         <div className={s.profileBlock}>

@@ -125,7 +125,7 @@ export const authMe = () => async (dispatch: DispatchType) => {
     try {
         const responseData = await authAPI.authMe()
         if (responseData.resultCode === ResultCodesEnum.Success) {
-            // dispatch(setToggleFetchAuth(false)) // отрисовка 'Login' или имя залогиненого пользователя
+            dispatch(setToggleFetchAuth(false))
             dispatch(setAuthUserData(responseData))
             let response = await profileAPI.getProfile(responseData.data.id) // дальше делаем запрос на сервак чтобы отрисовать фото
             dispatch(setPhoto(response.photos.small))

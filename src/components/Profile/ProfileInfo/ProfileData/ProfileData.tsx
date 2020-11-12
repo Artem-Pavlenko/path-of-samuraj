@@ -23,7 +23,7 @@ const ProfileData = (profile: UserProfileType) => {
                 <span>Full name: </span>{profile.fullName}
             </div>
             <div>
-                <span>About me:</span> {profile.aboutMe  ? profile.aboutMe : "..."}
+                <span>About me:</span> {profile.aboutMe ? profile.aboutMe : "..."}
             </div>
             <div className={s.jobBlock}>
                 {profile.lookingForAJob
@@ -34,7 +34,7 @@ const ProfileData = (profile: UserProfileType) => {
                 </div>}
             </div>
             <button onClick={showHideContacts} className={btn.btn}>{btnValue}</button>
-            {showContacts &&<div className={s.contactsBlock}>
+            {showContacts && <div className={s.contactsBlock}>
                 <div className={s.contacts}>
                     Contacts: {(Object.keys(profile.contacts) as Array<keyof typeof profile.contacts>).map(key => {
                     return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>

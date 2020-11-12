@@ -45,12 +45,12 @@ class ProfileStatusClassComponent extends React.Component<ProfileStatusType> {
                     {this.state.editMode
                         ? <input
                             type="text"
-                            value={this.state.statusText === null  ? '' : this.state.statusText}
+                            value={this.state.statusText === null ? '' : this.state.statusText}
                             autoFocus={true}
                             onChange={this.changeStatusText.bind(this)}
                             onBlur={this.addStatusText.bind(this)}
                         />
-                        : <span onDoubleClick={this.activateEditMod.bind(this)} title={'status'} >
+                        : <span onDoubleClick={this.activateEditMod.bind(this)} title={'status'}>
                             {this.props.status === '' || this.props.status === null ? '---' : this.props.status}
                         </span>
                     }

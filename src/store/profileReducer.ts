@@ -3,6 +3,7 @@ import {DispatchType, StateType} from "./redux-store";
 import {EditProfile, profileAPI, ResultCodesEnum} from "../API/API";
 import {Dispatch} from 'redux'
 import {stopSubmit} from "redux-form";
+import {setPhoto} from "./authReducer";
 
 //типизация initialState
 export type CommentType = {
@@ -137,9 +138,7 @@ const profileReducer = (state: ProfileType = initialState, action: ActionsType):
         case ADD_PHOTO:
             return {
                 ...state,
-                profile: {
-                    ...state.profile,
-                    photos: {
+                profile: {...state.profile, photos: {
                         small: action.smallPhoto,
                         large: action.largePhoto
                     }
@@ -210,9 +209,9 @@ export const updateProfileStatus = (status: string) => async (dispatch: Dispatch
 export const savePhoto = (photo: string | Blob) => async (dispatch: Dispatch) => {
     try {
         const responseData = await profileAPI.updPhotos(photo)
-        console.log(responseData)
         if (responseData.resultCode === ResultCodesEnum.Success) {
             dispatch(addPhoto(responseData.data.photos.large, responseData.data.photos.small))
+            dispatch(setPhoto(responseData.data.photos.small))
         }
     } catch (e) {
         console.log('error in save photo: ', e.message)
@@ -240,7 +239,7 @@ export const saveProfileChange = (profile: EditProfile) => async (dispatch: Disp
                     dispatch(stopSubmit('editProfile', {'contacts': {'facebook': responseData.messages[0]}}))
                 }
             }
-            // возвращаем Промис чтобы в случае ошибки  в ProfileInfo->onEditSubmit можно бло заюзать .then()
+            // возвращаем Промис чтобы в случае ошибки в ProfileInfo -> onEditSubmit можно было заюзать .then()
             return Promise.reject(responseData.messages)
         }
     } catch (e) {

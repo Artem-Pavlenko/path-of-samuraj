@@ -15,11 +15,9 @@ const reducers = combineReducers({
     auth: authReducer,
     app: appReducer,
     form: formReducer
-
 })
 
-//для работы с Redux Dev Tools
-
+// composeEnhancers для работы с Redux Dev Tools
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)))
@@ -28,12 +26,11 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddle
 //store без работы с Redux Dev Tools
 // let store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
-
 export type StateType = ReturnType<typeof reducers>
-export type ReduxStore = typeof store
 export type DispatchType = typeof store.dispatch
 
 export default store;
+
 
 // @ts-ignore
 window._store_ = store
