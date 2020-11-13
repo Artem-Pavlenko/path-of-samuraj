@@ -8,16 +8,16 @@ const TotalUsersCount = ({totalUsersCount}: count) => {
 
     const [count, setCount] = useState(0)
 
-    // useEffect(() => {
-    //     if (totalUsersCount) {
-    //         const interval = setInterval(() => {
-    //             count > totalUsersCount && clearInterval(interval)
-    //             count < totalUsersCount && setCount(() => count + 112)
-    //         }, 10)
-    //         count > totalUsersCount  && setCount(totalUsersCount)
-    //         return () => clearInterval(interval)
-    //     }
-    // }, [count, totalUsersCount])
+    useEffect(() => {
+        if (totalUsersCount) {
+            const interval = setInterval(() => {
+                count > totalUsersCount && clearInterval(interval)
+                count < totalUsersCount && setCount(() => count + 112)
+            }, 10)
+            count > totalUsersCount  && setCount(totalUsersCount)
+            return () => clearInterval(interval)
+        }
+    }, [count, totalUsersCount])
 
 
     return (
