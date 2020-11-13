@@ -47,7 +47,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType> & LoginForm> = (props)
         <form onSubmit={props.handleSubmit}>
             {createField(Input, 'email', 'login', requiredField)}
             {createField(Input, 'password', 'password', validators, typeInput)}
-            <input type="checkbox" onChange={onChangeShowPass}/> show password
+            <input type="checkbox" onChange={onChangeShowPass}/>show password
             {createField(Input, "rememberMe", 'password', validators, "checkbox", "remember me")}
             {props.error && <div className={s.formSummeryError}>{props.error}</div>}
             {props.captchaURL && <img src={props.captchaURL} alt=""/>}

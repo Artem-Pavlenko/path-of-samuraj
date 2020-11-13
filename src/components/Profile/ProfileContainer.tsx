@@ -26,7 +26,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
     refreshProfile = () => {
 
         let userID = this.props.match.params.userID
-        if (!userID) {              //если не передаём никакой id профиля, то зададим по умолчанию id
+        if (!userID) {              //если не передаём никакой id профиля
             userID = this.props.userID ? this.props.userID.toString() : ''
         }
         this.props.getProfile(userID)
@@ -56,7 +56,6 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
 let mapStateToProps = (state: StateType): StateProfileType => {
     return {
-        // ID авторизованоего пользоваетля
         userID: state.auth.data.id,
         isAuth: state.auth.isAuth
     }

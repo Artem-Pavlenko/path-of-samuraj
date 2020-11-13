@@ -32,7 +32,7 @@ export type setAuthorizationType = {
 }
 export type setToggleFetchHeaderType = {
     type: typeof SET_FETCH_HEADER
-    isFetchHeader: boolean
+    isFetch: boolean
 }
 export type setPhotoType = {
     type: typeof SET_PHOTO
@@ -89,7 +89,7 @@ const authReducer = (state: AuthType = initialState, action: ActionsType): AuthT
                 // при выходе зануляем данные
                 data: {email: null, login: null, id: null},
                 messages: [],
-                isAuth: action.isFetchHeader
+                isAuth: action.isFetch
             }
         }
         case SET_PHOTO: {
@@ -112,9 +112,9 @@ export default authReducer;
 
 //ActionCreators
 export const setAuthUserData = (data: data): setAuthorizationType => ({type: SET_AUTHORIZATION, data})
-export const setToggleFetchAuth = (isFetchHeader: boolean): setToggleFetchHeaderType => ({
+export const setToggleFetchAuth = (isFetch: boolean): setToggleFetchHeaderType => ({
     type: SET_FETCH_HEADER,
-    isFetchHeader
+    isFetch
 })
 export const setPhoto = (photo: string | null): setPhotoType => ({type: SET_PHOTO, photo})
 export const setErrorMess = (messages: string): setErrorMess => ({type: SET_ERROR_MESS, messages})
@@ -148,7 +148,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
             // dispatch(setErrorMess(response.messages[0]))
             dispatch(setCaptcha(responseIMG))
         } else if (response.resultCode !== ResultCodesEnum.Success) {
-            dispatch(stopSubmit('login', {_error: response.messages[0]}))
+            dispatch(stopSubmit('login', {_error: response.messages}))
             // dispatch(setErrorMess(response.messages[0]))
         }
     } catch (error) {

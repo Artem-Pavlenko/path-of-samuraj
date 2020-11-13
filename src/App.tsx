@@ -30,7 +30,6 @@ type AppType = AppDispatchToPropsType & AppStateToPropsType
 class App extends React.Component<AppType> {
     catchAllUnhandledErrors = (rej: any) => {
         alert('some error')
-        console.log(typeof rej)
         console.log('error(window) :', rej)
     }
 
@@ -43,9 +42,7 @@ class App extends React.Component<AppType> {
     }
 
     render() {
-        if (!this.props.setInitialize) {
-            return <Preloader2/>
-        }
+        if (!this.props.setInitialize) return <Preloader2/>
 
         return (
             <div className={"app-wrapper"}>

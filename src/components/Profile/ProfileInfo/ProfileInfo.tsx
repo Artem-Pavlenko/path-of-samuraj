@@ -55,7 +55,6 @@ const ProfileInfo = (props: profile) => {
     }
 
     if (!props.match.params.userID && !props.isAuth) return <Redirect to={'/login'} />
-
     return (
         <div className={s.profileBlock}>
             {
