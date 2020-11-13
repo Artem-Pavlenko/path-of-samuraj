@@ -62,15 +62,27 @@ class UsersPage extends React.Component<UsersContainerType> {
     }
 }
 
+// let mapStateToProps = (state: StateType) => {
+//     return {
+//         users: getUsersSelector(state),
+//         pageSize: getPageSizeSelector(state),
+//         totalUsersCount: getTotalUserCountSelector(state),
+//         currentPage: getCurrentPageSelector(state),
+//         isFetching: getIsFetchingSelector(state),
+//         followingInProgress: getFollowingInProgressUserIdSelector(state),
+//         portionSize: state.user.portionSize,
+//         isAuth: state.auth.isAuth
+//     }
+// }
 
 let mapStateToProps = (state: StateType) => {
     return {
-        users: getUsersSelector(state),
-        pageSize: getPageSizeSelector(state),
-        totalUsersCount: getTotalUserCountSelector(state),
-        currentPage: getCurrentPageSelector(state),
-        isFetching: getIsFetchingSelector(state),
-        followingInProgress: getFollowingInProgressUserIdSelector(state),
+        users: state.user.items,
+        pageSize: state.user.pageSize,
+        totalUsersCount: state.user.totalUsersCount,
+        currentPage: state.user.currentPage,
+        isFetching: state.user.isFetching,
+        followingInProgress: state.user.followingInProgress.userID,
         portionSize: state.user.portionSize,
         isAuth: state.auth.isAuth
     }

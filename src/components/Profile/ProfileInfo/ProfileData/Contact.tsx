@@ -9,7 +9,7 @@ type ContactType = {
 const Contact = ({contactTitle, contactValue}: ContactType) => {
     return (
         <div style={{paddingLeft: '10px'}}>
-            <b>{contactTitle}</b>: {contactValue ? contactValue : ''}
+            <span>{contactTitle}: {contactValue ? contactValue : ''}</span>
         </div>
     )
 }

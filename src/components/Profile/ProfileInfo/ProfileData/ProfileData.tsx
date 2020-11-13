@@ -36,7 +36,7 @@ const ProfileData = (profile: UserProfileType) => {
             <button onClick={showHideContacts} className={btn.btn}>{btnValue}</button>
             {showContacts && <div className={s.contactsBlock}>
                 <div className={s.contacts}>
-                    Contacts: {(Object.keys(profile.contacts) as Array<keyof typeof profile.contacts>).map(key => {
+                    <span>Contacts:</span> {(Object.keys(profile.contacts) as Array<keyof typeof profile.contacts>).map(key => {
                     return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
                 })}
                 </div>

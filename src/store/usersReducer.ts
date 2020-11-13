@@ -153,12 +153,10 @@ export const setToggleFollowing = (userID: number, isFetch: boolean): setFollowi
     isFetch
 })
 
-type getStateType = () => StateType
-
 
 //thunk
 export const getUsersThunk = (currentPage: number, pageSize: number) => {
-    return async (dispatch: Dispatch<ActionsType>, getState: getStateType) => {
+    return async (dispatch: Dispatch<ActionsType>, getState: () => StateType) => {
         dispatch(setToggleFetch(true))
         let responseData = await userAPI.getUsers(currentPage, pageSize)
         dispatch(setToggleFetch(false))

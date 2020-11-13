@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {UsersReducerType} from "../../store/usersReducer";
 import UserItem from "./userItem/UserItem";
 import s from "./Users.module.scss";
 import item from '../../common/layout/item.module.scss'
-import Preloader from "../../common/Preloader/Preloader";
 import Paginator from "../../common/Paginator/Paginator";
 import Preloader2 from "../../common/Preloader/PreloaderWithStyle/Preloader2";
+import TotalUsersCount from "./TotalCountEffect/TotalUsersCount";
 
 
 type DispatchToUsersPropsType = {
@@ -26,7 +26,9 @@ type StateToUsersPropsType = {
 type UsersItemPageType = DispatchToUsersPropsType & StateToUsersPropsType
 
 
-const Users = ({onPageChanged, totalUsersCount, pageSize, currentPage, ...props}: UsersItemPageType) => {
+const Users = React.memo(({onPageChanged, totalUsersCount, pageSize, currentPage, ...props}: UsersItemPageType) => {
+
+    console.log('Users.tsx render')
 
     return (
         <div>
@@ -37,6 +39,9 @@ const Users = ({onPageChanged, totalUsersCount, pageSize, currentPage, ...props}
                 pageSize={pageSize}
                 currentPage={currentPage}
             />
+            <div>
+                <TotalUsersCount totalUsersCount={totalUsersCount}/>
+            </div>
             <div className={s.PreloaderBlock}>
                 {props.isFetching && <Preloader2/>}
             </div>
@@ -60,7 +65,7 @@ const Users = ({onPageChanged, totalUsersCount, pageSize, currentPage, ...props}
             })}
         </div>
     )
-}
+})
 
 
 export default Users;
