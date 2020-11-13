@@ -11,12 +11,14 @@ const TotalUsersCount = ({totalUsersCount}: count) => {
     useEffect(() => {
         if (totalUsersCount) {
             const interval = setInterval(() => {
-                setCount(() => count + 112)
+                count > totalUsersCount && clearInterval(interval)
+                count < totalUsersCount && setCount(() => count + 112)
             }, 10)
-            count > totalUsersCount && clearInterval(interval)
+            count > totalUsersCount  && setCount(totalUsersCount)
             return () => clearInterval(interval)
         }
     }, [count, totalUsersCount])
+
 
     return (
         <div>
