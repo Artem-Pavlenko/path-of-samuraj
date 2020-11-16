@@ -3,15 +3,15 @@ import s from "./News.module.scss";
 
 function News() {
 
-    const [count, setCount] = useState(0)
-
-    useEffect( ()=> {
-        const interval = setInterval( () => {
-            setCount(count + 2)
-        }, 10)
-        count >= 400 && clearInterval(interval)
-        return () => clearInterval(interval)
-    }, [count])
+    // const [count, setCount] = useState(0)
+    //
+    // useEffect( ()=> {
+    //     const interval = setInterval( () => {
+    //         setCount(count + 2)
+    //     }, 10)
+    //     count >= 400 && clearInterval(interval)
+    //     return () => clearInterval(interval)
+    // }, [count])
 
     return (
         <div className={s.newsWrapper}>
@@ -22,9 +22,9 @@ function News() {
                 <li>React .......</li>
                 <li>it it it it it it </li>
             </ul>
-            <div>
-                <span>{count}</span>
-            </div>
+            {/*<div>*/}
+            {/*    <span>{count}</span>*/}
+            {/*</div>*/}
         </div>
     )
 }

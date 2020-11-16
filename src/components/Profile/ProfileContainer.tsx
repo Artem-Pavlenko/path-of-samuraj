@@ -7,7 +7,8 @@ import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./myPosts/MyPostsContainer";
-
+import s from "./Profile.module.scss"
+import ModalWindow from "../../common/ModalWindow/Modalwindow";
 
 
 type RouterType = RouteComponentProps<{ userID: string }>
@@ -46,9 +47,11 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
     render() {
         // if (!this.props.isAuth)return <Redirect to={'/Login'}/> // если пользователь не залогинен, то перенаправит на страницу Login
         return (
-            <div>
-                <ProfileInfo />
-                <MyPostsContainer/>
+            <div className={s.profileMainBlock}>
+                <div className={s.profile}>
+                    <ProfileInfo/>
+                    <MyPostsContainer/>
+                </div>
             </div>
         )
     }

@@ -53,7 +53,7 @@ handleSubmit,error,profile,...props
                 <span>My professional skills :</span>
                 {createField(Textarea, "lookingForAJobDescription", "my skills", maxLength50)}
             </div>
-            <div className={s.contacts}>
+            <div>
                 Contacts: {(Object.keys(profile.contacts) as Array<keyof typeof profile.contacts>).map(key => {
                 return <div key={key}>
                     <b>{key} :</b> {createField(Input, `contacts.${key}`, key, maxLength50)}

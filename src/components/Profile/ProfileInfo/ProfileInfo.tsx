@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef, useState} from "react";
+import React, {ChangeEvent, useCallback, useRef, useState} from "react";
 import s from "./ProfileInfo.module.scss";
 import item from "../../../common/layout/item.module.scss"
 import btn from "../../../common/layout/BTN.module.scss"
@@ -15,6 +15,7 @@ import ProfileData from "./ProfileData/ProfileData";
 import ProfileReduxForm from "./ProfileData/ProfileDataForm";
 import Preloader2 from "../../../common/Preloader/PreloaderWithStyle/Preloader2";
 import cn from "classnames"
+import ModalWindow from "../../../common/ModalWindow/Modalwindow";
 
 
 type RouterType = RouteComponentProps<{ userID: string }>
@@ -35,6 +36,7 @@ type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType & RouterType
 const ProfileInfo = (props: profile) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [editBtn, setEditBtn] = useState<'edit' | 'cancel'>('edit')
+    const [showModal, setShowModal] = useState<boolean>(false)
 
     const inputFileRef = useRef<HTMLInputElement>(null)
 
@@ -56,6 +58,9 @@ const ProfileInfo = (props: profile) => {
             setEditBtn('edit')
         })
     }
+    const onModalBackgroundClock = useCallback( () => {
+        setShowModal(false)
+    }, [])
 
     if (!props.match.params.userID && !props.isAuth) return <Redirect to={'/login'}/>
     return (
@@ -64,6 +69,8 @@ const ProfileInfo = (props: profile) => {
                 props.isFetch
                     ? <Preloader2/>
                     : <div className={`${s.descriptionBlock} ${item.itemCase}`}>
+                        {/*{showModal && <ModalWindow onBackgroundClick={onModalBackgroundClock} />}*/}
+                        {/*<button onClick={()=>setShowModal(true)}>show modal window</button>*/}
                         <div className={s.avaAndStatus}>
                             <img className={s.avatar} src={props.profile.photos.large || userIcon} alt=''/>
                             <ProfileStatus status={props.profileStatusText}

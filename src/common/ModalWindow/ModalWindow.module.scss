@@ -1,0 +1,29 @@
+//@import "src/";
+
+
+.modalBlock {
+  position: fixed;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background: #2b2f36;
+  opacity: .8;
+  top: 0;
+  left: 0;
+
+  .popupContentBlock{
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 10px;
+    opacity: 1;
+    .popupContent{
+      background: white;
+      color: #2b2f36;
+      padding: 30px;
+      z-index: 6;
+      opacity: 1;
+    }
+  }
+}
