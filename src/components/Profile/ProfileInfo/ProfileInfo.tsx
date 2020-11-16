@@ -51,13 +51,13 @@ const ProfileInfo = (props: profile) => {
     }
 
     const onEditSubmit = (data: ProfileReduxFormType) => {
-        props.saveProfileChange(data).then( () => {
+        props.saveProfileChange(data).then(() => {
             setEditMode(false)
             setEditBtn('edit')
         })
     }
 
-    if (!props.match.params.userID && !props.isAuth) return <Redirect to={'/login'} />
+    if (!props.match.params.userID && !props.isAuth) return <Redirect to={'/login'}/>
     return (
         <div className={s.profileBlock}>
             {
@@ -71,11 +71,14 @@ const ProfileInfo = (props: profile) => {
                             />
                         </div>
                         {!props.match.params.userID && props.isAuth &&
-                    <button onClick={ () => inputFileRef && inputFileRef.current && inputFileRef.current.click()} className={cn(btn.btn, s.changeFileBtn)}>change photo...</button>
+                        <button style={{margin: "10px"}}
+                                onClick={() => inputFileRef && inputFileRef.current && inputFileRef.current.click()}
+                                className={cn(btn.btn, s.changeFileBtn)}>change photo...</button>
                         }
-                        {!props.match.params.userID && props.isAuth && <input className={s.hiddenInput} ref={inputFileRef} type='file' onChange={onMainPhotoSelected}/>}
-                        {!props.match.params.userID && props.isAuth &&  <div>
-                            <button onClick={onEditMode} className={btn.btn}>{editBtn}</button>
+                        {!props.match.params.userID && props.isAuth &&
+                        <input className={s.hiddenInput} ref={inputFileRef} type='file' onChange={onMainPhotoSelected}/>}
+                        {!props.match.params.userID && props.isAuth && <div>
+                            <button style={{margin: "10px"}} onClick={onEditMode} className={btn.btn}>{editBtn}</button>
                         </div>}
 
                         {editMode
