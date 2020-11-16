@@ -15,6 +15,11 @@ body {
   grid-template-columns: 1fr 10fr;
   grid-gap: 7px;
 }
+@media screen and (max-width: 768px){
+  .app-wrapper {
+    width: 100%;
+  }
+}
 
 .app-wrapper-content {
   grid-area: c;
