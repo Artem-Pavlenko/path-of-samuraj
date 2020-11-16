@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useRef, useState} from "react";
 import s from "./ProfileInfo.module.scss";
 import item from "../../../common/layout/item.module.scss"
 import btn from "../../../common/layout/BTN.module.scss"
@@ -14,6 +14,7 @@ import {ProfileReduxFormType} from "./ProfileData/ProfileDataForm";
 import ProfileData from "./ProfileData/ProfileData";
 import ProfileReduxForm from "./ProfileData/ProfileDataForm";
 import Preloader2 from "../../../common/Preloader/PreloaderWithStyle/Preloader2";
+import cn from "classnames"
 
 
 type RouterType = RouteComponentProps<{ userID: string }>
@@ -34,6 +35,8 @@ type profile = ProfileStateToPropsType & ProfileDispatchTOPropsType & RouterType
 const ProfileInfo = (props: profile) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [editBtn, setEditBtn] = useState<'edit' | 'cancel'>('edit')
+
+    const inputFileRef = useRef<HTMLInputElement>(null)
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -67,7 +70,10 @@ const ProfileInfo = (props: profile) => {
                                            updateProfileStatus={props.updateProfileStatus}
                             />
                         </div>
-                        {!props.match.params.userID && props.isAuth && <input type='file' onChange={onMainPhotoSelected}/>}
+                        {!props.match.params.userID && props.isAuth &&
+                    <button onClick={ () => inputFileRef && inputFileRef.current && inputFileRef.current.click()} className={cn(btn.btn, s.changeFileBtn)}>change photo...</button>
+                        }
+                        {!props.match.params.userID && props.isAuth && <input className={s.hiddenInput} ref={inputFileRef} type='file' onChange={onMainPhotoSelected}/>}
                         {!props.match.params.userID && props.isAuth &&  <div>
                             <button onClick={onEditMode} className={btn.btn}>{editBtn}</button>
                         </div>}
