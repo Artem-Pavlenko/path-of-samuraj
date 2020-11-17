@@ -14,7 +14,7 @@ type StateToPropsType = {
 }
 type HeaderPropsType = StateToPropsType & DispatchToPropsType
 
-function Header(props: HeaderPropsType) {
+const Header = (props: HeaderPropsType) => {
     return (
         <header className={s.header}>
             <div className={s.network}>
