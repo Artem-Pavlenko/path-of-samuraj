@@ -13,10 +13,7 @@ type MyPostPropsType = {
 
 const MyPosts = React.memo((props: MyPostPropsType) => {
 
-    //отмапил посты
-    let posts = props.profilePage.post.map(post => <Post comment={post.comm} likeCount={post.like} key={post.id}/>)
-
-    function onAddPost(formData: FormPostType) {
+    const onAddPost = (formData: FormPostType) => {
         props.addPost(formData.post)
     }
 
@@ -26,7 +23,7 @@ const MyPosts = React.memo((props: MyPostPropsType) => {
             <div>
                 <FormPost onSubmit={onAddPost}/>
             </div>
-            {posts}
+            {props.profilePage.post.map(post => <Post comment={post.comm} likeCount={post.like} key={post.id}/>)}
         </div>
     )
 })
