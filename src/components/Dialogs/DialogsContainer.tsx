@@ -1,4 +1,4 @@
-import { addMessActionCreator} from "../../store/dialogsReducer";
+import { addMess} from "../../store/dialogsReducer";
 import {DispatchType, StateType} from "../../store/redux-store";
 import {compose} from "redux"
 import {connect} from "react-redux";
@@ -67,7 +67,7 @@ let mapStateToProps = (state: StateType) => {
 let mapDispatchToProps = (dispatch: DispatchType) => {
     return {
         onSendFormMess: (mess: string) => {
-            dispatch(addMessActionCreator(mess))
+            dispatch(addMess(mess))
         }
     }
 }

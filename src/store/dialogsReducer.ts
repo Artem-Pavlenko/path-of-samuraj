@@ -24,7 +24,7 @@ type ActionsType = AddMessActionType
 const ADD_MESS = "dialogs/ADD_MESS"
 
 //ActionCreators
-export const addMessActionCreator = (mess: string): AddMessActionType => ({
+export const addMess = (mess: string): AddMessActionType => ({
     type: ADD_MESS , mess
 })
 
