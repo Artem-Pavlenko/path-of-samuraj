@@ -16,7 +16,7 @@ type UsersItemPageType = DispatchToUsersPropsType & StateToUsersPropsType
 
 const Paginator = (props: UsersItemPageType) => {
 
-    let pageCount = Math.ceil((props.totalItemsCount / props.pageSize)) //делю на 50 чтобы отображалось меньше страниц
+    let pageCount = Math.ceil((props.totalItemsCount / props.pageSize))
     let pages = []
     for (let i = 1; i <= pageCount; i++) {
         pages.push(i)
@@ -44,7 +44,7 @@ const Paginator = (props: UsersItemPageType) => {
                 {portionNumber > 1 && <button onClick={setPrevPortion}>prev</button>}
                 {pages
                     .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
-                    .map(p => {  //отрисовка к-во страниц пользователей/50(розделена на 50 для удобства просмотра)
+                    .map(p => {
                         return (
                             <span key={p} onClick={() => {props.onPageChanged(p)}}
                                   className={cn(s.pageNumber, {[s.selectedPage]: props.currentPage === p})}>
