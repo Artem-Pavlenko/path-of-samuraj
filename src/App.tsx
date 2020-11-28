@@ -37,6 +37,7 @@ class App extends React.Component<AppType> {
         window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
         this.props.initializeApp()
     }
+
     componentWillUnmount() {
         window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
@@ -49,7 +50,7 @@ class App extends React.Component<AppType> {
                 <HeaderContainer/>
                 <NavBar/>
                 <div className={"app-wrapper-content"}>
-                        <Suspense fallback={<Preloader2/>}>
+                    <Suspense fallback={<Preloader2/>}>
                         <Switch>
                             <Route path={'/dialog'} render={() => <DialogsContainer/>}/>
                             <Route path={'/profile/:userID?'} render={() => <Profile/>}/>
@@ -62,7 +63,7 @@ class App extends React.Component<AppType> {
 
                             {/*<Route exact path={'/'}><Redirect to={'/login'} /></Route>*/}
                             <Redirect from={'/'} to={'/login'}/>
-                            <Route render={ () => <div>404 not found</div>}/>
+                            <Route render={() => <div>404 not found</div>}/>
                         </Switch>
                     </Suspense>
                 </div>

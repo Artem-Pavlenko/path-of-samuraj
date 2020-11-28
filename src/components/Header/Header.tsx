@@ -28,7 +28,7 @@ const Header = (props: HeaderPropsType) => {
                     ? <div className={s.profileLogin}>
                         <div>
                             <span>{props.login}</span>
-                            <button onClick={props.logout}>log out</button>
+                            <button onClick={props.logout}>logout</button>
                         </div>
                         <div><img src={props.photo == null ? userPhoto : props.photo} alt=""/></div>
 
