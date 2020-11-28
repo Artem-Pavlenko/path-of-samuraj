@@ -26,9 +26,7 @@ function UserItem(props: UserItemType) {
         <div key={props.user.id}>
             <NavLink to={'/profile/' + props.user.id}>
                 <img className={s.avatarIMG}
-                     src={props.user.photos.small === null
-                         ? userIcon
-                         : props.user.photos.small}
+                     src={props.user.photos.small || userIcon}
                      alt={''}
                 />
             </NavLink>

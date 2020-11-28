@@ -24,6 +24,7 @@ type ProfileStateToPropsType = {
     profile: UserProfileType
     isFetch: boolean
     profileStatusText: string | null
+    authUserID: number
 }
 type ProfileDispatchTOPropsType = {
     updateProfileStatus: (status: string) => void
@@ -75,6 +76,8 @@ const ProfileInfo = (props: profile) => {
                             <img className={s.avatar} src={props.profile.photos.large || userIcon} alt=''/>
                             <ProfileStatus status={props.profileStatusText}
                                            updateProfileStatus={props.updateProfileStatus}
+                                           profileID={props.profile.userId}
+                                           authUserID={props.authUserID}
                             />
                         </div>
                         {!props.match.params.userID && props.isAuth &&
@@ -103,7 +106,8 @@ let mapStateToProps = (state: StateType) => {
         profile: state.profile.profile,
         isFetch: state.profile.isFetching,
         profileStatusText: state.profile.profileStatusText,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        authUserID: state.auth.data.id
     }
 }
 

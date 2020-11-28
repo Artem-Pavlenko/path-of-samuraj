@@ -2,6 +2,8 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 
 type StatusStateToPropsType = {
     status: string | null
+    authUserID: number
+    profileID: number
 }
 type StatusDispatchToPropsType = {
     updateProfileStatus: (status: string) => void
@@ -19,7 +21,7 @@ const ProfileStatus = (props: ProfileStatusType) => {
     }, [props.status])
 
     function activateEditMod() {
-        setEditMode(true)
+        props.profileID === props.authUserID && setEditMode(true)
     }
 
     function changeStatusText(e: ChangeEvent<HTMLInputElement>) {
